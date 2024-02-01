@@ -6,13 +6,20 @@ const express=require("express");
 const memberRouter=require('./routers/member.router')
 
 
+//cors
+
+const cors=require('cors');
+
 const app=express(); 
 
 
+//middlle wares
 
 // pody barser
 const body_parser=require('body-parser')
 app.use(body_parser.json())
+
+app.use(cors()); 
 
 
 app.use("/members",memberRouter);

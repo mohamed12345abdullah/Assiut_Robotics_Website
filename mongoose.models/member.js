@@ -12,7 +12,7 @@ const memberSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    committe:{
+    committee:{
         type:String,
         required:true
     },
