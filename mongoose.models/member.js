@@ -27,6 +27,10 @@ const memberSchema=new mongoose.Schema({
     role:{
         type:String,
         default:"member"
+    },
+    confirm:{
+        type:Boolean,
+        default:false
     }
 })
 

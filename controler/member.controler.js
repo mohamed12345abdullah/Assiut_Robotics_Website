@@ -52,7 +52,15 @@ try {
 // }
 
 
+const getAllMembers=async(req,res)=>{
+    let members=await member.find({},{password:false});
+
+    res.status(200).send({message:"get data successfully",data:{members}})
+}
+
+
 module.exports={
     createAccount,
-    // login
+    // login,
+    getAllMembers
 }
