@@ -32,6 +32,7 @@ try {
 
     await newMember.save();
     const token =await jwt.generateToken({email})
+    // res.redirect("/login.html")
     res.status(201).send({"message":"Your account has been successfully created.",token})
 } catch (error) {
     console.log(error);
@@ -41,15 +42,26 @@ try {
 }
 
 
-// const login=async(req,res)=>{
-//     try {
-//         const {email,password}=req.body;
-
-//         const oldMember=await member.find({email});
-//     } catch (error) {
+const login=async(req,res)=>{
+    try {
+        console.log("body",req.body);
+        const {email,password,remember}=req.body;
+        const oldMember=await member.findOne({email});
+        if(oldMember){
+            if(oldMember.password==password){
+                const token =await jwt.generateToken({email},remember);
+                // res.redirect("/index.html")
+                res.status(200).send({"message":"Your are logged in",token})
+            }else{
+                res.status(400).send({message:"wrong password"})
+            }
+        }else{
+            res.status(404).send({message:"this user not found"})
+        }
+    } catch (error) {
         
-//     }
-// }
+    }
+}
 
 
 const getAllMembers=async(req,res)=>{
@@ -61,6 +73,6 @@ const getAllMembers=async(req,res)=>{
 
 module.exports={
     createAccount,
-    // login,
+    login,
     getAllMembers
 }

@@ -10,6 +10,6 @@ Router.route("/createAccount")
 Router.route("/getAllMembers")
         .get(memberControler.getAllMembers)
 
-
-
+Router.route("/login")
+        .post(memberControler.login)
 module.exports=Router;        

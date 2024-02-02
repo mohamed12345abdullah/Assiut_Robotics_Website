@@ -5,6 +5,7 @@ const generateToken=async(payload,rememberMe)=>{
     try {
         if(rememberMe){
             const token=await jwt.sign(payload, secret,{});
+            console.log("remember me");
             return token;
         }else{
             const token=await jwt.sign(payload, secret,{expiresIn:'2h'});
