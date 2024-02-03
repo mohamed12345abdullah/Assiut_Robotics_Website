@@ -8,7 +8,7 @@ const generateToken=async(payload,rememberMe)=>{
             console.log("remember me");
             return token;
         }else{
-            const token=await jwt.sign(payload, secret,{expiresIn:'2h'});
+            const token=await jwt.sign(payload, secret,{expiresIn:'2m'});
             return token;
         }
         
@@ -20,14 +20,18 @@ const generateToken=async(payload,rememberMe)=>{
 
 const verify=async(req,res,next)=>{
     try {
-   
         const token=req.body.token;
         if(!token){
             res.status(401).send({message:"token is required"});
         }else{
         const decoded=await jwt.verify(token,secret);
-        console.log("decoded is : ",decoded);
-        next();    
+        if(decoded){
+            console.log("decoded is : ",decoded);
+            req.decoded=decoded;  
+            next();    
+        }else{
+            res.status(401).send({message:"unauthorized"})
+        }
         }
     } catch (error) {
         

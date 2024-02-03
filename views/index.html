@@ -338,10 +338,17 @@
 		<!-- Footer Section End -->
 
     <script>
-      function check_login() {
+      async function check_login() {
         let token = window.localStorage.getItem("token");
-        window.location.href = "login/login.html";
         console.log(token);
+
+        if (token) {
+            window.location.href = "Profile page/index.html"
+        
+        } else {
+          window.location.href = "login/login.html";
+     
+        }
       }
     </script>
 

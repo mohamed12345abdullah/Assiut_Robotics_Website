@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto+Condensed:wght@300&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="load()">
+    <div class="container">
+        <a href="../index.html" style="text-decoration: none; color: inherit;">
+            <img id="logo" src="../images/logo.png">
+        </a>
+
+        <div class="content">
+            <div class="left">
+                <img id="human" src="./images/بني ادم.png" alt="notfound">
+                <div class="info">
+                    <h2 id="nameHuman">Hembo Tingor</h2>
+                    <p id="specialty">Web Designer</p>
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </div>
+            </div>
+
+            <div class="right">
+                <p class="title bolding">Information</p>
+                <hr />
+                <div class="contact">
+                    <div class="titles">
+                        <p class="bolding">Email</p>
+                        <p class="bolding right">Phone</p>
+                    </div>
+                    <div class="infoo">
+                        <p>mfng@gmail.com</p>
+                        <p class="right">98764512398</p>
+                    </div>
+                </div>
+                <p class="title bolding">Projects</p>
+                <hr />
+                <div class="works">
+                    <div class="titles">
+                        <p class="bolding">Recent</p>
+                        <p class="bolding right">Most Viewed</p>
+                    </div>
+                    <div class="infoo">
+                        <p>Sam Dissuja</p>
+                        <p class="right">Dinoter husainm</p>
+                    </div>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const load =async () => {
+            let token = window.localStorage.getItem("token");
+            console.log(token);
+            let data = {
+                token,
+            }
+            if (token) {
+                let response = await fetch("../members/verify", {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    
+                    window.location.href = "../login/login.html"
+                } 
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>

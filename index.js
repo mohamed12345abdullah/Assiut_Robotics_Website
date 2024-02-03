@@ -26,7 +26,7 @@ app.use(cors());
 
 app.use("/",express.static(__dirname+"/views"))
 app.use("/members",memberRouter);
-
+// app.use("")
 app.get("/",(req,res)=>{    
     res.end("server run successfully ")
 })

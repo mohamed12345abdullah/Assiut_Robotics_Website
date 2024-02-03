@@ -72,8 +72,24 @@ const getAllMembers=async(req,res)=>{
 }
 
 
+
+const verify=async(req,res)=>{
+    try{
+
+
+    
+    if(req.decoded){
+        res.status(200).send({message:"success authorization"})
+    }
+    }catch(error){
+        res.status(401).send({message:" unauthorized"})
+
+    }
+}
+
 module.exports={
     createAccount,
     login,
-    getAllMembers
+    getAllMembers,
+    verify
 }
