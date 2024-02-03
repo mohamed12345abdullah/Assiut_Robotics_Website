@@ -13,9 +13,9 @@ try {
     console.log(req.body);
     
     let {name,email,password,committee,gender,phoneNumber,role}=req.body;
-    let oldEmail=await member.find({email});
+    let oldEmail=await member.findOne({email});
     console.log("old member",oldEmail);
-    if(oldEmail.length){
+    if(oldEmail){
         console.log("old member",oldEmail);
        return res.status(400).send({message:"This email is already in use. Please log in or use a different email." });
     }
@@ -31,9 +31,9 @@ try {
     })
 
     await newMember.save();
-    const token =await jwt.generateToken({email})
-    // res.redirect("/login.html")
-    res.status(201).send({"message":"Your account has been successfully created.",token})
+    // const token =await jwt.generateToken({email})
+    
+    res.status(201).send({"message":"Your account has been successfully created. <br> wait until your request be accept"})
 } catch (error) {
     console.log(error);
     res.status(400).send({"message":error.message});
@@ -50,8 +50,9 @@ const login=async(req,res)=>{
         if(oldMember){
             if(oldMember.password==password){
                 const token =await jwt.generateToken({email},remember);
-                // res.redirect("/index.html")
-                res.status(200).send({"message":"Your are logged in",token})
+                // res.redirect("/index.html");
+                
+                res.status(200).send({"message":"Your are logged in",token});
             }else{
                 res.status(400).send({message:"wrong password"})
             }

@@ -38,7 +38,7 @@
                      aria-current="page" href="#about" title="About Us">About Us </a>
                   </li>
                   <li class="nav-item">
-                    <i class="fa-solid fa-user userIcon" title="User" style="  position: absolute; right: 5%; top:25%; "></i>
+                    <i onclick="check_login()" class="fa-solid fa-user userIcon" title="User" style="  position: absolute; right: 5%; top:25%; "></i>
                   </li>
 				  </ul>
                 </div>
@@ -329,6 +329,12 @@
     </footer>
 		<!-- Footer Section End -->
 		
+        <script>
+            function check_login(){
+                let token=window.localStorage.getItem("token");
+                console.log(token);
+            }
+        </script>
 		
 		
     </body>

@@ -17,7 +17,7 @@
     <img id="logo" src="photos\logo.png">
     <div class="container">
 
-        <form id="signupForm" action="members/createAccount" method="post">
+        <form id="signupForm" action="../members/createAccount" method="post">
             <h2>MEMBER SIGN UP</h2>
             <div class="input-box">
                 <input type="text" name="name" placeholder="Username" required>
@@ -95,6 +95,32 @@
             })
 
             
+
+            // fetch api 
+
+            document.forms['signupForm'].addEventListener('submit',async (event)=>{
+                event.preventDefault();
+                // TODO do something here to show user that form is being submitted
+                const response=await fetch(event.target.action, {
+                    method: 'POST',
+                    body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+                });
+                let JSONresponse=await response.json();
+                if(!response.ok){
+                    
+                    console.log(JSONresponse);       
+                    document.querySelector(".message").innerHTML=JSONresponse.message;
+
+                }else {
+                    console.log('aaa',JSONresponse);
+                    
+                    document.querySelector(".message").innerHTML=JSONresponse.message;
+
+                }
+         
+
+                
+            })
             
            } catch (error) {
             console.log(error);
