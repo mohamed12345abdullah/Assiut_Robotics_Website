@@ -1,305 +1,311 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv='cache-control' content='no-cache'> 
-        <meta http-equiv='expires' content='0'> 
-        <meta http-equiv='pragma' content='no-cache'>
-        <title>Main</title>
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/all.min.css">
-        <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-         <link rel="preconnect" href="https://fonts.googleapis.com">
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,700;1,300;1,500&display=swap"
-          rel="stylesheet">
-    </head>
-    <body onload="load()">
 
-         <!-- navbar -->
-         <nav class="navbar navbar-expand-lg navbar-light  text-center" >
-            <div class="container-fluid">
-                
-             
-              <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li>
-                        <img src="images/logo.png" class="sublogo">
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link active " style="  position: absolute; right: 50%; "
-                         aria-current="page" href="#computation" title="Blog">Blog</a>
-                      </li>
-                  <li class="nav-item">
-                    <a class="nav-link active " style="  position: absolute; right:30%; width :190px; "
-                     aria-current="page" href="#computation" title="Achievement">Achievement</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active " style=" position: absolute; right: 10%; width :160px;"
-                     aria-current="page" href="#about" title="About Us">About Us </a>
-                  </li>
-                  <li class="nav-item">
-                    <i onclick="check_login()" class="fa-solid fa-user userIcon" title="User" style="  position: absolute; right: 5%; top:25%; "></i>
-                  </li>
-				  </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="who-are-we" style="margin:5%;">
-	<!--intro-->
-  <div class="intro">
-	  
-    <div>
-      <img src="images/0whoarewe.png" class="icon ">
-	  </div>
-  <div >
-  
-  
-      
-  <h3 class="font">The potato was originally The potato is a <br>
-    starchy tuber of the plant Solanum tuberosum <br>
-    and is a root vegetable native to<br>
-     the Americas.The plant is perennial <br>
-     in the nightshade family Solanaceae <br>
-     Wildpotato species can be found <br>
-     from the southern United States<br>
-  </h3>
-  
-  </div>
- 
-    <!-- big -->
-    
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <!-- medium -->
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <!-- smaall-->
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
-    <div class="Image-bubble"></div>
+<head>
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <title>Main</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/all.min.css">
+  <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,700;1,300;1,500&display=swap"
+    rel="stylesheet">
+</head>
 
-    <!-- bbubble -->
-    
-    <div class="bubble"><span></span></div>
-    <div class="bubble"><span></span></div>
-    <div class="bubble"><span></span></div>
+<body onload="load()">
 
-    
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light  text-center">
+    <div class="container-fluid">
 
 
+      <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li>
+            <img src="images/logo.png" class="sublogo">
+          </li>
 
-
-
-    
- 
-
-
-
- </div>
-
-  <!-- counter -->	
-  <div style="margin-top: 0;">
-  <div class="counter-color-background">
-    </div>
-    <div class="counter_background">
-  
-    
-      <div class="counter">
-       <div class="d-flex justify-content-center fs-1 fw-bold "style="color: #104068;
-                                     margin-top: 10px;" title="COUNTER">COUNTER</div>
-         <div class="row">
-            <div class="col-sm">
-        <p><i class="fa fa-book fa-4x" id="counter_icon"></i></p>
-               <p id='0101' class="fs-2 counter_text" >0</p>
-        
-               <p class="counter_text" title="NEW">NEW</p>
-            </div>
-            <div class="col-sm">
-        <p><i class="fa fa-user" id="counter_icon"></i></p>
-               <p id='0102' class="fs-2 counter_text ">876</p>
-               <p class="counter_text" title="MEMBERS" >MEMBERS</p>
-         </div>
-         <div class="col-sm">
-       <p><i class="fa-solid fa-medal " id="counter_icon"></i></p>
-            <p class="fs-2 container_text counter-text" id='0103'>12</p>
-            <p class="counter_text align-content-center" title="AWARDS">AWARDS</p>
-         </div>
-        <div class="col-sm">
-       <p><i class="fa-sharp fa-solid fa-fish" id="counter_icon"></i></p>
-            <p class="fs-2 counter_text"id='0104'>12 </p>
-            <p class="counter_text align-content-center" title="POTATOS">POTATOS</p>
-         </div>
+          <li class="nav-item">
+            <a class="nav-link active " style="  position: absolute; right: 50%; " aria-current="page"
+              href="#computation" title="Blog">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active " style="  position: absolute; right:30%; width :190px; " aria-current="page"
+              href="#computation" title="Achievement">Achievement</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active " style=" position: absolute; right: 10%; width :160px; " aria-current="page"
+              href="#about" title="About Us">About Us </a>
+          </li>
+          <li class="nav-item">
+            <i onclick="check_login()" class="fa-solid fa-user userIcon" title="User"
+              style="  position: absolute; right: 5%; top:25%; "></i>
+          </li>
+        </ul>
       </div>
-   </div>
-  
-    
     </div>
-    
-    
-    
- 
- 
-  
-  
-  
+  </nav>
+  <div class="who-are-we" style="margin:5%;">
+    <!--intro-->
+    <div class="intro">
 
-  
-  
-  
+      <div>
+        <img src="images/0whoarewe.png" class="icon ">
+      </div>
+      <div>
+
+
+
+        <h3 class="font">The potato was originally The potato is a <br>
+          starchy tuber of the plant Solanum tuberosum <br>
+          and is a root vegetable native to<br>
+          the Americas.The plant is perennial <br>
+          in the nightshade family Solanaceae <br>
+          Wildpotato species can be found <br>
+          from the southern United States<br>
+        </h3>
+
+      </div>
+
+      <!-- big -->
+
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <!-- medium -->
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <!-- smaall-->
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+      <div class="Image-bubble"></div>
+
+      <!-- bbubble -->
+
+      <div class="bubble"><span></span></div>
+      <div class="bubble"><span></span></div>
+      <div class="bubble"><span></span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <!-- counter -->
+    <div style="margin-top: 0;">
+      <div class="counter-color-background">
+      </div>
+      <div class="counter_background">
+
+
+        <div class="counter">
+          <div class="d-flex justify-content-center fs-1 fw-bold " style="color: #104068;
+                                     margin-top: 10px;" title="COUNTER">COUNTER</div>
+          <div class="row">
+            <div class="col-sm">
+              <p><i class="fa fa-book fa-4x" id="counter_icon"></i></p>
+              <p id='0101' class="fs-2 counter_text">0</p>
+
+              <p class="counter_text" title="NEW">NEW</p>
+            </div>
+            <div class="col-sm">
+              <p><i class="fa fa-user" id="counter_icon"></i></p>
+              <p id='0102' class="fs-2 counter_text ">876</p>
+              <p class="counter_text" title="MEMBERS">MEMBERS</p>
+            </div>
+            <div class="col-sm">
+              <p><i class="fa-solid fa-medal " id="counter_icon"></i></p>
+              <p class="fs-2 container_text counter-text" id='0103'>12</p>
+              <p class="counter_text align-content-center" title="AWARDS">AWARDS</p>
+            </div>
+            <div class="col-sm">
+              <p><i class="fa-sharp fa-solid fa-fish" id="counter_icon"></i></p>
+              <p class="fs-2 counter_text" id='0104'>12 </p>
+              <p class="counter_text align-content-center" title="POTATOS">POTATOS</p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script>
+      function animate(obj, initVal, lastVal, duration) {
+        let startTime = null;
+
+        //get the current timestamp and assign it to the currentTime variable
+        let currentTime = Date.now();
+
+        //pass the current timestamp to the step function
+        const step = (currentTime) => {
+
+          //if the start time is null, assign the current time to startTime
+          if (!startTime) {
+            startTime = currentTime;
+          }
+
+          //calculate the value to be used in calculating the number to be displayed
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+
+          //calculate what to be displayed using the value gotten above
+          obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
+
+          //checking to make sure the counter does not exceed the last value (lastVal)
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            window.cancelAnimationFrame(window.requestAnimationFrame(step));
+          }
+        };
+        //start animating
+        window.requestAnimationFrame(step);
+      }
+      let text1 = document.getElementById('0101');
+      let text2 = document.getElementById('0102');
+      let text3 = document.getElementById('0103');
+      let text4 = document.getElementById('0104');
+      const load = () => {
+        animate(text1, 0, 95, 7000);
+        animate(text2, 200, 120, 7000);
+        animate(text3, 0, 70, 7000);
+        animate(text4, 100, 25, 7000);
+
+      }
+    </script>
+
+    <!-- end counter -->
+
   </div>
-  
-  <script>
-    function animate(obj, initVal, lastVal, duration) {
-       let startTime = null;
 
-    //get the current timestamp and assign it to the currentTime variable
-    let currentTime = Date.now();
 
-    //pass the current timestamp to the step function
-    const step = (currentTime ) => {
 
-    //if the start time is null, assign the current time to startTime
-    if (!startTime) {
-       startTime = currentTime ;
-    }
+  <!-- contact us -->
+  <div class="contact">
+    <div class="container ">
+      <div class="text-center">
+        <h1 style="color:white; font-size: 4rem; " class=" mt-5 mb-5" title="CONTACT US">CONTACT US</h1>
+        <input type="email" placeholder="Email" class="bg-transparent  text-white-50 mt-3 mb-3" title="Email">
+        <h3 class="  text-contact" title="WHO DO YOU WANT TO CONTACT ?">WHO DO YOU WANT TO CONTACT ? </h3>
+      </div>
 
-    //calculate the value to be used in calculating the number to be displayed
-    const progress = Math.min((currentTime - startTime)/ duration, 1);
 
-    //calculate what to be displayed using the value gotten above
-    obj.innerHTML = Math.floor(progress * (lastVal - initVal) + initVal);
 
-    //checking to make sure the counter does not exceed the last value (lastVal)
-    if (progress < 1) {
-       window.requestAnimationFrame(step);
-    } else {
-          window.cancelAnimationFrame(window.requestAnimationFrame(step));
-       }
-    };
-    //start animating
-       window.requestAnimationFrame(step);
-    }
-    let text1 = document.getElementById('0101');
-    let text2 = document.getElementById('0102');
-    let text3 = document.getElementById('0103');
-     let text4 = document.getElementById('0104');
-    const load = () => {
-       animate(text1, 0, 95, 7000);
-       animate(text2, 200, 120, 7000);
-       animate(text3, 0, 70, 7000);
-     animate(text4, 100, 25, 7000);
-    
-    }
- </script>
-  
-  	<!-- end counter -->
+      <div class="row">
+        <!-- 1 -->
+        <div class="col-md-6 col-lg-3 ">
+          <div class="outer-circle">
+            <div class="inner-circle">
+              <h2>PR</h2>
+            </div>
+            <h3>MEMBER</h3>
+          </div>
 
         </div>
-	
-		
-
-        <!-- contact us -->
-        <div class="contact">
-          <div class="container ">
-            <div class="text-center">
-              <h1 style="color:white; font-size: 4rem; " class=" mt-5 mb-5"title="CONTACT US">CONTACT US</h1>
-              <input type="email" placeholder="Email" class="bg-transparent  text-white-50 mt-3 mb-3" title="Email" >
-              <h3 class="  text-contact" title="WHO DO YOU WANT TO CONTACT ?">WHO DO YOU WANT TO CONTACT ? </h3>
+        <!-- 2 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="outer-circle">
+            <div class="inner-circle">
+              <h2>OC</h2>
             </div>
+            <h3>MEMBER</h3>
+          </div>
 
-
-          
-            <div class="row">
-              <!-- 1 -->
-              <div class="col-md-6 col-lg-3 ">
-                <div class="outer-circle">
-                  <div class="inner-circle">
-                   <h2>PR</h2>
-                  </div>
-                  <h3>MEMBER</h3>
-                </div>
-
-              </div>
-              <!-- 2 -->
-              <div class="col-md-6 col-lg-3">
-                <div class="outer-circle">
-                  <div class="inner-circle">
-                   <h2>OC</h2>
-                  </div>
-                  <h3>MEMBER</h3>
-                </div>
-
-              </div>
-              <!-- 3 -->
-              <div class="col-md-6 col-lg-3">
-                <div class="outer-circle">
-                  <div class="inner-circle">
-                   <h2>AC</h2>
-                  </div>
-                  <h3>MEMBER</h3>
-                </div>
-
-              </div>
-              <!-- 4 -->
-              <div class="col-md-6 col-lg-3">
-                <div class="outer-circle  ">
-                  <div class="inner-circle">
-                   <h2>HR</h2>
-                  </div>
-                  <h3>MEMBER</h3>
-                </div>
-
-              </div>
+        </div>
+        <!-- 3 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="outer-circle">
+            <div class="inner-circle">
+              <h2>AC</h2>
             </div>
+            <h3>MEMBER</h3>
+          </div>
+
+        </div>
+        <!-- 4 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="outer-circle  ">
+            <div class="inner-circle">
+              <h2>HR</h2>
+            </div>
+            <h3>MEMBER</h3>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- footer -->
+  <div class="footer">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="box col-lg-4 mb-4 ">
+          <input type="text" placeholder="NAME" class="bg-transparent  ">
+
+          <div class="container-footer">
+            <div class="potato">
+              <div class="outerCircle2"><span class="innercircle2"></span></div>
+
+
+              <input type="text" placeholder="your message" class="msgbox bg-transparent  ">
+
+              <h4 class="mt-5"></h4>
+            </div>
+            <input type="text" placeholder="TO" class="bg-transparent  mt-5  ">
+          </div>
+
+        </div>
+
+        <div class="social col-lg-8 ">
+          <div class="d-flex justify-content-center align-items-center">
+            <a href="https://www.facebook.com/robotics.assiut" class="social-icons"><img
+                src="images/SocialLoginface-01.png" alt="" class="img-fluid me-3"></a>
+            <a href="https://www.youtube.com/@AssiutRobotics" class="social-icons"><img src="images/youtube.png" alt=""
+                class="img-fluid"></a>
+
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+            <a href="https://www.linkedin.com/company/assiut-robotics/" class="social-icons"><img
+                src="images/SocialLoginlinkid-01.png" alt="" class="img-fluid me-3"></a>
+            <a href="https://www.instagram.com/assiutrobotics/" class="social-icons"><img
+                src="images/SocialLogininsta-01.png" alt="" class="img-fluid"></a>
           </div>
         </div>
 
+      </div>
+    </div>
 
-        <!-- footer -->
-        <div class="footer">
-          <div class="container"   >
-            <div class="row align-items-center">
-              <div class="box col-lg-4 mb-4 ">
-                <input type="text" placeholder="NAME" class="bg-transparent  " >
-  
-                <div class="container-footer">
-                  <div  class="potato" >
-                    <div class="outerCircle2"><span class="innercircle2"></span></div>
-					  
-					  
-                    <input type="text" placeholder="your message" class="msgbox bg-transparent  ">
-                     
-                   <h4 class="mt-5"></h4>
-                  </div>
-                  <input type="text" placeholder="TO" class="bg-transparent  mt-5  ">
-                </div>
-  
-              </div>
-             
-            <div class="social col-lg-8 ">
-              <div class="d-flex justify-content-center align-items-center">
-                <a href="https://www.facebook.com/robotics.assiut" class="social-icons"><img src="images/SocialLoginface-01.png" alt="" class="img-fluid me-3"></a>
-                <a href="https://www.youtube.com/@AssiutRobotics" class="social-icons"><img src="images/youtube.png" alt="" class="img-fluid"></a>
-                
-              </div>
-                <div class="d-flex justify-content-center align-items-center">
-                  <a href="https://www.linkedin.com/company/assiut-robotics/" class="social-icons"><img src="images/SocialLoginlinkid-01.png" alt="" class="img-fluid me-3"></a>
-                  <a href="https://www.instagram.com/assiutrobotics/" class="social-icons"><img src="images/SocialLogininsta-01.png" alt="" class="img-fluid"></a>
-                </div>
-            </div>
-            
-          </div>
-        </div>
-        
 
-		
-		<!-- second Footer Section Begin 
+
+    <!-- second Footer Section Begin 
 		    <footer class="footer spad">
         <div class="container">
             <div class="row">
@@ -330,15 +336,16 @@
         </div>
     </footer>
 		<!-- Footer Section End -->
-		
-        <script>
-            function check_login(){
-                let token=window.localStorage.getItem("token");
-                window.location.href="login/login.html";
-                console.log(token);
-            }
-        </script>
-		
-		
-    </body>
+
+    <script>
+      function check_login() {
+        let token = window.localStorage.getItem("token");
+        window.location.href = "login/login.html";
+        console.log(token);
+      }
+    </script>
+
+
+</body>
+
 </html>
