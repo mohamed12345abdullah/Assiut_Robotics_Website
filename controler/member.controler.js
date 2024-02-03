@@ -33,7 +33,7 @@ try {
     await newMember.save();
     // const token =await jwt.generateToken({email})
     
-    res.status(201).send({"message":"Your account has been successfully created. <br> wait until your request be accept"})
+    res.status(201).send({"message":"Your account has been successfully created. <br> wait until your request be acceptted"})
 } catch (error) {
     console.log(error);
     res.status(400).send({"message":error.message});
