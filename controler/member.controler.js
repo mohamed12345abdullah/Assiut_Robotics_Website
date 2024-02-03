@@ -49,7 +49,11 @@ const login=async(req,res)=>{
         const oldMember=await member.findOne({email});
         if(oldMember){
             if(oldMember.password==password){
-                const token =await jwt.generateToken({email},remember);
+                const token =await jwt.generateToken({
+                    name:oldMember.name,
+                    email:oldMember.email,
+                    phoneNumber:oldMember.phoneNumber
+                },remember);
                 // res.redirect("/index.html");
                 
                 res.status(200).send({"message":"Your are logged in",token});
@@ -77,9 +81,8 @@ const verify=async(req,res)=>{
     try{
 
 
-    
     if(req.decoded){
-        res.status(200).send({message:"success authorization"})
+        res.status(200).send({message:"success authorization",data:req.decoded})
     }
     }catch(error){
         res.status(401).send({message:" unauthorized"})

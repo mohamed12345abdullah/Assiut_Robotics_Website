@@ -42,8 +42,8 @@
                         <p class="bolding right">Phone</p>
                     </div>
                     <div class="infoo">
-                        <p>mfng@gmail.com</p>
-                        <p class="right">98764512398</p>
+                        <p id="email">mfng@gmail.com</p>
+                        <p id="phone" class="right">98764512398</p>
                     </div>
                 </div>
                 <p class="title bolding">Projects</p>
@@ -87,6 +87,12 @@
                 if (!response.ok) {
                     
                     window.location.href = "../login/login.html"
+                }else{
+                    const JSONresponse= await response.json();
+                    console.log(JSONresponse);
+                    document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;
+                    document.getElementById("email").innerHTML=JSONresponse.data.email;
+                    document.getElementById("phone").innerHTML=JSONresponse.data.phoneNumber;
                 } 
             }
 
