@@ -24,7 +24,7 @@
                 <i class='bx bxs-user' style="margin-left: 80%;"></i>
             </div>
             <div class="input-box">
-                <input type="text" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" required>
                 <i class='bx bxs-user' style="margin-left: 80%;"></i>
             </div>
             <div class="input-box">
@@ -34,6 +34,9 @@
             <div class="input-box">
                 <input class="confirm_password" type="password" name="confirm_password" placeholder="confirm_password" required>
                 <i class='bx bxs-lock' style="margin-left: 80%;"></i>
+            </div>
+            <div style="color: red;" class="matched">
+
             </div>
             <div class="input-box">
                 <label for="committee">Select your committee:</label>
@@ -86,10 +89,10 @@
                 const password=document.querySelector(".password").value;
                 let confirm_password=document.querySelector(".confirm_password").value;
                 if(password!=confirm_password){
-                    document.querySelector(".message").innerHTML="password not matched"
+                    document.querySelector(".matched").innerHTML="password not matched"
 
                 }else{
-                    document.querySelector(".message").innerHTML=""
+                    document.querySelector(".matched").innerHTML=""
                 }
                 console.log("input",password,confirm_password);
             })
