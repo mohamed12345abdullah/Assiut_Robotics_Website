@@ -14,5 +14,10 @@ Router.route("/login")
         .post(memberControler.login);
 
 Router.route("/verify")
-        .post(JWT.verify,memberControler.verify)
+        .post(JWT.verify,memberControler.verify);
+
+
+Router.route("/confirm")
+        .post(memberControler.confirm)
+
 module.exports=Router;        

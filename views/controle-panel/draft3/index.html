@@ -15,7 +15,7 @@
         <div id="container"></div>
     <script>
         const getMembersData = () => {
-            return fetch('https://assiut-robotics-website.vercel.app/members/getAllMembers?fbclid=IwAR1Vc2AE5I-B_p_kzbq7jP9UOB4FjivhIUGUVZcmEFVxuQnYWCGD_XEJ-0E')
+            return fetch('../../../members/getAllMembers')
                 .then(data => data.json())
         }
         getMembersData().then((data) => {

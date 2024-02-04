@@ -49,14 +49,22 @@ const login=async(req,res)=>{
         const oldMember=await member.findOne({email});
         if(oldMember){
             if(oldMember.password==password){
-                const token =await jwt.generateToken({
-                    name:oldMember.name,
-                    email:oldMember.email,
-                    phoneNumber:oldMember.phoneNumber
-                },remember);
-                // res.redirect("/index.html");
-                
-                res.status(200).send({"message":"Your are logged in",token});
+                console.log(oldMember.confirm);
+                if(oldMember.confirm){
+                    const token =await jwt.generateToken({
+                        name:oldMember.name, 
+                        email:oldMember.email,
+                        phoneNumber:oldMember.phoneNumber,
+                        role:oldMember.role
+                    },remember);
+                    // res.redirect("/index.html");
+                    
+                    res.status(200).send({"message":"Your are logged in",token});
+                }
+                else{
+                    res.status(400).send({"message":"Your account has been successfully created. <br> wait until your request be acceptted"})
+
+                }
             }else{
                 res.status(400).send({message:"wrong password"})
             }
@@ -80,9 +88,14 @@ const getAllMembers=async(req,res)=>{
 const verify=async(req,res)=>{
     try{
 
-
     if(req.decoded){
-        res.status(200).send({message:"success authorization",data:req.decoded})
+        const oldMember=await member.findOne({email:req.decoded.email})
+        if(oldMember){
+            res.status(200).send({message:"success authorization",data:req.decoded});
+        }else{
+            res.status(401).send({message:" unauthorized"})
+
+        }
     }
     }catch(error){
         res.status(401).send({message:" unauthorized"})
@@ -90,9 +103,28 @@ const verify=async(req,res)=>{
     }
 }
 
+
+
+
+const confirm=async(req,res)=>{
+    const {id,confirm}=req.body;
+    if(confirm){
+        await member.findByIdAndUpdate(id,{confirm});
+        res.end("updated")
+    }else {
+        await member.findByIdAndDelete(id);
+        res.end("deleted");
+    }
+    // else{
+    //     res.end("done")
+    // }
+  
+}
+
 module.exports={
     createAccount,
     login,
     getAllMembers,
-    verify
+    verify,
+    confirm
 }
