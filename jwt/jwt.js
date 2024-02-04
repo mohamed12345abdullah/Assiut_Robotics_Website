@@ -8,7 +8,7 @@ const generateToken=async(payload,rememberMe)=>{
             console.log("remember me");
             return token;
         }else{
-            const token=await jwt.sign(payload, secret,{expiresIn:'2m'});
+            const token=await jwt.sign(payload, secret,{expiresIn:'60m'});
             return token;
         }
         
