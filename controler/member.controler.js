@@ -109,7 +109,7 @@ const verify=async(req,res)=>{
 const confirm=async(req,res)=>{
     const {id,confirm}=req.body;
     if(confirm){
-        await member.findByIdAndUpdate(id,{confirm});
+        await member.findByIdAndUpdate(id,{confirm:"true"});
         res.end("updated")
     }else {
         await member.findByIdAndDelete(id);
