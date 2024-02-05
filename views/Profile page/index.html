@@ -110,6 +110,7 @@
                     document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;
                     document.getElementById("email").innerHTML=JSONresponse.data.email;
                     document.getElementById("phone").innerHTML=JSONresponse.data.phoneNumber;
+                    document.getElementById("specialty").innerHTML=JSONresponse.data.committee;
                     window.localStorage.setItem("role",JSONresponse.data.role);
                     window.localStorage.setItem("committee",JSONresponse.data.committee);
                 } 
