@@ -18,6 +18,6 @@ Router.route("/verify")
 
 
 Router.route("/confirm")
-        .post(memberControler.confirm)
+        .post(JWT.verify, memberControler.confirm)
 
 module.exports=Router;        

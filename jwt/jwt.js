@@ -25,13 +25,13 @@ const verify=async(req,res,next)=>{
             res.status(401).send({message:"token is required"});
         }else{
         const decoded=await jwt.verify(token,secret);
-        if(decoded){
-            console.log("decoded is : ",decoded);
-            req.decoded=decoded;  
-            next();    
-        }else{
-            res.status(401).send({message:"unauthorized"})
-        }
+            if(decoded){
+                console.log("decoded is : ",decoded);
+                req.decoded=decoded;  
+                next();    
+            }else{
+                res.status(401).send({message:"unauthorized"})
+            }
         }
     } catch (error) {
         
