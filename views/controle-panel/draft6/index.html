@@ -21,6 +21,18 @@
             <option value="media">Media</option>
             <option value="hr">HR</option>
           </select>
+        <script>
+            const ele=document.getElementById("committee");
+            const role=window.localStorage.getItem("role");
+            let com;
+            if(role!="leader"){
+                ele.style.display="none";
+                com=window.localStorage.getItem("committee")
+            }else{
+                com = document.getElementById('committee').value;
+            }
+            
+        </script>  
         <select name="gender" id="gender">
             <option value="All">All</option>
             <option value="male">male</option>
@@ -61,7 +73,7 @@
             });
             thead.append(tr);
             table.append(tr)
-            let com = document.getElementById('committee').value;
+            
             let gen = document.getElementById('gender').value;
             let rol = document.getElementById('role').value;
             let con = document.getElementById('confirm').value;

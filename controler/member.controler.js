@@ -55,7 +55,8 @@ const login=async(req,res)=>{
                         name:oldMember.name, 
                         email:oldMember.email,
                         phoneNumber:oldMember.phoneNumber,
-                        role:oldMember.role
+                        role:oldMember.role,
+                        committee:oldMember.committee
                     },remember);
                     // res.redirect("/index.html");
                     

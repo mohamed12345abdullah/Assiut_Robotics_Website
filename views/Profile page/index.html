@@ -108,6 +108,8 @@
                     document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;
                     document.getElementById("email").innerHTML=JSONresponse.data.email;
                     document.getElementById("phone").innerHTML=JSONresponse.data.phoneNumber;
+                    window.localStorage.setItem("role",JSONresponse.data.role);
+                    window.localStorage.setItem("committee",JSONresponse.data.committee);
                 } 
             }else{
                 window.location.href = "../login/login.html"

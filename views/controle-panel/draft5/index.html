@@ -13,19 +13,20 @@
         <button id="btn" style="background-color: rgb(255, 207, 87);" > view data </button>
         <select name="committee" id="committee">
             <option value="web">web</option>
-            <option value="hr">hr</option>
+            <option value="HR">HR</option>
           </select>
-        <select name="gender" id="gender">
+        <select  name="gender" id="gender">
             <option value="male">male</option>
-            <option value="1female">female</option>
+            <option value="female">female</option>
           </select>
         <select name="role" id="role">
             <option value="member">member</option>
             <option value="admin">admin</option>
           </select>
         <select name="confirm" id="confirm">
-            <option value="true">confirmed</option>
             <option value="false">not confirmed</option>
+            <option value="true">confirmed</option>
+            
           </select>
         <br>
         <h3> Members Data: </h3> 
@@ -52,12 +53,18 @@
             });
             thead.append(tr);
             table.append(tr)
-            let com = document.getElementById('committee').value;
-            let gen = document.getElementById('gender').value;
             let rol = document.getElementById('role').value;
+            let com = document.getElementById('committee').value;
+            if(rol!="leader"){
+                document.getElementById('committee').style.display="none";
+                com=window.localStorage.getItem("com");
+            }
+            
+            let gen = document.getElementById('gender').value;
             let con = document.getElementById('confirm').value === "true"
             $.each(jsonData, function(i, item){
-                if((item.committee == com) && (item.gender == gen) && (item.role == rol) && (item.confirm == con)){
+                
+                if((item.committee == com)&& (item.gender == gen)  && (item.role == rol) && (item.confirm == con)){
                     console.log("test");
                     let tr = $("<tr>");
                     let vals = Object.values(item);
