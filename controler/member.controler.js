@@ -1,12 +1,12 @@
 require('dotenv').config();
 const MONGOURL=process.env.MONGOURL;
-
+const bcrypt=require('../middlleware/bcrypt');
 const mongoose=require('mongoose');
 mongoose.connect(MONGOURL)
 const member = require('../mongoose.models/member');
 
 // jwt
-const jwt=require('../jwt/jwt');
+const jwt=require('../middlleware/jwt');
 
 const createAccount=async(req,res)=>{
 try { 
@@ -19,11 +19,11 @@ try {
         console.log("old member",oldEmail);
        return res.status(400).send({message:"This email is already in use. Please log in or use a different email." });
     }
-
+    let hashedpass= await bcrypt.hashing(password);
     const newMember=new member({ 
         name,
         email,
-        password,
+        password:hashedpass,
         committee,
         gender,
         phoneNumber,
@@ -45,18 +45,19 @@ try {
 const login=async(req,res)=>{
     try {
         console.log("body",req.body);
-        const {email,password,remember}=req.body;
+        const {email,password,remember}=req.body;  
         const oldMember=await member.findOne({email});
         if(oldMember){
-            if(oldMember.password==password){
-                console.log(oldMember.confirm);
+            const truepass=await bcrypt.comparePassword(password,oldMember.password);
+            if(truepass){
+                
                 if(oldMember.role!=5){
                     const token =await jwt.generateToken({
                         name:oldMember.name, 
                         email:oldMember.email,
                         phoneNumber:oldMember.phoneNumber,
                         role:oldMember.role,
-                        committee:oldMember.committee
+                        committee:oldMember.committee 
                     },remember);
                     // res.redirect("/index.html");
                     

@@ -1,7 +1,7 @@
 const express=require('express');
 
 const memberControler=require("../controler/member.controler");
-const JWT=require('../jwt/jwt')
+const JWT=require('../middlleware/jwt')
 const Router=express.Router();
 
 Router.route("/createAccount")
