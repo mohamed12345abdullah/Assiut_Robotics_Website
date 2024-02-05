@@ -25,13 +25,10 @@ const memberSchema=new mongoose.Schema({
         required:true
     },
     role:{
-        type:String,
-        default:"member"
+        type:Number,
+        default:5
     },
-    confirm:{
-        type:Boolean,
-        default:false
-    }
+
 })
 
 module.exports=mongoose.model("Member",memberSchema);

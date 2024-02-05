@@ -104,7 +104,7 @@
                 }else{
                     const JSONresponse= await response.json();
                     console.log(JSONresponse);
-                    if(JSONresponse.data.role !="member"){
+                    if(JSONresponse.data.role <4){
                         document.getElementById('controle-panel').style.display="inline-block";
                     }
                     document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;

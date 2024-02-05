@@ -26,7 +26,7 @@
             const ele=document.getElementById("committee");
             const role=window.localStorage.getItem("role");
           
-            if(role!="leader"){
+            if(role!=1){
                 ele.style.display="none";
                 
             }
@@ -39,15 +39,16 @@
           </select>
         <select name="role" id="role">
             <option value="All">All</option>
-            <option value="member">member</option>
-            <option value="admin">admin</option>
+            <option value=4>member</option>
+            <option value=3>admin</option>
+            <option value=2>head</option>
           </select>
-        <select name="confirm" id="confirm">
+        <!-- <select name="confirm" id="confirm">
             <option value="All">All</option>
             <option value="false">not confirmed</option>
             <option value="true">confirmed</option>
             
-          </select>
+        </select> -->
         <br>
         <h3> Members Data: </h3> 
         <div id="container"></div>
@@ -78,7 +79,7 @@
             const role=window.localStorage.getItem("role");
             let com;
 
-            if(role!="leader"){
+            if(role!=1){
                 
                 com=window.localStorage.getItem("committee")
             }else{
@@ -88,12 +89,12 @@
             
             let gen = document.getElementById('gender').value;
             let rol = document.getElementById('role').value;
-            let con = document.getElementById('confirm').value;
+            // let con = document.getElementById('confirm').value;
             $.each(jsonData, function(i, item){
                 if(((item.committee == com) || (com == "All"))
                 && ((item.gender == gen) || (gen == "All"))
                 && ((item.role == rol) || (rol == "All"))
-                && ((item.confirm.toString() == con) || (con == "All"))
+                // && ((item.confirm.toString() == con) || (con == "All"))
                 ){
                     let tr = $("<tr>");
                     let vals = Object.values(item);
@@ -107,7 +108,9 @@
                     });
                     let td=$("<td>");
                     button=`    
-                       <button onclick="confirm(1,dataset.id)" data-id="${item._id}"> accept </button>
+                       <button onclick="confirm(4,dataset.id)" data-id="${item._id}"> accept </button>
+                       <button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it admin </button>
+                       <button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it head </button>
                        <button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>`;
                     td.append(button)
                     tr.append(td);
@@ -122,14 +125,15 @@
 
      
 
-        const confirm=async(confirm,id)=>{
+        const confirm=async(role,id)=>{
         try {
-console.log(confirm);
+console.log(role);
 console.log(id);
 
             let data={
+            token:window.localStorage.getItem("token"),
             id:id,
-            confirm:confirm
+            role:role
             }
             const response=await fetch("../../members/confirm",{
                 method:"post",

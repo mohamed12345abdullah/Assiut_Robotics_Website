@@ -50,7 +50,7 @@ const login=async(req,res)=>{
         if(oldMember){
             if(oldMember.password==password){
                 console.log(oldMember.confirm);
-                if(oldMember.confirm){
+                if(oldMember.role!=5){
                     const token =await jwt.generateToken({
                         name:oldMember.name, 
                         email:oldMember.email,
@@ -108,9 +108,9 @@ const verify=async(req,res)=>{
 
 
 const confirm=async(req,res)=>{
-    const {id,confirm}=req.body;
-    if(confirm){
-        await member.findByIdAndUpdate(id,{confirm:"true"});
+    const {id,role}=req.body;
+    if(role){
+        await member.findByIdAndUpdate(id,{role});
         res.status(200).send({message:"confirmed"})
     }else {
         await member.findByIdAndDelete(id);
