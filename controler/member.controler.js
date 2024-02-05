@@ -111,10 +111,10 @@ const confirm=async(req,res)=>{
     const {id,confirm}=req.body;
     if(confirm){
         await member.findByIdAndUpdate(id,{confirm:"true"});
-        res.end("updated")
+        res.status(200).send({message:"confirmed"})
     }else {
         await member.findByIdAndDelete(id);
-        res.end("deleted");
+        res.status(200).send({message:"deleted"});
     }
     // else{
     //     res.end("done")

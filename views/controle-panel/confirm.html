@@ -9,6 +9,7 @@
         <title>Admin</title>
     </head>
     <body>
+  
         <h2>Assiut Robotics members Data</h2>
         <button id="btn" style="background-color: rgb(255, 207, 87);" > view data </button>
         <select name="committee" id="committee">
@@ -70,7 +71,9 @@
                 th.text(item);
                 tr.append(th);
             });
+            tr.append("accept")
             thead.append(tr);
+            
             table.append(tr);
             const role=window.localStorage.getItem("role");
             let com;
@@ -94,11 +97,20 @@
                 ){
                     let tr = $("<tr>");
                     let vals = Object.values(item);
+                    let button;
                     $.each(vals, (i, elem) => {
                     let td = $("<td>");
                     td.text(elem);
+                   
                     tr.append(td);
+                    
                     });
+                    let td=$("<td>");
+                    button=`    
+                       <button onclick="confirm(1,dataset.id)" data-id="${item._id}"> accept </button>
+                       <button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>`;
+                    td.append(button)
+                    tr.append(td);
                     table.append(tr);
                 };
                 
@@ -107,6 +119,36 @@
         }
         })
         .catch(error => console.log('ERROR!'))
+
+     
+
+        const confirm=async(confirm,id)=>{
+        // try {
+console.log(confirm);
+console.log(id);
+
+            let data={
+            id:id,
+            confirm:confirm
+            }
+            const response=await fetch("../../members/confirm",{
+                method:"post",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(data)
+            })
+            const JSONresponse=await response.json();
+            if (response.ok) {
+                console.log(JSONresponse);
+            }else{
+                console.log("error", JSONresponse);
+            }
+            
+        // } catch (error) {
+        //         console.log(error);
+        //     }
+        }
     </script>
     </body>
 </html>
