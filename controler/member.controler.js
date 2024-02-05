@@ -1,12 +1,15 @@
 require('dotenv').config();
 const MONGOURL=process.env.MONGOURL;
-const bcrypt=require('../middlleware/bcrypt');
 const mongoose=require('mongoose');
 mongoose.connect(MONGOURL)
 const member = require('../mongoose.models/member');
 
 // jwt
 const jwt=require('../middlleware/jwt');
+
+//bcrypt
+const bcrypt=require('../middlleware/bcrypt');
+
 
 const createAccount=async(req,res)=>{
 try { 

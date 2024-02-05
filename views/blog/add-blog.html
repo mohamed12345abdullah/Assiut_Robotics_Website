@@ -17,7 +17,7 @@
     <img id="logo" src="../images/logo.png">
     <div class="container">
         
-        <form id="loginForm" action="../../members/login" method="post">
+        <form id="addBlog" action="../../blogs/add" method="post">
             <h2>ADD A BLOG</h2>
                 <div class="input-box">
                     <input type="text" name="title" placeholder="title" required>
@@ -47,7 +47,7 @@
     <script>
         try {
 
-            document.forms['loginForm'].addEventListener('submit',async (event)=>{
+            document.forms['addBlog'].addEventListener('submit',async (event)=>{
                 event.preventDefault();
                 // TODO do something here to show user that form is being submitted
                 const response=await fetch(event.target.action, {
@@ -61,10 +61,12 @@
                     document.querySelector(".message").innerHTML=JSONresponse.message;
 
                 }else {
-                    // console.log('aaa',JSONresponse);
-                    window.localStorage.setItem('token',JSONresponse.token);
                     document.querySelector(".message").innerHTML=JSONresponse.message;
-                    window.location.href="../Profile page/index.html"
+
+                    // console.log('aaa',JSONresponse);
+                    // window.localStorage.setItem('token',JSONresponse.token);
+                    // document.querySelector(".message").innerHTML=JSONresponse.message;
+                    // window.location.href="../Profile page/index.html"
                 }
          
 
@@ -72,7 +74,7 @@
             })
             
         } catch (error) {
-            
+            console.log(error);
         }
 
     </script>
