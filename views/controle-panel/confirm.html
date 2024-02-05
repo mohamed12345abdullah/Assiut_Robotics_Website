@@ -21,12 +21,13 @@
             <option value="OC">OC</option>
             <option value="media">Media</option>
             <option value="HR">HR</option>
+            <option value="Marketing">Marketing</option>
           </select>
         <script>
             const ele=document.getElementById("committee");
             const role=window.localStorage.getItem("role");
           
-            if(role!=1){
+            if(role!=(1&&2)){
                 ele.style.display="none";
                 
             }
@@ -79,7 +80,7 @@
             const role=window.localStorage.getItem("role");
             let com;
 
-            if(role!=1){
+            if(role!=(1&&2)){
                 
                 com=window.localStorage.getItem("committee")
             }else{
@@ -109,8 +110,8 @@
                     let td=$("<td>");
                     button=`    
                        <button onclick="confirm(4,dataset.id)" data-id="${item._id}"> accept </button>
-                       <button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it admin </button>
-                       <button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it head </button>
+                       <button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it head </button>
+                       <button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it admin  </button>
                        <button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>`;
                     td.append(button)
                     tr.append(td);
