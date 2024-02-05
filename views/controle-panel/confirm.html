@@ -24,11 +24,9 @@
         <script>
             const ele=document.getElementById("committee");
             const role=window.localStorage.getItem("role");
-            let com;
+          
             if(role!="leader"){
                 ele.style.display="none";
-                com=window.localStorage.getItem("committee")
-            }else{
                 
             }
             
@@ -73,8 +71,18 @@
                 tr.append(th);
             });
             thead.append(tr);
-            table.append(tr)
-            com = document.getElementById('committee').value;
+            table.append(tr);
+            const role=window.localStorage.getItem("role");
+            let com;
+
+            if(role!="leader"){
+                
+                com=window.localStorage.getItem("committee")
+            }else{
+                com = document.getElementById('committee').value;
+            }
+
+            
             let gen = document.getElementById('gender').value;
             let rol = document.getElementById('role').value;
             let con = document.getElementById('confirm').value;
