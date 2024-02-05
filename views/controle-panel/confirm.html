@@ -16,10 +16,10 @@
             <option value="web">web</option>
             <option value="AC mechanic">AC Mechanic</option>
             <option value="AC electric">AC Electric</option>
-            <option value="BR">BR</option>
+            <option value="PR">PR</option>
             <option value="OC">OC</option>
             <option value="media">Media</option>
-            <option value="hr">HR</option>
+            <option value="HR">HR</option>
           </select>
         <script>
             const ele=document.getElementById("committee");
@@ -29,7 +29,7 @@
                 ele.style.display="none";
                 com=window.localStorage.getItem("committee")
             }else{
-                com = document.getElementById('committee').value;
+                
             }
             
         </script>  
@@ -54,7 +54,7 @@
         <div id="container"></div>
     <script>
         const getMembersData = () => {
-            return fetch('https://assiut-robotics-website.vercel.app/members/getAllMembers?fbclid=IwAR1Vc2AE5I-B_p_kzbq7jP9UOB4FjivhIUGUVZcmEFVxuQnYWCGD_XEJ-0E')
+            return fetch('../../members/getAllMembers')
                 .then(data => data.json())
         }
         getMembersData().then((data) => {
@@ -74,7 +74,7 @@
             });
             thead.append(tr);
             table.append(tr)
-            
+            com = document.getElementById('committee').value;
             let gen = document.getElementById('gender').value;
             let rol = document.getElementById('role').value;
             let con = document.getElementById('confirm').value;
