@@ -32,6 +32,8 @@
 
         </div>
 
+        <button onclick="logout()">LOG OUT</button>
+
     </nav>
     <div class="container">
     
@@ -117,6 +119,13 @@
             }
 
 
+        }
+
+        const logout=()=>{
+            window.localStorage.removeItem("token");
+            document.querySelector(".container").style.display="none";
+            window.alert("نورتنا  (: ")
+            window.location.href="../"
         }
     </script>
 </body>

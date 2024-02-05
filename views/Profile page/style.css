@@ -112,6 +112,18 @@ nav{
     height: 50px;
     
 }
+nav button{
+    margin-top: 50px;
+    margin-right: 1.5rem;
+    float: right;
+    width: 100px;
+    height: 30px;
+    background-color: #2aa9f3;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 20px;
+
+}
 #controle-panel{
 
     margin-top: 50px;
