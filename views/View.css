@@ -52,6 +52,7 @@ body {
   @media screen and (max-width: 600px) {
     .topnav.responsive {position: relative;}
     .topnav.responsive .icon {
+      z-index: 100;
       position: absolute;
       right: 0;
       top: 0;
@@ -74,6 +75,7 @@ body {
 }
 
 #container {
+    z-index: -10;
     position: absolute;
     margin: auto;
     width: 100vw;
