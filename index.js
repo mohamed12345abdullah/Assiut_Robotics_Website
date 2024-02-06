@@ -6,6 +6,7 @@ const PORT=process.env.PORT;
 const express=require("express");
 const memberRouter=require('./routers/member.router')
 const blogRouter=require('./routers/blog.router')
+const componentRouter=require('./routers/component.router')
 
 
 //cors
@@ -28,6 +29,7 @@ app.use(cors());
 app.use("/",express.static(__dirname+"/views"))
 app.use("/members",memberRouter);
 app.use('/blogs',blogRouter)
+app.use('/components',componentRouter)
 // app.use("")
 app.get("/",(req,res)=>{    
     res.end("server run successfully ")
