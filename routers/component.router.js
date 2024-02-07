@@ -15,6 +15,8 @@ Router.route('/update')
         .post(componentControler.updateComponent);
 Router.route('/deleteAll')
         .get(componentControler.deleteAll);
+Router.route('/deleteOne')
+        .post(componentControler.deleteOne);
 
 
 

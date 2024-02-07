@@ -164,8 +164,37 @@ function read() {
     deALL.innerHTML = '';
   }
 }
-function del(item) {
 
+
+
+const deleteOne=async(id)=>{
+  data={
+    id
+  }
+  const res = await fetch("../../components/deleteOne",{
+    method:"post",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(data)
+
+  })
+  if(res.ok){
+    const response=await res.json();
+    console.log(await response);
+    // prodata=await response.data;
+    getComponents();
+    read();
+  }
+  else{
+    const response=await res.json();
+    console.log(await response.message);
+  }
+}
+
+
+function del(item) {
+  deleteOne(prodata[item]._id)
   prodata.splice(item, 1);
   localStorage.product = JSON.stringify(prodata);
   read();

@@ -73,9 +73,29 @@ const deleteAll=async(req,res)=>{
 }
 
 
+
+const deleteOne=async(req,res)=>{
+    try {
+        console.log("delete one");
+       const id= req.body.id;
+    await component.findByIdAndDelete(id);
+    res.status(200).send({message:"deleted"});
+
+} catch (error) {
+    res.status(500).send({message:error.message});
+
+}
+}
+
+
+
+
+
+
 module.exports={
     addComponent,
     getCombonent,
     updateComponent,
-    deleteAll
+    deleteAll,
+    deleteOne
 }
