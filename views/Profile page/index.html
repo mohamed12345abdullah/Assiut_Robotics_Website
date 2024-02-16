@@ -31,6 +31,12 @@
             </a>
 
         </div>
+        <div style="display: none;" id="head-hr">
+            <a  href="../controle-panel/addHrTocommittee.html" style="text-decoration: none; color: inherit;">
+                make hr admin 
+            </a>
+
+        </div>
 
         <button onclick="logout()">LOG OUT</button>
 
@@ -106,6 +112,9 @@
                     console.log(JSONresponse);
                     if(JSONresponse.data.role <4){
                         document.getElementById('controle-panel').style.display="inline-block";
+                    }
+                    if((JSONresponse.data.committee=="hr"&&JSONresponse.data.role <4 )||JSONresponse.data.role ==1){
+                        document.getElementById('head-hr').style.display="inline-block";
                     }
                     document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;
                     document.getElementById("email").innerHTML=JSONresponse.data.email;

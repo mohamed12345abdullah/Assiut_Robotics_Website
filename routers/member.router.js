@@ -20,4 +20,8 @@ Router.route("/verify")
 Router.route("/confirm")
         .post(JWT.verify, memberControler.confirm)
 
+
+Router.route("/hr")
+        .post(JWT.verify, memberControler.controleHR)
+
 module.exports=Router;        
