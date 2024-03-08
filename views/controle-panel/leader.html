@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>leader page</title>
+</head>
+<body>
+    <section class="main">
+        <div class="web-committee">
+            <h2>web</h2>
+            <div class="head">
+                <h2>head</h2>
+                <a href=""> edit head </a>
+            </div>   
+      
+            
+        </div>
+        <div class="HR-committee">
+            <h2>HR</h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+        <div class="media-committee">
+            <h2>media</h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+        <div class="AcMechanical-committee">
+            <h2>Ac mechanic</h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+        <div class="AcElectrical-committee">
+            <h2>Ac electric</h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+        <div class="markting-committee">
+            <h2>marketing</h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+        <div class="Pr-committee">
+            <h2>pr </h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+        <div class="OC-committee">
+            <h2>Oc</h2>
+
+            <div class="head">
+            </div>   
+      
+            
+        </div>
+
+    </section>
+    
+
+
+    <script>
+        const webCommittee=document.querySelector(".web-committee");
+        const HRcommittee=document.querySelector(".HR-committee");
+        const mediaCommittee=document.querySelector(".media-committee");
+        const AcElectricalcommittee=document.querySelector(".AcElectrical-committee");
+        const AcMechanicalcommittee=document.querySelector(".AcMechanical-committee");
+        const marktingcommittee=document.querySelector(".markting-committee");
+        const Prcommittee=document.querySelector(".Pr-committee");
+        const OCcommittee=document.querySelector(".OC-committee");
+
+        function addMembersToCommittee(com,member) {
+            if(member.role==2){
+                document.querySelector(com+' .head').innerHTML+=`
+                <li class="name"> head ${member.name} </li>
+                <li class="com">${member.committee} </li>
+                <li class="email"> ${member.email}</li>
+                <li class="phone number"> ${member.number}</li>
+                <li class="role">${member.role} </li>`
+            }else{
+            document.querySelector(com).innerHTML+=`
+                <div class="member">
+                <li class="name">member ${member.name} </li>
+                <li class="com">${member.committee} </li>
+                <li class="email"> ${member.email}</li>
+                <li class="phone number"> ${member.number}</li>
+                <li class="role">${member.role} </li>
+                </div>
+            `
+            }
+        }
+        onload=async function () {
+            
+            const res=await fetch("http://localhost:3000/members/getAllMembers");
+            if(res.ok){
+                const response=await res.json();
+
+                response.data.members.forEach(member => {
+                    switch (member.committee) {
+                        case 'web':
+                            addMembersToCommittee(".web-committee",member)
+                            break;
+                        case 'HR':
+                            addMembersToCommittee(".HR-committee",member)
+
+                            break;
+                        case 'AC mechanic':
+                            addMembersToCommittee(".AcMechanical-committee",member)
+
+                            break;
+                        case 'AC electric':
+                            addMembersToCommittee(".AcElectrical-committee",member)
+
+                            break;
+                        case 'PR':
+                            addMembersToCommittee(".Pr-committee",member)
+
+                            break;
+                        case 'marketing':
+                            addMembersToCommittee(".markting-committee",member)
+
+                            break;
+                        case 'media':
+                            addMembersToCommittee(".media-committee",member)
+
+                            break;
+                        
+                        case 'OC':
+                            addMembersToCommittee(".OC-committee",member)
+
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                  
+                });
+            }
+
+        }
+    </script>
+</body>
+</html>
