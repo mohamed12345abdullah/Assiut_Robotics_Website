@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><link rel="stylesheet" href="">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>leader page</title>
+    <style>
+        /* .main{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content:space-between ;
+            background-color: bisque;
+        } */
+        .main>div{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content:space-between ;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            background-color: cadetblue;
+            width: 100%;
+        }
+
+        .main>div>div{
+            background-color: antiquewhite;
+            width: 30%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <section class="main">
         <div class="web-committee">
-            <h2>web</h2>
+            <!-- <h2>web</h2> -->
             <div class="head">
                 <h2>head</h2>
                 <a href=""> edit head </a>
@@ -78,15 +106,7 @@
 
 
     <script>
-        const webCommittee=document.querySelector(".web-committee");
-        const HRcommittee=document.querySelector(".HR-committee");
-        const mediaCommittee=document.querySelector(".media-committee");
-        const AcElectricalcommittee=document.querySelector(".AcElectrical-committee");
-        const AcMechanicalcommittee=document.querySelector(".AcMechanical-committee");
-        const marktingcommittee=document.querySelector(".markting-committee");
-        const Prcommittee=document.querySelector(".Pr-committee");
-        const OCcommittee=document.querySelector(".OC-committee");
-
+    
         function addMembersToCommittee(com,member) {
             if(member.role==2){
                 document.querySelector(com+' .head').innerHTML+=`
@@ -108,8 +128,9 @@
             }
         }
         onload=async function () {
-            
-            const res=await fetch("http://localhost:3000/members/getAllMembers");
+            //https://assiut-robotics-website.onrender.com/
+            //http://localhost:3000/
+            const res=await fetch("https://assiut-robotics-website.onrender.com/members/getAllMembers");
             if(res.ok){
                 const response=await res.json();
 
