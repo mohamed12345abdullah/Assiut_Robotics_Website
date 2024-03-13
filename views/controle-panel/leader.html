@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="stylesheet" href="">
+
+<head>
+    <link rel="stylesheet" href="">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,18 +16,18 @@
             justify-content:space-between ;
             background-color: bisque;
         } */
-        .main>div{
+        .main>div {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            justify-content:space-between ;
+            justify-content: space-between;
             margin-top: 20px;
             margin-bottom: 20px;
             background-color: cadetblue;
             width: 100%;
         }
 
-        .main>div>div{
+        .main>div>div {
             background-color: antiquewhite;
             width: 30%;
             margin-top: 20px;
@@ -33,150 +35,229 @@
         }
     </style>
 </head>
+
 <body>
     <section class="main">
+        <div class="new-members">
+            new-member
+        </div>
         <div class="web-committee">
             <!-- <h2>web</h2> -->
             <div class="head">
-                <h2>head</h2>
+
                 <a href=""> edit head </a>
-            </div>   
-      
-            
+            </div>
+
+
         </div>
         <div class="HR-committee">
             <h2>HR</h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
         <div class="media-committee">
             <h2>media</h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
         <div class="AcMechanical-committee">
             <h2>Ac mechanic</h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
         <div class="AcElectrical-committee">
             <h2>Ac electric</h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
         <div class="markting-committee">
             <h2>marketing</h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
         <div class="Pr-committee">
             <h2>pr </h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
         <div class="OC-committee">
             <h2>Oc</h2>
 
             <div class="head">
-            </div>   
-      
-            
+                <a href=""> edit head </a>
+            </div>
+
+
         </div>
 
     </section>
-    
+
+
 
 
     <script>
-    
-        function addMembersToCommittee(com,member) {
-            if(member.role==2){
-                document.querySelector(com+' .head').innerHTML+=`
+
+        const confirm = async (role, id) => {
+            try {
+                console.log(role);
+                console.log(id);
+
+                let data = {
+                    token: window.localStorage.getItem("token"),
+                    id: id,
+                    role: role
+                }
+                const response = await fetch("https://assiut-robotics-website.onrender.com/members/confirm", {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                const JSONresponse = await response.json();
+                if (response.ok) {
+                    console.log(JSONresponse);
+                } else {
+                    console.log("error", JSONresponse);
+                    window.location.href = "../login/login.html";
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        function addMembersToCommittee(com, member) {
+            if (member.role == 2) {
+                document.querySelector(com + ' .head').innerHTML += `
                 <li class="name"> head ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
-                <li class="phone number"> ${member.number}</li>
-                <li class="role">${member.role} </li>`
-            }else{
-            document.querySelector(com).innerHTML+=`
+                <li class="phone number"> ${member.phoneNumber}</li>
+                <li class="role">${member.role} </li>
+
+                `
+            } else if (member.role == 5) {
+                document.querySelector(".new-members").innerHTML += `
                 <div class="member">
-                <li class="name">member ${member.name} </li>
+                <li class="name">name: ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
-                <li class="phone number"> ${member.number}</li>
+                <li class="phone number">phoneNumber ${member.phoneNumber}</li>
                 <li class="role">${member.role} </li>
+                
+                <button  onclick="confirm(4,dataset.id)" data-id="${member._id}"> accept</button>
+                <button onclick="confirm(0,dataset.id)" data-id="${member._id}"> remove</button>
+
                 </div>
+                
+            `
+
+            }
+            else {
+                document.querySelector(com).innerHTML += `
+                <div class="member">
+                <li class="name"> ${member.name} </li>
+                <li class="com">${member.committee} </li>
+                <li class="email"> ${member.email}</li>
+                <li class="phone number"> ${member.phoneNumber}</li>
+                <li class="role">${member.role} </li>
+                
+                <button onclick="confirm(0,dataset.id)" data-id="${member._id}"> remove</button>
+                </div>
+                
             `
             }
         }
-        onload=async function () {
+        onload = async function () {
             //https://assiut-robotics-website.onrender.com/
             //http://localhost:3000/
-            const res=await fetch("https://assiut-robotics-website.onrender.com/members/getAllMembers");
-            if(res.ok){
-                const response=await res.json();
+            const res = await fetch("https://assiut-robotics-website.onrender.com/members/getAllMembers");
+            if (res.ok) {
+                const response = await res.json();
 
                 response.data.members.forEach(member => {
                     switch (member.committee) {
                         case 'web':
-                            addMembersToCommittee(".web-committee",member)
+                            addMembersToCommittee(".web-committee", member)
                             break;
                         case 'HR':
-                            addMembersToCommittee(".HR-committee",member)
+                            addMembersToCommittee(".HR-committee", member)
 
                             break;
                         case 'AC mechanic':
-                            addMembersToCommittee(".AcMechanical-committee",member)
+                            addMembersToCommittee(".AcMechanical-committee", member)
 
                             break;
                         case 'AC electric':
-                            addMembersToCommittee(".AcElectrical-committee",member)
+                            addMembersToCommittee(".AcElectrical-committee", member)
 
                             break;
                         case 'PR':
-                            addMembersToCommittee(".Pr-committee",member)
+                            addMembersToCommittee(".Pr-committee", member)
 
                             break;
                         case 'marketing':
-                            addMembersToCommittee(".markting-committee",member)
+                            addMembersToCommittee(".markting-committee", member)
 
                             break;
                         case 'media':
-                            addMembersToCommittee(".media-committee",member)
+                            addMembersToCommittee(".media-committee", member)
 
                             break;
-                        
+
                         case 'OC':
-                            addMembersToCommittee(".OC-committee",member)
+                            addMembersToCommittee(".OC-committee", member)
 
                             break;
-                    
+
                         default:
+                            addMembersToCommittee(".HR-committee", member)
                             break;
                     }
-                  
+
                 });
             }
 
         }
+
+
+
+
+
+
+
+
+            // draft
+            // < button onclick = "confirm(4,dataset.id)" data - id="${item._id}" > accept </button >
+            //<button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it head </button>
+            //<button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it admin  </button>
+            //<button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>
     </script>
 </body>
+
 </html>
