@@ -43,7 +43,7 @@ const createAccount = async (req, res) => {
     }
 
 }
-
+ 
 
 const login = async (req, res) => {
     try {
@@ -139,6 +139,19 @@ const controleHR = async (req, res) => {
     }
 
 }
+const changeHead=async(req,res)=>{
+    try {
+    const old_id=req.body.old_id;
+    const new_id=req.body.new_id;
+    await member.findOneAndUpdate({_id:old_id},{role:4});
+    const newHead=await member.findOneAndUpdate({_id:new_id},{role:2});
+    // await member.save();
+    res.status(200).send({ message: "done"});
+    }
+    catch (error) {
+        res.status(400).send({ message:error.message }); 
+    }
+}
 
 module.exports = {
     createAccount,
@@ -146,5 +159,6 @@ module.exports = {
     getAllMembers,
     verify,
     confirm,
-    controleHR
+    controleHR,
+    changeHead
 }
