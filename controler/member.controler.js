@@ -146,6 +146,8 @@ const changeHead=async(req,res)=>{
     await member.findOneAndUpdate({_id:old_id},{role:4});
     const newHead=await member.findOneAndUpdate({_id:new_id},{role:2});
     // await member.save();
+    newHead.save();
+    
     res.status(200).send({ message: "done"});
     }
     catch (error) {

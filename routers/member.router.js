@@ -21,7 +21,7 @@ Router.route("/confirm")
         .post(JWT.verify, memberControler.confirm);
 
 Router.route("/changeHead")
-        .post(memberControler.changeHead);
+        .post(JWT.verify,memberControler.changeHead);
 
 
 Router.route("/hr")

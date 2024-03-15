@@ -37,7 +37,12 @@
 </head>
 
 <body>
+    <div class="current-com">
+
+    </div>
     <section class="main">
+
+
         <div class="new-members">
             new-member
         </div>
@@ -45,7 +50,7 @@
             <!-- <h2>web</h2> -->
             <div class="head">
 
-                
+
             </div>
 
 
@@ -54,7 +59,7 @@
             <h2>HR</h2>
 
             <div class="head">
-               
+
             </div>
 
 
@@ -63,7 +68,7 @@
             <h2>media</h2>
 
             <div class="head">
-                
+
             </div>
 
 
@@ -72,7 +77,7 @@
             <h2>Ac mechanic</h2>
 
             <div class="head">
-                
+
             </div>
 
 
@@ -81,7 +86,7 @@
             <h2>Ac electric</h2>
 
             <div class="head">
-                
+
             </div>
 
 
@@ -90,7 +95,7 @@
             <h2>marketing</h2>
 
             <div class="head">
-               
+
             </div>
 
 
@@ -99,7 +104,7 @@
             <h2>pr </h2>
 
             <div class="head">
-                
+
             </div>
 
 
@@ -108,7 +113,7 @@
             <h2>Oc</h2>
 
             <div class="head">
-                
+
             </div>
 
 
@@ -120,6 +125,7 @@
 
 
     <script>
+        let members;
 
         const confirm = async (role, id) => {
             try {
@@ -151,6 +157,78 @@
             }
         }
 
+        function addMembersToCurrent(com, member) {
+            if (1) {
+                document.querySelector(com).innerHTML += `
+                <div class="member"  data-id="${member._id}">
+                <li class="name"> ${member.name} </li>
+                <li class="com">${member.committee} </li>
+                <li class="email"> ${member.email}</li>
+                <li class="phone number"> ${member.phoneNumber}</li>
+                <li class="role">${member.role} </li>
+                <button onclick="confi(dataset.id)" "> select</button>
+                </div>
+                `
+            }
+
+
+        }
+
+
+        const changeHead = async (com, head_id) => {
+            document.querySelector(".main").style.opacity = '0.3';
+            document.querySelector(".current-com").style.opacity = '1';
+            console.log(com);
+            console.log(head_id);
+            members.forEach(member => {
+                if (member.committee == com && member.role == 4) {
+                    console.log(12);
+                    addMembersToCurrent(".current-com", member)
+                }
+            });
+            console.log("after for each member");
+            const current_members = Array.from(document.querySelectorAll(".current-com .member"));
+            console.log("after current");
+            // console.log(current_members.length);
+            current_members.forEach(element => {
+
+                element.addEventListener("click", async (event) => {
+
+                    
+                    try {
+                        // console.log(role);
+                        // console.log(id);
+                        let data = {
+                            token: window.localStorage.getItem("token"),
+                            old_id: head_id,
+                            new_id: element.dataset.id
+                        }
+                        console.log(data);
+                        const response = await fetch("../../members/changeHead", {
+                            method: "post",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        const JSONresponse = await response.json();
+                        if (response.ok) {
+                            console.log(JSONresponse);
+                        } else {
+                            console.log("error", JSONresponse);
+                            window.location.href = "../login/login.html";
+
+                        }
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+                })
+            });
+
+        }
+
+
         function addMembersToCommittee(com, member) {
             if (member.role == 2) {
                 document.querySelector(com + ' .head').innerHTML += `
@@ -159,7 +237,7 @@
                 <li class="email"> ${member.email}</li>
                 <li class="phone number"> ${member.phoneNumber}</li>
                 <li class="role">${member.role} </li>
-                <button  onclick="confirm(4,dataset.id)" data-id="${member._id}"> change head</button>
+                <button  onclick="changeHead(dataset.com,dataset.id)" data-id="${member._id}" data-com="${member.committee}"> change head</button>
                 `
             } else if (member.role == 5) {
                 document.querySelector(".new-members").innerHTML += `
@@ -179,6 +257,7 @@
 
             }
             else {
+
                 document.querySelector(com).innerHTML += `
                 <div class="member">
                 <li class="name"> ${member.name} </li>
@@ -193,14 +272,16 @@
             `
             }
         }
+
+
         onload = async function () {
             //https://assiut-robotics-website.onrender.com/
             //http://localhost:3000/
-            const res = await fetch("https://assiut-robotics-website.onrender.com/members/getAllMembers");
+            const res = await fetch("../../members/getAllMembers");
             if (res.ok) {
                 const response = await res.json();
-
-                response.data.members.forEach(member => {
+                members = response.data.members;
+                members.forEach(member => {
                     switch (member.committee) {
                         case 'web':
                             addMembersToCommittee(".web-committee", member)
@@ -252,11 +333,11 @@
 
 
 
-            // draft
-            // < button onclick = "confirm(4,dataset.id)" data - id="${item._id}" > accept </button >
-            //<button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it head </button>
-            //<button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it admin  </button>
-            //<button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>
+        // draft
+        // < button onclick = "confirm(4,dataset.id)" data - id="${item._id}" > accept </button >
+        //<button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it head </button>
+        //<button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it admin  </button>
+        //<button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>
     </script>
 </body>
 
