@@ -8,30 +8,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>leader page</title>
     <style>
-        /* .main{
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content:space-between ;
-            background-color: bisque;
-        } */
-        .main>div {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            background-color: cadetblue;
-            width: 100%;
+        .current-member {
+            background-color: rgba(7, 74, 150, 0.356);
+            grid-column: 1 / auto auto auto;
+
+
         }
 
-        .main>div>div {
-            background-color: antiquewhite;
-            width: 30%;
+        .head {
+            grid-area: Area;
+            background-color: #00ffff;
+
+            margin: auto;
+            width: 200px;
             margin-top: 20px;
             margin-bottom: 20px;
+        }
+        .members {
+            display: grid;
+            grid-template-areas: 'Area Area Area Area';
+            grid-auto-columns: 300px;
+            grid-gap: 30px;
+            padding: 20px;
+            background-color: cadetblue;
+
+        }
+
+        .members>div {
+            text-align: center;
+        }
+
+        .tabs {
+            background-color: rgb(146, 195, 238);
+            width: 1050px;
+            margin: auto;
+        }
+
+        .tabs>div {
+            width: 90px;
+            display: inline-block;
+            margin: 10px 10px;
+            background-color: rgb(95, 146, 240);
+        }
+
+        .tabs>div:hover {
+            background-color: rgb(32, 96, 216);
+
+            cursor: pointer;
+        }
+        .current-com{
+            position: fixed;
         }
     </style>
 </head>
@@ -40,82 +66,21 @@
     <div class="current-com">
 
     </div>
+
     <section class="main">
-
-
-        <div class="new-members">
-            new-member
+        <div class="tabs">
+            <div data-com="new-members">new members</div>
+            <div data-com="web">web</div>
+            <div data-com="HR">HR</div>
+            <div data-com="Marketing">Marketing</div>
+            <div data-com="AC machanic">AC mechanic</div>
+            <div data-com="AC electric">AC electric</div>
+            <div data-com="OC">OC</div>
+            <div data-com="PR">PR</div>
+            <div data-com="media">media</div>
         </div>
-        <div class="web-committee">
-            <!-- <h2>web</h2> -->
-            <div class="head">
 
-
-            </div>
-
-
-        </div>
-        <div class="HR-committee">
-            <h2>HR</h2>
-
-            <div class="head">
-
-            </div>
-
-
-        </div>
-        <div class="media-committee">
-            <h2>media</h2>
-
-            <div class="head">
-
-            </div>
-
-
-        </div>
-        <div class="AcMechanical-committee">
-            <h2>Ac mechanic</h2>
-
-            <div class="head">
-
-            </div>
-
-
-        </div>
-        <div class="AcElectrical-committee">
-            <h2>Ac electric</h2>
-
-            <div class="head">
-
-            </div>
-
-
-        </div>
-        <div class="markting-committee">
-            <h2>marketing</h2>
-
-            <div class="head">
-
-            </div>
-
-
-        </div>
-        <div class="Pr-committee">
-            <h2>pr </h2>
-
-            <div class="head">
-
-            </div>
-
-
-        </div>
-        <div class="OC-committee">
-            <h2>Oc</h2>
-
-            <div class="head">
-
-            </div>
-
+        <div class="members">
 
         </div>
 
@@ -126,6 +91,8 @@
 
     <script>
         let members;
+
+
 
         const confirm = async (role, id) => {
             try {
@@ -160,13 +127,13 @@
         function addMembersToCurrent(com, member) {
             if (1) {
                 document.querySelector(com).innerHTML += `
-                <div class="member"  data-id="${member._id}">
+                <div class="current-member"  data-id="${member._id}">
                 <li class="name"> ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
                 <li class="phone number"> ${member.phoneNumber}</li>
                 <li class="role">${member.role} </li>
-                <button onclick="confi(dataset.id)" "> select</button>
+                <
                 </div>
                 `
             }
@@ -176,12 +143,12 @@
 
 
         const changeHead = async (com, head_id) => {
-            document.querySelector(".main").style.opacity = '0.3';
+            document.querySelector(".main").style.opacity = '0.1';
             document.querySelector(".current-com").style.opacity = '1';
             console.log(com);
             console.log(head_id);
             members.forEach(member => {
-                if (member.committee == com && member.role == 4) {
+                if (member.committee == com && member.role <= 4) {
                     console.log(12);
                     addMembersToCurrent(".current-com", member)
                 }
@@ -194,7 +161,7 @@
 
                 element.addEventListener("click", async (event) => {
 
-                    
+
                     try {
                         // console.log(role);
                         // console.log(id);
@@ -231,16 +198,20 @@
 
         function addMembersToCommittee(com, member) {
             if (member.role == 2) {
-                document.querySelector(com + ' .head').innerHTML += `
+                document.querySelector(".members").innerHTML += `
+                <div class="head">
                 <li class="name"> head ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
                 <li class="phone number"> ${member.phoneNumber}</li>
                 <li class="role">${member.role} </li>
                 <button  onclick="changeHead(dataset.com,dataset.id)" data-id="${member._id}" data-com="${member.committee}"> change head</button>
+                </div>
+
                 `
-            } else if (member.role == 5) {
-                document.querySelector(".new-members").innerHTML += `
+            }
+            else if (member.role == 5) {
+                document.querySelector(com).innerHTML += `
                 <div class="member">
                 <li class="name">name: ${member.name} </li>
                 <li class="com">${member.committee} </li>
@@ -281,52 +252,38 @@
             if (res.ok) {
                 const response = await res.json();
                 members = response.data.members;
-                members.forEach(member => {
-                    switch (member.committee) {
-                        case 'web':
-                            addMembersToCommittee(".web-committee", member)
-                            break;
-                        case 'HR':
-                            addMembersToCommittee(".HR-committee", member)
 
-                            break;
-                        case 'AC mechanic':
-                            addMembersToCommittee(".AcMechanical-committee", member)
-
-                            break;
-                        case 'AC electric':
-                            addMembersToCommittee(".AcElectrical-committee", member)
-
-                            break;
-                        case 'PR':
-                            addMembersToCommittee(".Pr-committee", member)
-
-                            break;
-                        case 'marketing':
-                            addMembersToCommittee(".markting-committee", member)
-
-                            break;
-                        case 'media':
-                            addMembersToCommittee(".media-committee", member)
-
-                            break;
-
-                        case 'OC':
-                            addMembersToCommittee(".OC-committee", member)
-
-                            break;
-
-                        default:
-                            addMembersToCommittee(".HR-committee", member)
-                            break;
-                    }
-
-                });
             }
 
         }
 
+        const tabs = Array.from(document.querySelectorAll('.tabs>div'));
+        function clearTabs() {
+            tabs.forEach(tab => {
+                tab.style = `background-color: rgb(95, 146, 240);`
+            })
+        }
 
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                clearTabs();
+                tab.style = `background-color: rgb(32, 96, 216);`
+                document.querySelector('.members').innerHTML = '';
+                console.log(tab.dataset.com);
+                members.forEach(member => {
+                    if (member.committee == tab.dataset.com && member.role < 5) {
+                        addMembersToCommittee('.members', member)
+
+                    }
+
+                    if (tab.dataset.com == 'new-members' && member.role == 5) {
+                        addMembersToCommittee('.members', member)
+
+                    }
+
+                });
+            })
+        });
 
 
 
