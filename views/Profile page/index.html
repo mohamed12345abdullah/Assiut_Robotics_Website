@@ -27,7 +27,19 @@
         </a>
         <div style="display: none;" id="controle-panel">
             <a  href="../controle-panel/leader.html" style="text-decoration: none; color: inherit;">
-                leader controle page
+                controle page
+            </a>
+
+        </div>
+        <div style="display: none;" id="OC-page">
+            <a  href="../OC_page/OC (1).html" style="text-decoration: none; color: inherit;">
+                OC page
+            </a>
+
+        </div>
+        <div style="display: none;" id="blog-page">
+            <a  href="../blog/add-blog.html" style="text-decoration: none; color: inherit;">
+                Add blog
             </a>
 
         </div>
@@ -115,6 +127,12 @@
                     }
                     if((JSONresponse.data.committee=="HR"&&JSONresponse.data.role <4 )||JSONresponse.data.role ==1){
                         document.getElementById('head-hr').style.display="inline-block";
+                    }
+                    if(JSONresponse.data.committee=="OC"){
+                        document.getElementById('OC-page').style.display="inline-block";
+                    }
+                    if(JSONresponse.data.committee=="media"){
+                        document.getElementById('blog-page').style.display="inline-block";
                     }
                     document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;
                     document.getElementById("email").innerHTML=JSONresponse.data.email;

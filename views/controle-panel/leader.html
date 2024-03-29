@@ -8,57 +8,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>leader page</title>
     <style>
-        .current-member {
-            background-color: rgba(7, 74, 150, 0.356);
-            grid-column: 1 / auto auto auto;
-
-
+    *{
+        list-style: none ;
+    }
+    .main{
+        /* width: 100%; */
+    }
+    .members {
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            column-gap: 20px;
+            row-gap: 40px;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #E0F4FF;
         }
+     
 
         .head {
-            grid-area: Area;
+            width :40%;
+            margin-left: 30%;
+            margin-right: 30%;
+            /* flex: 2; */
+            order: 1;
             background-color: #00ffff;
-
-            margin: auto;
-            width: 200px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+  
         }
-        .members {
-            display: grid;
-            grid-template-areas: 'Area Area Area Area';
-            grid-auto-columns: 300px;
-            grid-gap: 30px;
-            padding: 20px;
-            background-color: cadetblue;
-
+        .member{
+            width: 20%;
+            
+            order: 2;
         }
 
         .members>div {
             text-align: center;
+            background-color: #8ed1f5;
+            border: #ffffff solid  2px;
+            border-radius: 10px;
+            box-shadow: 5px 3px  #ffffff ;
+            /* box-shadow: 5px 5px inset #ffffff; */
         }
 
         .tabs {
-            background-color: rgb(146, 195, 238);
-            width: 1050px;
+            background-color: rgb(41, 140, 228);
+            width: 80%;
             margin: auto;
         }
 
         .tabs>div {
             width: 90px;
             display: inline-block;
-            margin: 10px 10px;
-            background-color: rgb(95, 146, 240);
+            margin: 10px 10px 0 10px ;
+            background-color: rgb(164, 196, 224);
+            border-radius: 5px 5px 0 0;
+            text-align: center;
         }
 
         .tabs>div:hover {
-            background-color: rgb(32, 96, 216);
+            background-color: #E0F4FF;
 
             cursor: pointer;
         }
         .current-com{
+            transition: all 1s;
             position: fixed;
+            width: 0%;
+            height: 200px;
+            margin: auto;
+            transform: translate(200%);
+            background-color: rgb(11, 56, 82);
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content:space-around ;
+            
         }
+        .current-com:hover{
+            transition: all 1s ease-in-out;
+            width: 80%;
+            /* scale: 2; */
+            margin-right: auto;
+            margin-left: auto;
+            transform: translate(10%);
+
+        }
+
+        .current-com>div{
+            text-align: center;
+            border: #d9f0f7 solid  0.5px;
+            border-radius: 10px;
+            box-shadow: 1px 0.3px  #ffffff ;
+            margin: 20px;
+            background-color: rgb(77, 168, 243);
+            width: 20%;
+        }
+
+        .newmembers{
+            display: flex;
+            flex-flow: row wrap;
+            background-color: rgb(169, 235, 153);
+            display: none;
+
+        }
+        .newmembers>.member{
+            text-align: center;
+            border: #d9f0f7 solid  0.5px;
+            border-radius: 10px;
+            box-shadow: 1px 0.3px  #ffffff ;
+            margin: 20px;
+            background-color: rgb(77, 243, 215);
+            width: 20%;
+        }
+
     </style>
 </head>
 
@@ -79,13 +142,15 @@
             <div data-com="PR">PR</div>
             <div data-com="media">media</div>
         </div>
-
+        <div class="newmembers" >
+            new-members:
+        </div>
         <div class="members">
+             
 
         </div>
 
     </section>
-
 
 
 
@@ -114,6 +179,7 @@
                 const JSONresponse = await response.json();
                 if (response.ok) {
                     console.log(JSONresponse);
+                    location.reload();
                 } else {
                     console.log("error", JSONresponse);
                     window.location.href = "../login/login.html";
@@ -128,6 +194,8 @@
             if (1) {
                 document.querySelector(com).innerHTML += `
                 <div class="current-member"  data-id="${member._id}">
+                    <img src="بني ادم.png" alt="">
+
                 <li class="name"> ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
@@ -144,19 +212,29 @@
 
         const changeHead = async (com, head_id) => {
             document.querySelector(".main").style.opacity = '0.1';
-            document.querySelector(".current-com").style.opacity = '1';
+            document.querySelector(".current-com").style=`
+            transition: all 1s;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            transform: translate(10%);
+            z-index: 100;
+
+                        `;
             console.log(com);
             console.log(head_id);
             members.forEach(member => {
-                if (member.committee == com && member.role <= 4) {
+                const splitcom=member.committee.split(' ',1);
+                    // console.log(splitcom);
+                if (splitcom == com && member.role <= 4) {
                     console.log(12);
                     addMembersToCurrent(".current-com", member)
                 }
             });
             console.log("after for each member");
-            const current_members = Array.from(document.querySelectorAll(".current-com .member"));
+            const current_members = Array.from(document.querySelectorAll(".current-com .current-member"));
             console.log("after current");
-            // console.log(current_members.length);
+            console.log(current_members.length);
             current_members.forEach(element => {
 
                 element.addEventListener("click", async (event) => {
@@ -181,6 +259,7 @@
                         const JSONresponse = await response.json();
                         if (response.ok) {
                             console.log(JSONresponse);
+                            location.reload();
                         } else {
                             console.log("error", JSONresponse);
                             window.location.href = "../login/login.html";
@@ -200,6 +279,8 @@
             if (member.role == 2) {
                 document.querySelector(".members").innerHTML += `
                 <div class="head">
+                    <img src="بني ادم.png" alt="">
+
                 <li class="name"> head ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
@@ -213,6 +294,8 @@
             else if (member.role == 5) {
                 document.querySelector(com).innerHTML += `
                 <div class="member">
+                    <img src="بني ادم.png" alt="">
+
                 <li class="name">name: ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
@@ -231,6 +314,8 @@
 
                 document.querySelector(com).innerHTML += `
                 <div class="member">
+                    <img src="بني ادم.png" alt="">
+
                 <li class="name"> ${member.name} </li>
                 <li class="com">${member.committee} </li>
                 <li class="email"> ${member.email}</li>
@@ -255,6 +340,34 @@
 
             }
 
+
+        const role=window.localStorage.getItem('role');
+        const com=window.localStorage.getItem('committee');
+
+
+        if(role<4&&role!=1){
+            console.log(com);
+            document.querySelector('.tabs').style.display='none';
+            document.querySelector('.newmembers').style.display='block';
+            members.forEach(member => {
+                const splitcom=member.committee.split(' ',1);
+                    // console.log(splitcom);
+                    if (splitcom == com &&member.role<5 ) {
+                        addMembersToCommittee('.members', member)
+
+                    }
+
+                    if (splitcom == com && member.role == 5 ) {
+                        addMembersToCommittee('.newmembers', member)
+
+                    }
+
+                });
+            
+        }
+
+
+
         }
 
         const tabs = Array.from(document.querySelectorAll('.tabs>div'));
@@ -267,11 +380,16 @@
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 clearTabs();
-                tab.style = `background-color: rgb(32, 96, 216);`
+                tab.style = ` 
+            background-color: #E0F4FF;
+
+                `
                 document.querySelector('.members').innerHTML = '';
                 console.log(tab.dataset.com);
                 members.forEach(member => {
-                    if (member.committee == tab.dataset.com && member.role < 5) {
+                    const splitcom=member.committee.split(' ',1);
+                    console.log(splitcom);
+                    if (splitcom == tab.dataset.com && member.role < 5) {
                         addMembersToCommittee('.members', member)
 
                     }
@@ -285,6 +403,8 @@
             })
         });
 
+
+       
 
 
 

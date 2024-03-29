@@ -71,7 +71,9 @@
                     const response=await res.json();
                     let members=response.data.members;
                     members.forEach(member => {
-                    if(member.committee=="HR"){
+                        const splitcom=member.committee.split(' ',1);
+                    // console.log(splitcom);
+                    if(splitcom=="HR"){
 
                         document.getElementById('members').innerHTML+=`
                         <option data-id="${member._id}" value="${member._id}">${member.name}</option>   `

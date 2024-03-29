@@ -17,7 +17,7 @@
         <a href="#About Us" target="_blank" style="margin-right: 60px;" > </i>About Us</a>
         <a href="#Our Achievements" target="_blank"  style="margin-right: 60px;">Our Achievements</a>
         <a href="blog/index.html" target="_blank"  style="margin-right: 60px;">Blog</a>
-        <a href="login/signup.html" target="_blank"  style="margin-right: 60px;">Register</a>
+        <a href="login/signup.html" target="_blank"  style="margin-right: 60px;" id="register">Register</a>
         <a href="Profile page/index.html" target="_blank"  style="margin-right: 60px;">profile</a>
         <a href="#footer"  style="margin-right: 60px;">Contact Us</a>
         <a href="javascript:void(0);"  class="icon" onclick="myFunction()">
@@ -161,5 +161,14 @@
     </div>
   </footer>
     <script src="View.js"></script>
+
+
+    <script>
+      const token=window.localStorage.getItem('token');
+      if(token){
+        console.log(token);
+        document.getElementById('register').style.display='none';
+      }
+    </script>
 </body>
 </html>
