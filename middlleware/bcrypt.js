@@ -6,7 +6,8 @@ const hashing=async(password)=>{
         return hashedpass;
         
     } catch (error) {
-        res.status(400).send({message:"error in hashing password"})
+        console.log(error);
+        // res.status(400).send({message:"error in hashing password"})
     }
   
 }

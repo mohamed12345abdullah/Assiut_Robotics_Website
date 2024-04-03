@@ -194,7 +194,7 @@
             if (1) {
                 document.querySelector(com).innerHTML += `
                 <div class="current-member"  data-id="${member._id}">
-                    <img src="بني ادم.png" alt="">
+                    <img src='../../uploads/${member.avatar}' alt="">
 
                 <li class="name"> ${member.name} </li>
                 <li class="com">${member.committee} </li>
@@ -211,7 +211,7 @@
 
 
         const changeHead = async (com, head_id) => {
-            document.querySelector(".main").style.opacity = '0.1';
+            document.querySelector(".main").style.opacity = '0.5';
             document.querySelector(".current-com").style=`
             transition: all 1s;
             width: 80%;
@@ -279,7 +279,7 @@
             if (member.role == 2) {
                 document.querySelector(".members").innerHTML += `
                 <div class="head">
-                    <img src="بني ادم.png" alt="">
+                    <img src='../../uploads/${member.avatar}' alt="">
 
                 <li class="name"> head ${member.name} </li>
                 <li class="com">${member.committee} </li>
@@ -294,7 +294,7 @@
             else if (member.role == 5) {
                 document.querySelector(com).innerHTML += `
                 <div class="member">
-                    <img src="بني ادم.png" alt="">
+                    <img src='../../uploads/${member.avatar}' alt="">
 
                 <li class="name">name: ${member.name} </li>
                 <li class="com">${member.committee} </li>
@@ -314,7 +314,7 @@
 
                 document.querySelector(com).innerHTML += `
                 <div class="member">
-                    <img src="بني ادم.png" alt="">
+                    <img src='../../uploads/${member.avatar}' alt="">
 
                 <li class="name"> ${member.name} </li>
                 <li class="com">${member.committee} </li>

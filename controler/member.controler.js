@@ -14,6 +14,7 @@ const bcrypt = require('../middlleware/bcrypt');
 const createAccount = async (req, res) => {
     try {
         console.log(req.body);
+        // console.log(req.file);
 
         let { name, email, password, committee, gender, phoneNumber, role } = req.body;
         let oldEmail = await member.findOne({ email });
@@ -30,7 +31,8 @@ const createAccount = async (req, res) => {
             committee,
             gender,
             phoneNumber,
-            role
+            role,
+            avatar:req.file.filename
         })
 
         await newMember.save();
@@ -38,7 +40,7 @@ const createAccount = async (req, res) => {
 
         res.status(201).send({ "message": "Your account has been successfully created. <br> wait until your request be acceptted" })
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         res.status(400).send({ "message": error.message });
     }
 
@@ -60,7 +62,8 @@ const login = async (req, res) => {
                         email: oldMember.email,
                         phoneNumber: oldMember.phoneNumber,
                         role: oldMember.role,
-                        committee: oldMember.committee
+                        committee: oldMember.committee,
+                        avatar:oldMember.avatar
                     }, remember);
                     // res.redirect("/index.html");
 

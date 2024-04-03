@@ -28,7 +28,10 @@ const memberSchema=new mongoose.Schema({
         type:Number,
         default:5
     },
-
+    avatar:{
+        type:String,
+        default:"بني ادم.png"
+    }
 })
 
 module.exports=mongoose.model("Member",memberSchema);

@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
     <img id="logo" src="photos\logo.png">
     <div class="container">
 
-        <form id="signupForm" action="../members/createAccount" method="post">
+        <form id="signupForm" action="../members/createAccount" method="post" enctype="multipart/form-data">
             <h2>MEMBER SIGN UP</h2>
             <div class="input-box">
                 <input type="text" name="name" placeholder="Username" required>
@@ -32,7 +32,8 @@
                 <i class='bx bxs-lock' style="margin-left: 80%;"></i>
             </div>
             <div class="input-box">
-                <input class="confirm_password" type="password" name="confirm_password" placeholder="confirm_password" required>
+                <input class="confirm_password" type="password" name="confirm_password" placeholder="confirm_password"
+                    required>
                 <i class='bx bxs-lock' style="margin-left: 80%;"></i>
             </div>
             <div style="color: red;" class="matched">
@@ -60,12 +61,17 @@
                     <!-- Add more options as needed -->
                 </select>
             </div>
+
             <div class="input-box">
                 <input type="text" name="phoneNumber" placeholder="phone Number" required>
                 <i class='bx bxs-lock' style="margin-left: 85%;"></i>
             </div>
+            <div class="input-box">
+                <label for="picture">upload profile picture</label>
+                <input type="file" name="avatar" id="picture">
+            </div>
             <div class="btn">
-                <input class="btn" type="submit" placeholder="phone Number" value="sign up">
+                <input class="btn" type="submit" value="sign up">
                 <!-- <i class='bx bxs-lock' style="margin-left: 85%;"></i> -->
             </div>
             <div class="remember-forgot">
@@ -73,7 +79,7 @@
                 <a href="#">Forgot Password?</a>
             </div>
 
-  
+
             <!-- <button type="button" class="btn" onclick="submitForm()">Sign Up</button> -->
             <div style="color: red;" class="message">
 
@@ -84,51 +90,59 @@
         </form>
 
         <script>
-           try {
-            
-            document.querySelector(".confirm_password").addEventListener('input',()=>{
-                const password=document.querySelector(".password").value;
-                let confirm_password=document.querySelector(".confirm_password").value;
-                if(password!=confirm_password){
-                    document.querySelector(".matched").innerHTML="password not matched"
+            try {
 
-                }else{
-                    document.querySelector(".matched").innerHTML=""
-                }
-                console.log("input",password,confirm_password);
-            })
+                document.querySelector(".confirm_password").addEventListener('input', () => {
+                    const password = document.querySelector(".password").value;
+                    let confirm_password = document.querySelector(".confirm_password").value;
+                    if (password != confirm_password) {
+                        document.querySelector(".matched").innerHTML = "password not matched"
 
-            
+                    } else {
+                        document.querySelector(".matched").innerHTML = ""
+                    }
+                    console.log("input", password, confirm_password);
+                })
 
-            // fetch api 
 
-            document.forms['signupForm'].addEventListener('submit',async (event)=>{
-                event.preventDefault();
-                // TODO do something here to show user that form is being submitted
-                const response=await fetch(event.target.action, {
-                    method: 'POST',
-                    body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-                });
-                let JSONresponse=await response.json();
-                if(!response.ok){
-                    
-                    console.log(JSONresponse);       
-                    document.querySelector(".message").innerHTML=JSONresponse.message;
 
-                }else {
-                    console.log('aaa',JSONresponse);
-                    
-                    document.querySelector(".message").innerHTML=JSONresponse.message;
+                // fetch api 
 
-                }
-         
+                // document.forms['signupForm'].addEventListener('submit', async (event) => {
+                //     event.preventDefault();
+                //     // TODO do something here to show user that form is being submitted
+                //     // Create a FormData object
+                //     const formData = new FormData(event.target);
 
-                
-            })
-            
-           } catch (error) {
-            console.log(error);
-           }
+                //     // Append file input data to FormData object
+                //     const fileInput = document.getElementById('picture');
+                //     console.log('avatar', fileInput.files[0]);
+                //     formData.append('avatar', fileInput.files[0]);
+                //     const response = await fetch(event.target.action, {
+                //         method: 'POST',
+
+                //         body: formData
+                //     });
+                //     let JSONresponse = await response.json();
+                //     if (!response.ok) {
+
+                //         console.log(JSONresponse);
+                //         document.querySelector(".message").innerHTML = JSONresponse.message;
+
+                //     } else {
+                //         console.log('aaa', JSONresponse);
+
+                //         document.querySelector(".message").innerHTML = JSONresponse.message;
+
+                //     }
+
+
+
+                // })
+
+            } catch (error) {
+                console.log(error);
+            }
         </script>
 
     </div>
