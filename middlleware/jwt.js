@@ -3,14 +3,14 @@ const secret="qwertyuiop1234567890asdfghjkl"
 const generateToken=async(payload,rememberMe)=>{
     
     try {
-        if(rememberMe){
-            const token=await jwt.sign(payload, secret,{});
-            console.log("remember me");
+        // if(rememberMe){
+            // const token=await jwt.sign(payload, secret,{});
+            // console.log("remember me");
+            // return token;
+        // }else{
+            const token=await jwt.sign(payload, secret,{expiresIn:rememberMe||"2h"});
             return token;
-        }else{
-            const token=await jwt.sign(payload, secret,{expiresIn:'60m'});
-            return token;
-        }
+        // }
         
     } catch (error) {
         return error;
@@ -20,7 +20,7 @@ const generateToken=async(payload,rememberMe)=>{
 
 const verify=async(req,res,next)=>{
     try {
-        const token=req.body.token;
+        const token=req.body.token||req.params.token;
         console.log(token);
         if(!token){
             res.status(401).send({message:"token is required"});

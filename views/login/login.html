@@ -28,7 +28,7 @@
                     <i class='bx bxs-lock'  style="margin-left: 85%;"></i>
                 </div>
                 <div class="remember-forgot">
-                    <label><input type="checkbox" value="true" name="remember"> Remember me</label>
+                    <label><input type="checkbox" value="48h"  name="remember"> Remember me</label>
                     <a href="forgot_Password">Forgot Password?</a>
                 </div>
                 <button type="submit" class="btn">Login</button>
@@ -58,8 +58,8 @@
                     document.querySelector(".message").innerHTML=JSONresponse.message;
 
                 }else {
-                    // console.log('aaa',JSONresponse);
-                    window.localStorage.setItem('token',JSONresponse.token);
+                    console.log('aaa',JSONresponse);
+                    window.localStorage.setItem('token',JSONresponse.data.token);
                     document.querySelector(".message").innerHTML=JSONresponse.message;
                     window.location.href="../Profile page/index.html"
                 }

@@ -4,7 +4,7 @@ const memberControler=require("../controler/member.controler");
 const JWT=require('../middlleware/jwt')
 const Router=express.Router();
 const multer=require('multer');
-
+const otp=require("../utils/otp")
 
 
 const diskStorage=multer.diskStorage({
@@ -40,9 +40,11 @@ const upload=multer({
 })
 
 
+Router.route("/verifyEmail")
+        .post(memberControler.verifyEmail)
 
-Router.route("/createAccount")
-        .post(upload.single('avatar'),memberControler.createAccount)
+Router.route("/createAccount/:token")
+        .get(JWT.verify,memberControler.createAccount)
 
 Router.route("/getAllMembers")
         .get(memberControler.getAllMembers)
@@ -63,5 +65,17 @@ Router.route("/changeHead")
 
 Router.route("/hr")
         .post(JWT.verify, memberControler.controleHR);
+
+
+Router.route("/generateOTP/:email")
+        .get( memberControler.generateOTP);
+
+
+Router.route("/verifyOTP")
+        .post(otp.verifyOtp);
+
+
+Router.route("/changePass")
+        .post(memberControler.changePass);
 
 module.exports=Router;        

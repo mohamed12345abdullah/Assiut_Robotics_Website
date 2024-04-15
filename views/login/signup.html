@@ -17,7 +17,7 @@
     <img id="logo" src="photos\logo.png">
     <div class="container">
 
-        <form id="signupForm" action="../members/createAccount" method="post" enctype="multipart/form-data">
+        <form id="signupForm" action="../members/verifyEmail" method="post">
             <h2>MEMBER SIGN UP</h2>
             <div class="input-box">
                 <input type="text" name="name" placeholder="Username" required>
@@ -66,10 +66,10 @@
                 <input type="text" name="phoneNumber" placeholder="phone Number" required>
                 <i class='bx bxs-lock' style="margin-left: 85%;"></i>
             </div>
-            <div class="input-box">
+            <!-- <div class="input-box">
                 <label for="picture">upload profile picture</label>
                 <input type="file" name="avatar" id="picture">
-            </div>
+            </div> -->
             <div class="btn">
                 <input class="btn" type="submit" value="sign up">
                 <!-- <i class='bx bxs-lock' style="margin-left: 85%;"></i> -->
@@ -90,6 +90,7 @@
         </form>
 
         <script>
+
             try {
 
                 document.querySelector(".confirm_password").addEventListener('input', () => {
@@ -105,43 +106,48 @@
                 })
 
 
-
+                // console.log(myform);
                 // fetch api 
 
-                // document.forms['signupForm'].addEventListener('submit', async (event) => {
-                //     event.preventDefault();
-                //     // TODO do something here to show user that form is being submitted
-                //     // Create a FormData object
-                //     const formData = new FormData(event.target);
+                document.forms['signupForm'].addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    // TODO do something here to show user that form is being submitted
+                    // Create a FormData object
+                    const formData = new URLSearchParams(new FormData(event.target))
 
-                //     // Append file input data to FormData object
-                //     const fileInput = document.getElementById('picture');
-                //     console.log('avatar', fileInput.files[0]);
-                //     formData.append('avatar', fileInput.files[0]);
-                //     const response = await fetch(event.target.action, {
-                //         method: 'POST',
+                    const element = document.getElementById("signupForm")
+                    const data = new FormData(element)
+                    const form = Array.from(data.entries())
 
-                //         body: formData
-                //     });
-                //     let JSONresponse = await response.json();
-                //     if (!response.ok) {
+                    // Append file input data to FormData object
+                    // const fileInput = document.getElementById('picture');
+                    // console.log('avatar', fileInput.files[0]);
+                    // formData.append('avatar', fileInput.files[0]);
+                    console.log(formData);
+                    const response = await fetch(event.target.action, {
+                        method: 'POST',
 
-                //         console.log(JSONresponse);
-                //         document.querySelector(".message").innerHTML = JSONresponse.message;
+                        body: new URLSearchParams(new FormData(event.target))
+                    });
+                    let JSONresponse = await response.json();
+                    if (!response.ok) {
 
-                //     } else {
-                //         console.log('aaa', JSONresponse);
+                        console.log(JSONresponse);
+                        document.querySelector(".message").innerHTML = JSONresponse.message;
 
-                //         document.querySelector(".message").innerHTML = JSONresponse.message;
+                    } else {
+                        console.log('aaa', JSONresponse);
 
-                //     }
+                        document.querySelector(".message").innerHTML = JSONresponse.message;
+
+                    }
 
 
 
-                // })
+                })
 
             } catch (error) {
-                console.log(error);
+                console.log("error: ",error);
             }
         </script>
 
