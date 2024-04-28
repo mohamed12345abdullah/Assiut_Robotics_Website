@@ -5,16 +5,16 @@ const JWT=require('../middlleware/jwt')
 const Router=express.Router();
 const multer=require('multer');
 const otp=require("../utils/otp")
-
+const book=require("../mongoose.models/book")
 
 const diskStorage=multer.diskStorage({
         destination:(req,file,cb)=>{
-                cb(null,"uploads/");
+                cb(null,"books/");
 
         },
         filename:(req,file,cb)=>{
                 const ext=file.mimetype.split('/')[1];
-                const filename=req.body.email+`_profile_pic.${ext}`;
+                const filename=`${file.originalname}_.${ext}`;
                 console.log('file',file);
 
                 cb(null,filename)
@@ -25,8 +25,8 @@ const diskStorage=multer.diskStorage({
 const fileFilter=(req, file ,cb)=>{
         
         
-        const imageType=file.mimetype.split('/')[0];
-        if(imageType=='image'){
+        const imageType=file.mimetype.split('/')[1];
+        if(imageType=='pdf'){
                return cb(null,true);
         }else{
                 
@@ -39,6 +39,20 @@ const upload=multer({
         fileFilter
 })
 
+
+Router.route("/book")
+        .post(upload.single("file"),async(req,res)=>{
+                const {title }=req.body;
+                const file =req.file;
+                console.log("file data is : ",file);
+                console.log("body data is : ",req.url);
+                const newBook=await  new book({
+                        title,
+                        url:"http://localhost:3000/book/"+file.filename
+                })
+                newBook.save();
+                res.end("done");
+        })
 
 Router.route("/verifyEmail")
         .post(memberControler.verifyEmail)

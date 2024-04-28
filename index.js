@@ -2,7 +2,6 @@ require('dotenv').config();
 const PORT=process.env.PORT;
 
 
-
 const express=require("express");
 const memberRouter=require('./routers/member.router')
 const blogRouter=require('./routers/blog.router')
@@ -28,11 +27,17 @@ app.use(body_parser.urlencoded({extended:false}));
 
 
 
+app.use("/book",express.static(__dirname+"/books "))
 app.use("/",express.static(__dirname+"/views"))
 app.use("/uploads",express.static(__dirname+"/uploads"))
 app.use("/members",memberRouter);
 app.use('/blogs',blogRouter)
 app.use('/components',componentRouter)
+
+//draft
+
+
+app.use("/upload",memberRouter)
 // app.use("")
 app.get("/",(req,res)=>{    
     res.end("server run successfully ")
