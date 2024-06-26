@@ -28,7 +28,7 @@ app.use(body_parser.urlencoded({extended:false}));
 
 
 app.use("/book",express.static(__dirname+"/books "))
-app.use("/",express.static(__dirname+"/views"))
+app.use("/",express.static(__dirname+"/views/main"))
 app.use("/uploads",express.static(__dirname+"/uploads"))
 app.use("/members",memberRouter);
 app.use('/blogs',blogRouter)
