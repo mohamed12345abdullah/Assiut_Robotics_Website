@@ -1,0 +1,141 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+body{
+    background-image: url(../images/background-all-pages.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.container{
+    height: 100vh;
+    width: 100%;
+
+}
+#logo{
+    width: 110px;
+    height: 60px;
+    margin-left: 35px;
+    margin-top: 35px;
+}
+.content{
+    margin-top: 5%;
+    width: 100%;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+}
+.left{
+    width: 25%;
+    background-image: linear-gradient(to left, #2aa9f3 5%,#8ecff2);
+    /* background-image: linear-gradient(to right, #2aa9f3 50%,#fff); */
+    color: #fff;
+}
+.left img{
+    margin: 30% 40%;
+    border: 2px solid #104068;
+    border-radius: 50%;
+}
+.left .info{
+    margin: -20% 29%;
+    text-align: center;
+}
+.info h2{
+    font-size: 27px;
+    margin-bottom: 15%;
+}
+.info p{
+    font-size: 25px;
+    margin-bottom: 20%;
+}
+.info i{
+    cursor: pointer;
+}
+
+.right{
+    width: 40%;
+    background-color: #fff;
+    padding-top: 2%;
+}
+hr{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+.contact{
+    padding-bottom: 5%;
+}
+.contact .titles, .works .titles{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 18%;
+    padding-top: 5%;
+}
+.title{
+    margin-left: 10%;
+    padding-bottom: 0.5%;
+}
+.bolding{
+    font-size: 22px;
+    font-weight: 600;
+    color: #104068;
+}
+.infoo{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 18%;
+    padding-top: 1%;
+    font-size: 18px;
+    color: #858585;
+}
+
+.social{
+    width: 14%;
+    padding-left: 10%;
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    color: #104068;
+}
+.social i{
+    cursor: pointer;
+}
+
+
+/* style nav  */
+nav{
+    /* background-color: #104068; */
+    height: min-content;
+    height: 50px;
+    
+}
+nav button{
+    margin-top: 50px;
+    margin-right: 1.5rem;
+    float: right;
+    width: 100px;
+    height: 30px;
+    background-color: #2aa9f3;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 20px;
+
+}
+#controle-panel,#head-hr,#OC-page,#blog-page{
+
+    margin-top: 50px;
+    margin-right: 1rem;
+    float: right;
+    width: 100px;
+    height: 30px;
+    background-color: #2aa9f3;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 20px;
+
+
+
+}
