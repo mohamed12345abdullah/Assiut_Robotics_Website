@@ -4,7 +4,8 @@
     font-family: 'Roboto Condensed', sans-serif;
 }
 body{
-    background-image: url(../images/background-all-pages.jpg);
+    /* background-image: url(../images/background-all-pages.jpg); */
+    background-color: #eef0e5;
     background-size: cover;
     background-position: center;
 }
