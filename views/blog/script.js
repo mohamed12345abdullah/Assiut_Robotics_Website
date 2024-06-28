@@ -63,7 +63,9 @@ function loadBlogs() {
             console.log("error");
         }
     }
+    load();
 }
 
 
 readMoreShow();
+loadBlogs();
