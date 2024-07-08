@@ -83,7 +83,7 @@ const createAccount =  async (req, res) => {
             committee,
             gender,
             phoneNumber,
-            avatar: req.file.filename
+            //avatar: req.file.filename
         })
 
         await newMember.save();
