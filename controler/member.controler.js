@@ -58,8 +58,8 @@ const token=await jwt.generateToken({name,email,password, committee, gender, pho
 
 }
 
-const createAccount = asyncWrapper( async (req, res) => {
-    // try {
+const createAccount =  async (req, res) => {
+    try {
         // console.log(req.body);
         // console.log(req.file);
         let { name, email, password, committee, gender, phoneNumber } = req.decoded;
@@ -87,24 +87,24 @@ const createAccount = asyncWrapper( async (req, res) => {
         })
 
         await newMember.save();
-        // const token =await jwt.generateToken({email})
+         const token =await jwt.generateToken({email})
 
         res.status(201).json({
                         status: httpStatusText.SUCCESS,
                         data: null,
                         message: "Your account has been successfully created. <br> wait until your request be acceptted"
         })
-    // } catch (error) {
-    //     console.log(error.message);
-    //     res.status(400).json({
-    //                     status: httpStatusText.ERROR,
-    //                     data: null,
-    //                     "message": error.message
-    //     });
-    // }
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({
+                        status: httpStatusText.ERROR,
+                        data: null,
+                        "message": error.message
+        });
+    }
 
 }
-)
+
 
 const login = async (req, res) => {
     try {
