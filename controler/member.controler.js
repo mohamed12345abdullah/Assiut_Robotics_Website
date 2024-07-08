@@ -36,13 +36,13 @@ const token=await jwt.generateToken({name,email,password, committee, gender, pho
                      subject:"subject ",
                      text: "my text", 
                      html:`
-                     <br> verifi your email by ckick on th next link
+                     <br> verifi your email by click on th next link
                      https://assiut-robotics-website.onrender.com/members/createAccount/${token}
                      `});
                      res.status(200).json({
                         status:httpStatusText.SUCCESS,
                         data:null,
-                        message: "verify your email by clic on the link on your email ",
+                        message: "verify your email by click on the link on your email ",
                         code:400 
                     })
 
