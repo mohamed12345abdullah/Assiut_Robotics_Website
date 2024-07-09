@@ -1,14 +1,11 @@
-require('dotenv').config();
+require("dotenv").config();
 const MONGOURL = process.env.MONGOURL;
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.connect(MONGOURL);
-const blog = require('../mongoose.models/blog');
-
+const blog = require("../mongoose.models/blog");
 
 const addBlog = async (req, res) => {
     try {
-
-
         const { title, content, date, avatar } = req.body;
 
         const newblog = await new blog({
@@ -20,31 +17,23 @@ const addBlog = async (req, res) => {
 
         newblog.save();
 
-        res.status(200).send({message:"add blog successfully"})
+        res.status(200).send({ message: "add blog successfully" });
     } catch (error) {
-        res.status(400).send({message:error});
-
+        res.status(400).send({ message: error });
     }
+};
 
-}
-
-
-
-const getBlogs =async(req,res)=>{
-
+const getBlogs = async (req, res) => {
     try {
-        const blogs=await blog.find({})
+        const blogs = await blog.find({});
 
-        res.status(200).send({message:"get daa sucessfully",data:blogs});
+        res.status(200).send({ message: "get daa sucessfully", data: blogs });
     } catch (error) {
-        res.status(404).send({message:"not found"});
-
+        res.status(404).send({ message: "not found" });
     }
-   
-}
+};
 
-
-module.exports={
+module.exports = {
     addBlog,
-    getBlogs
-}
+    getBlogs,
+};
