@@ -1,7 +1,6 @@
-
-
 function navButtonClick() {
     const topNav = document.getElementById("myTopnav");
+    
     if (topNav.classList.contains("responsive")) {
         hideNav();
     } else {
@@ -18,18 +17,22 @@ function isMobile() {
 function hideNav() {
     const topNav = document.getElementById("myTopnav");
     const content = document.getElementById("backdrop");
+    const navToggleIcon = document.getElementById('js-navbar-toggle');
     if (topNav.classList.contains("responsive")) {
         topNav.classList.remove("responsive");
         content.style.display = "none";
+        navToggleIcon.classList.remove("change");
     }
 }
 
 function showNav() {
     const topNav = document.getElementById("myTopnav");
     const content = document.getElementById("backdrop");
+    const navToggleIcon = document.getElementById('js-navbar-toggle');
     if (!topNav.classList.contains("responsive")) {
         topNav.classList.add("responsive");
         content.style.display = "block";
+        navToggleIcon.classList.add("change");
     }
 }
 
