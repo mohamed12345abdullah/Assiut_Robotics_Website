@@ -39,19 +39,6 @@ const upload=multer({
 })
 
 
-// Router.route("/book")
-//         .post(upload.single("file"),async(req,res)=>{
-//                 const {title }=req.body;
-//                 const file =req.file;
-//                 console.log("file data is : ",file);
-//                 console.log("body data is : ",req.url);
-//                 const newBook=await  new book({
-//                         title,
-//                         url:"http://localhost:3000/book/"+file.filename
-//                 })
-//                 newBook.save();
-//                 res.end("done");
-//         })
 
 Router.route("/verifyEmail")
         .post(memberControler.verifyEmail)
