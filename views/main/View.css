@@ -102,22 +102,20 @@ h1 {
 }
 
 .card .card-description {
-    display: block;
+    display: none;
     position: absolute;
     top: 0;
     transform: translate(15%, -80%);
-    /* background-color: rgba(255, 255, 255, 0.9); */
     background-color: #1073b1;
     padding: 1em;
     color: white;
     border-radius: 0.6em;
-    box-shadow: 0 0 1.2em rgba(25, 0, 58, 0.1);
+    box-shadow: 0 0 1.2em rgba(25, 0, 58, 0.5);
     text-align: center;
     z-index: 100;
-    max-width: 260px;
-    width: 90%;
-    opacity: 0;
-    -webkit-transform: translate(15%, -80%);
+    max-width: 285px;
+    width: 100%;
+    -webkit-transform: translate(10%, -80%);
     -moz-transform: translate(15%, -80%);
     -ms-transform: translate(15%, -80%);
     -o-transform: translate(15%, -80%);
@@ -144,7 +142,22 @@ h1 {
 }
 
 .card:hover .card-description {
-    opacity: 1;
+    display: block;
+}
+
+.fade22 {
+    animation-name: fadeAnim22;
+    animation-duration: 500ms;
+}
+
+@keyframes fadeAnim22 {
+    from {
+        opacity: 0.1;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .card img {
@@ -155,6 +168,7 @@ h1 {
 .card h3 {
     font-weight: 500;
     width: 95%;
+    margin: auto;
 }
 
 .card p {
