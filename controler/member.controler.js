@@ -36,13 +36,10 @@ const token=await jwt.generateToken({name,email,password, committee, gender, pho
                      subject:"subject ",
                      text: "my text", 
                      html:`
-                     <br> verify your email by click on th next link
-
-                     
-                     https://assiut-robotics-website.onrender.com/members/createAccount/${token}
-                     
-                     
-                     `});
+    <p>Please verify your email by clicking on the link below:</p>
+    <br><br>
+    <a href="https://assiut-robotics-website.onrender.com/members/createAccount/${token}">Verify your email</a>
+  `});
                      res.status(200).json({
                         status:httpStatusText.SUCCESS,
                         data:null,
