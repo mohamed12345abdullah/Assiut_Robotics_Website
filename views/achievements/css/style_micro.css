@@ -51,6 +51,20 @@ nav {
     font-size: 20px;
 }
 
+.nav-links-2 {
+    color: white !important;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.nav-links-3 {
+    color: white !important;
+    position: absolute;
+    right: 12%;
+    bottom: 0;
+}
+
 .abstract {
     background-color: rgba(10, 40, 70, .5);
     border-radius: 25px;
