@@ -30,7 +30,7 @@ const memberSchema=new mongoose.Schema({
     },
     avatar:{
         type:String,
-        default:"بني ادم.png"
+        default:"default_avatar.png"
     }
 })
 
