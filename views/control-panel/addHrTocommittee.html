@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,11 +24,11 @@
             <div class="input-box">
                 <label for="gender">Select member:</label>
                 <select style="width: 10rem; height: 30px;" id="members" name="id">
-             
+
                     <!-- Add more options as needed -->
                 </select>
             </div>
-            
+
             <div class="input-box">
                 <label for="committee">Select your committee:</label>
                 <select style="width: 10rem; height: 30px;" id="committee" name="committee">
@@ -44,91 +44,91 @@
                 </select>
             </div>
 
-        
+
             <div class="btn">
-                <input class="btn" type="submit" placeholder="phone Number" >
+                <input class="btn" type="submit" placeholder="phone Number">
                 <!-- <i class='bx bxs-lock' style="margin-left: 85%;"></i> -->
             </div>
-       
 
-  
+
+
             <!-- <button type="button" class="btn" onclick="submitForm()">Sign Up</button> -->
             <div style="color: red;" class="message">
 
             </div>
-          
+
         </form>
 
         <script>
-           try {
+            try {
 
 
-            // <option value="female">female</option>
-            onload=async function(){
+                // <option value="female">female</option>
+                onload = async function() {
 
-                const res=await fetch("../../members/getAllMembers");
-                if(await res.ok){
-                    const response=await res.json();
-                    let members=response.data.members;
-                    members.forEach(member => {
-                        const splitcom=member.committee.split(' ',1);
-                    // console.log(splitcom);
-                    if(splitcom=="HR"){
+                    const res = await fetch("../../members/getAllMembers");
+                    if (await res.ok) {
+                        const response = await res.json();
+                        let members = response.data.members;
+                        members.forEach(member => {
+                            const splitcom = member.committee.split(' ', 1);
+                            // console.log(splitcom);
+                            if (splitcom == "HR") {
 
-                        document.getElementById('members').innerHTML+=`
+                                document.getElementById('members').innerHTML += `
                         <option data-id="${member._id}" value="${member._id}">${member.name}</option>   `
+                            }
+
+                        });
+                        console.log(await response);
+
                     }
 
+                }
+
+
+
+
+
+                // fetch api 
+
+                document.forms['signupForm'].addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    // TODO do something here to show user that form is being submitted
+                    console.log(window.localStorage.getItem("token"));
+                    let data = {
+                        token: window.localStorage.getItem("token"),
+                        id: event.target.id.value,
+                        committee: event.target.committee.value
+                    }
+
+                    const response = await fetch(event.target.action, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data) // event.target is the form
                     });
-                    console.log( await response);
+                    let JSONresponse = await response.json();
+                    if (!response.ok) {
 
-                }
+                        console.log(JSONresponse);
+                        document.querySelector(".message").innerHTML = JSONresponse.message;
 
+                    } else {
+                        console.log('aaa', JSONresponse);
+
+                        document.querySelector(".message").innerHTML = JSONresponse.message;
+
+                    }
+
+
+
+                })
+
+            } catch (error) {
+                console.log(error);
             }
-            
-
-
-            
-
-            // fetch api 
-
-            document.forms['signupForm'].addEventListener('submit',async (event)=>{
-                event.preventDefault();
-                // TODO do something here to show user that form is being submitted
-              console.log(window.localStorage.getItem("token"));
-                let data={
-                    token:window.localStorage.getItem("token"),
-                    id:event.target.id.value,
-                    committee:event.target.committee.value
-                }
-              
-                const response=await fetch(event.target.action, {
-                    method: 'POST',
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body: JSON.stringify(data) // event.target is the form
-                });
-                let JSONresponse=await response.json();
-                if(!response.ok){
-                    
-                    console.log(JSONresponse);       
-                    document.querySelector(".message").innerHTML=JSONresponse.message;
-
-                }else {
-                    console.log('aaa',JSONresponse);
-                    
-                    document.querySelector(".message").innerHTML=JSONresponse.message;
-
-                }
-         
-
-                
-            })
-            
-           } catch (error) {
-            console.log(error);
-           }
         </script>
 
     </div>

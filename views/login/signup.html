@@ -11,30 +11,36 @@
     <link rel="stylesheet" href="login.css">
     <title> Sign In Form</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../main/footerAndheader.css" />
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <img id="logo" src="../all-images/logo.png">
+
+    <!-- header -->
+    <div id="myUniqueHeaderID"></div>
+
     <div class="container">
 
         <form id="signupForm" action="../members/verifyEmail" method="post">
             <h2>MEMBER SIGN UP</h2>
             <div class="input-box">
                 <input type="text" name="name" placeholder="Username" required>
-                <i class='bx bxs-user' style="margin-left: 80%;"></i>
+                <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email" required>
-                <i class='bx bxs-user' style="margin-left: 80%;"></i>
+                <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
                 <input class="password" type="password" name="password" placeholder="password" required>
-                <i class='bx bxs-lock' style="margin-left: 80%;"></i>
+                <i class='bx bxs-lock'></i>
             </div>
             <div class="input-box">
-                <input class="confirm_password" type="password" name="confirm_password" placeholder="confirm_password"
-                    required>
-                <i class='bx bxs-lock' style="margin-left: 80%;"></i>
+                <input class="confirm_password" type="password" name="confirm_password" placeholder="confirm_password" required>
+                <i class='bx bxs-lock'></i>
             </div>
             <div style="color: red;" class="matched">
 
@@ -42,9 +48,9 @@
             <div class="input-box">
                 <label for="committee">Select your committee:</label>
                 <select style="width: 10rem; height: 30px;" id="committee" name="committee">
-                    <option value="web">web</option>
-                    <option value="AC mechanic">AC mechanic</option>
-                    <option value="AC electric">AC electric</option>
+                    <option value="web">Web</option>
+                    <option value="AC mechanic">AC mechanical</option>
+                    <option value="AC electric">AC electrical</option>
                     <option value="PR">PR</option>
                     <option value="OC">OC</option>
                     <option value="media">media</option>
@@ -76,7 +82,6 @@
             </div>
             <div class="remember-forgot">
                 <label><input type="checkbox" name="remember"> Remember me</label>
-                <a href="#">Forgot Password?</a>
             </div>
 
 
@@ -90,7 +95,6 @@
         </form>
 
         <script>
-
             try {
 
                 document.querySelector(".confirm_password").addEventListener('input', () => {
@@ -147,11 +151,16 @@
                 })
 
             } catch (error) {
-                console.log("error: ",error);
+                console.log("error: ", error);
             }
         </script>
 
     </div>
+
+    <!--Footer-->
+    <div id="myUniqueFooterID"></div>
+
+    <script src="../main/footerAndheader.js" defer></script>
 
 </body>
 

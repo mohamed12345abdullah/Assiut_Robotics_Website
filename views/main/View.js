@@ -1,30 +1,9 @@
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
-
-
-
-  const elts = {
+const elts = {
     text1: document.getElementById("text1"),
-    text2: document.getElementById("text2")
+    text2: document.getElementById("text2"),
 };
 
-const texts = [
-    "Let's",
-    "Know",
-    "More",
-    "About",
-    "Assiut",
-    "Robotics",
-    "Team",
-    ":)",
-   
-];
+const texts = ["Let's", "Know", "More", "About", "Assiut", "Robotics", "Team", ":)"];
 
 const morphTime = 1;
 const cooldownTime = 0.25;
@@ -87,7 +66,6 @@ function animate() {
         if (shouldIncrementIndex) {
             textIndex++;
         }
-
         doMorph();
     } else {
         doCooldown();
@@ -95,5 +73,3 @@ function animate() {
 }
 
 animate();
-
-

@@ -1,17 +1,4 @@
-:root {
-    --shape: "M617.49,100c52.49-1.78,46.26,112.7,46.26,178.69C663.75,458.36,537.64,604,382.07,604S100.39,458.37,100.39,278.7c0-63.45-7.58-173.24,42.94-172.71,263.66,2.76,316.45-.61,474.16-6Z"
-}
 
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background-image: url(background.jpg);
-
-}
-
-*, ::after, ::before {
-    box-sizing: border-box;
-}
 
 .header {
     display: flex;
@@ -40,7 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-image: url(background.jpg);
+    background-image: url(../all-images/background.jpg);
     padding: 40px;
     width: 75%;
     margin: 5rem auto 0 auto;
@@ -54,12 +41,12 @@ body {
 }
 
 .section h1 {
-    color: #104068;
+    color: #5cb4fe;
     margin-top: 0;
 }
 
 .section p {
-    color: #124281;
+    color: #b3c6de;
     margin-right: 15px;
 }
 
@@ -108,7 +95,7 @@ body {
 
 .text-content {
     overflow: hidden;
-    margin: 0;
+    margin: 0 0 3px 0;
 }
 
 .text-content.truncated {
@@ -128,6 +115,14 @@ body {
 
 .toggle-content.show {
     display: inline;
+}
+
+.section1 .toggle-content {
+    color: blue;
+}
+
+.section .toggle-content {
+    color: #7b87ff;
 }
 
 .calender {
@@ -166,15 +161,24 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-content: center;
+    align-content: flex-start;
     justify-content: center;
     align-items: flex-start;
     margin-right: 20px;
-    flex:1 0 200px;
+    flex: 1 0 200px;
     transition: all 0.3s ease;
 }
 
 .page-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.unPinnedBlogs {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -214,76 +218,89 @@ body {
     font-size: 24px;
 }
 
-footer {
-    margin-top: 25px;
-    height: 50px;
-}
-
 @media screen and (max-width: 980px) {
     .BLOG_IMG {
         width: 100px;
         height: 100px;
     }
+
     .BLOG_IMG2 {
         width: 75px;
         height: 75px;
     }
+
     .section1 {
         padding: 20px;
         width: 90%;
     }
+
     .section1 .content-container {
         flex: 1 0 100px;
     }
+
     .section1 h1 {
         font-size: 16px;
     }
+
     .section1 .text-content {
         font-size: 12px;
     }
+
     .section1 .toggle-content {
         font-size: 12px;
     }
+
     .section1 .calender {
         height: 25px;
         width: 25px;
     }
+
     .section1 .date-text {
         font-size: 10px;
     }
+
     .header {
         padding: 10px;
     }
+
     .header h1 {
         padding: 8px;
         border-radius: 9px;
         font-size: 28px;
     }
+
     .header span {
         padding: 8px;
         border-radius: 9px;
         font-size: 18px;
     }
+
     .section {
         padding: 20px;
         width: 85%;
     }
+
     .section h1 {
         font-size: 14px;
     }
+
     .section p {
         font-size: 12px;
     }
+
     .section .content-container {
         flex: 1 0 100px;
     }
+
     .section .toggle-content {
         font-size: 12px;
     }
+
     .section .calender {
         height: 25px;
         width: 25px;
     }
+
     .section .date-text {
         font-size: 10px;
     }

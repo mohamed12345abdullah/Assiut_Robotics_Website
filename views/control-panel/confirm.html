@@ -42,7 +42,6 @@
             ele.style.display = "none";
 
         }
-
     </script>
     <select name="gender" id="gender">
         <option value="All">All</option>
@@ -70,69 +69,69 @@
                 .then(data => data.json())
         }
         getMembersData().then((data) => {
-            console.log(data);
-            return data.data.members;
-        }).then((jsonData) => {
-            document.getElementById('btn').onclick = function () {
-                let container = $("#container");
-                let table = $("<table>");
-                let cols = Object.keys(jsonData[0]);
-                let thead = $("<thead>");
-                let tr = $("<tr>");
-                $.each(cols, function (i, item) {
-                    let th = $("<th>");
-                    th.text(item);
-                    tr.append(th);
-                });
-                tr.append("accept")
-                thead.append(tr);
+                console.log(data);
+                return data.data.members;
+            }).then((jsonData) => {
+                document.getElementById('btn').onclick = function() {
+                    let container = $("#container");
+                    let table = $("<table>");
+                    let cols = Object.keys(jsonData[0]);
+                    let thead = $("<thead>");
+                    let tr = $("<tr>");
+                    $.each(cols, function(i, item) {
+                        let th = $("<th>");
+                        th.text(item);
+                        tr.append(th);
+                    });
+                    tr.append("accept")
+                    thead.append(tr);
 
-                table.append(tr);
-                const role = window.localStorage.getItem("role");
-                let com;
+                    table.append(tr);
+                    const role = window.localStorage.getItem("role");
+                    let com;
 
-                if (role != (1 && 2)) {
+                    if (role != (1 && 2)) {
 
-                    com = window.localStorage.getItem("committee")
-                } else {
-                    com = document.getElementById('committee').value;
-                }
+                        com = window.localStorage.getItem("committee")
+                    } else {
+                        com = document.getElementById('committee').value;
+                    }
 
 
-                let gen = document.getElementById('gender').value;
-                let rol = document.getElementById('role').value;
-                // let con = document.getElementById('confirm').value;
-                $.each(jsonData, function (i, item) {
-                    if (((item.committee == com) || (com == "All"))
-                        && ((item.gender == gen) || (gen == "All"))
-                        && ((item.role == rol) || (rol == "All"))
-                        // && ((item.confirm.toString() == con) || (con == "All"))
-                    ) {
-                        let tr = $("<tr>");
-                        let vals = Object.values(item);
-                        let button;
-                        $.each(vals, (i, elem) => {
+                    let gen = document.getElementById('gender').value;
+                    let rol = document.getElementById('role').value;
+                    // let con = document.getElementById('confirm').value;
+                    $.each(jsonData, function(i, item) {
+                        if (((item.committee == com) || (com == "All")) &&
+                            ((item.gender == gen) || (gen == "All")) &&
+                            ((item.role == rol) || (rol == "All"))
+                            // && ((item.confirm.toString() == con) || (con == "All"))
+                        ) {
+                            let tr = $("<tr>");
+                            let vals = Object.values(item);
+                            let button;
+                            $.each(vals, (i, elem) => {
+                                let td = $("<td>");
+                                td.text(elem);
+
+                                tr.append(td);
+
+                            });
                             let td = $("<td>");
-                            td.text(elem);
-
-                            tr.append(td);
-
-                        });
-                        let td = $("<td>");
-                        button = `    
+                            button = `    
                        <button onclick="confirm(4,dataset.id)" data-id="${item._id}"> accept </button>
                        <button onclick="confirm(3,dataset.id)" data-id="${item._id}"> make it head </button>
                        <button onclick="confirm(2,dataset.id)" data-id="${item._id}"> make it admin  </button>
                        <button onclick="confirm(0,dataset.id)" data-id="${item._id}"> remove</button>`;
-                        td.append(button)
-                        tr.append(td);
-                        table.append(tr);
-                    };
+                            td.append(button)
+                            tr.append(td);
+                            table.append(tr);
+                        };
 
-                });
-                container.append(table)
-            }
-        })
+                    });
+                    container.append(table)
+                }
+            })
             .catch(error => console.log('ERROR!'))
 
 

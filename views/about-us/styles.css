@@ -1,9 +1,16 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
     color: #1f003b;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
 }
 
 .header {
@@ -11,6 +18,7 @@ body {
     padding: 1em 0;
     text-align: center;
     box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+    width: 100%;
 }
 
 .header h1 {
@@ -43,14 +51,16 @@ body {
 }
 
 .footer {
-    background-color: #1f003b;
+    background-color: #3f0077;
     color: #ffffff;
     text-align: center;
     padding: 1em 0;
-    position: fixed;
     bottom: 0;
-    width: 100%;
-    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+    width: 90%;
+    box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.2);
+    border-radius: 50px;
+    align-self: center;
+    display: block;
 }
 
 .footer p {

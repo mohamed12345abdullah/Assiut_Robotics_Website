@@ -1,7 +1,7 @@
 var contentList = [];
 
 function readMoreShow() {
-    $(document).ready(function () {
+    $(document).ready(function() {
         var content = document.querySelectorAll(".text-content");
         content.forEach((element) => {
             var text = element.textContent;
@@ -12,6 +12,11 @@ function readMoreShow() {
                 element.classList.add("truncated")
                 element.textContent = truncatedText;
             }
+        });
+        $(".toggle-content").click(function(event) {
+            event.preventDefault(); // Prevent the default action of the inner link
+            event.stopPropagation(); // Prevent the event from bubbling up to the outer <a> element
+            console.log("Done");
         });
     });
 }

@@ -6,15 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>profile page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto+Condensed:wght@300&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body onload="load()">
@@ -23,29 +19,29 @@
     <nav>
 
         <a href="../index.html" style="text-decoration: none; color: inherit;">
-            <img id="logo" src="../all-images/logo.png">
+            <img id="logo" src="../images/logo.png">
         </a>
         <div style="display: none;" id="controle-panel">
-            <a  href="../control-panel/leader.html" style="text-decoration: none; color: inherit;">
+            <a href="../controle-panel/leader.html" style="text-decoration: none; color: inherit;">
                 controle page
             </a>
 
         </div>
         <div style="display: none;" id="OC-page">
-            <a  href="../OC_page/OC (1).html" style="text-decoration: none; color: inherit;">
+            <a href="../OC_page/OC (1).html" style="text-decoration: none; color: inherit;">
                 OC page
             </a>
 
         </div>
         <div style="display: none;" id="blog-page">
-            <a  href="../blog/add-blog.html" style="text-decoration: none; color: inherit;">
+            <a href="../blog/add-blog.html" style="text-decoration: none; color: inherit;">
                 Add blog
             </a>
 
         </div>
         <div style="display: none;" id="head-hr">
-            <a  href="../controle-panel/addHrTocommittee.html" style="text-decoration: none; color: inherit;">
-                make hr admin 
+            <a href="../controle-panel/addHrTocommittee.html" style="text-decoration: none; color: inherit;">
+                make hr admin
             </a>
 
         </div>
@@ -54,7 +50,7 @@
 
     </nav>
     <div class="container">
-    
+
         <div class="content">
             <div class="left">
                 <img id="human" src="./images/بني ادم.png" alt="notfound">
@@ -101,7 +97,7 @@
 
 
     <script>
-        const load =async () => {
+        const load = async () => {
             let token = window.localStorage.getItem("token");
             console.log(token);
             let data = {
@@ -117,32 +113,32 @@
                 });
 
                 if (!response.ok) {
-                    
+
                     window.location.href = "../login/login.html"
-                }else{
-                    const JSONresponse= await response.json();
+                } else {
+                    const JSONresponse = await response.json();
                     console.log(JSONresponse);
-                    if(JSONresponse.data.role <4){
-                        document.getElementById('controle-panel').style.display="inline-block";
+                    if (JSONresponse.data.role < 4) {
+                        document.getElementById('controle-panel').style.display = "inline-block";
                     }
-                    if((JSONresponse.data.committee=="HR"&&JSONresponse.data.role <4 )||JSONresponse.data.role ==1){
-                        document.getElementById('head-hr').style.display="inline-block";
+                    if ((JSONresponse.data.committee == "HR" && JSONresponse.data.role < 4) || JSONresponse.data.role == 1) {
+                        document.getElementById('head-hr').style.display = "inline-block";
                     }
-                    if(JSONresponse.data.committee=="OC"){
-                        document.getElementById('OC-page').style.display="inline-block";
+                    if (JSONresponse.data.committee == "OC") {
+                        document.getElementById('OC-page').style.display = "inline-block";
                     }
-                    if(JSONresponse.data.committee=="media"){
-                        document.getElementById('blog-page').style.display="inline-block";
+                    if (JSONresponse.data.committee == "media") {
+                        document.getElementById('blog-page').style.display = "inline-block";
                     }
-                    document.getElementById("nameHuman").innerHTML=JSONresponse.data.name;
-                    document.getElementById("email").innerHTML=JSONresponse.data.email;
-                    document.getElementById("phone").innerHTML=JSONresponse.data.phoneNumber;
-                    document.getElementById("specialty").innerHTML=JSONresponse.data.committee;
-                    document.getElementById("human").src=`../../uploads/${JSONresponse.data.avatar}`;
-                    window.localStorage.setItem("role",JSONresponse.data.role);
-                    window.localStorage.setItem("committee",JSONresponse.data.committee);
-                } 
-            }else{
+                    document.getElementById("nameHuman").innerHTML = JSONresponse.data.name;
+                    document.getElementById("email").innerHTML = JSONresponse.data.email;
+                    document.getElementById("phone").innerHTML = JSONresponse.data.phoneNumber;
+                    document.getElementById("specialty").innerHTML = JSONresponse.data.committee;
+                    document.getElementById("human").src = `../../uploads/${JSONresponse.data.avatar}`;
+                    window.localStorage.setItem("role", JSONresponse.data.role);
+                    window.localStorage.setItem("committee", JSONresponse.data.committee);
+                }
+            } else {
                 window.location.href = "../login/login.html"
 
             }
@@ -150,11 +146,11 @@
 
         }
 
-        const logout=()=>{
+        const logout = () => {
             window.localStorage.removeItem("token");
-            document.querySelector(".container").style.display="none";
+            document.querySelector(".container").style.display = "none";
             window.alert("نورتنا  (: ")
-            window.location.href="../"
+            window.location.href = "../"
         }
     </script>
 </body>
