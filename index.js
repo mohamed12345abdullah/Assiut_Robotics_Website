@@ -42,7 +42,7 @@ app.use("/upload",memberRouter)
 app.get("/",(req,res)=>{    
     res.end("server run successfully ")
 })
-
+ 
 app.use((error, req, res ,next)=>{
     res.status(500).json(  { status:httpStatusText.ERROR,
                             message:Array(error)})
