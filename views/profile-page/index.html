@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>profile page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="shortcut icon" href="../all-images/logo.ico" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto+Condensed:wght@300&display=swap"
+        rel="stylesheet">
 </head>
 
 <body onload="load()">
@@ -19,29 +23,29 @@
 
     <nav>
 
-        <a href="../index.html" style="text-decoration: none; color: inherit;">
+        <a href="../index.html" class="control-buttons">
             <img id="logo" src="../all-images/logo.png">
         </a>
         <div style="display: none;" id="control-panel">
-            <a href="../control-panel/leader.html" style="text-decoration: none; color: inherit;">
-                controle page
+            <a href="../control-panel/leader.html" class="control-buttons">
+                control page
             </a>
 
         </div>
         <div style="display: none;" id="OC-page">
-            <a href="../OC_page/OC.html" style="text-decoration: none; color: inherit;">
+            <a href="../OC_page/OC.html" class="control-buttons">
                 OC page
             </a>
 
         </div>
         <div style="display: none;" id="blog-page">
-            <a href="../blog/add-blog.html" style="text-decoration: none; color: inherit;">
+            <a href="../blog/add-blog.html" class="control-buttons">
                 Add blog
             </a>
 
         </div>
         <div style="display: none;" id="head-hr">
-            <a href="../control-panel/addHrTocommittee.html" style="text-decoration: none; color: inherit;">
+            <a href="../control-panel/addHrTocommittee.html" class="control-buttons">
                 make hr admin
             </a>
 
@@ -66,18 +70,36 @@
                 <p class="title bolding">Information</p>
                 <hr />
                 <div class="contact">
-                    <div class="titles">
+                    <div>
                         <p class="bolding">Email</p>
-                        <p class="bolding right">Phone</p>
+                        <p id="email">mfng@gmail.com</p>
+                    </div>
+                    <div>
+                        <p class="bolding">Phone</p>
+                        <p id="phone">98764512398</p>
+                    </div>
+                    <!-- <div class="titles">
+                        
+                        
                     </div>
                     <div class="infoo">
-                        <p id="email">mfng@gmail.com</p>
-                        <p id="phone" class="right">98764512398</p>
-                    </div>
+                        
+                        
+                    </div> -->
                 </div>
                 <p class="title bolding">Projects</p>
                 <hr />
-                <div class="works">
+                <div class="contact">
+                    <div>
+                        <p class="bolding">Recent</p>
+                        <p>Sam Dissuja</p>
+                    </div>
+                    <div>
+                        <p class="bolding">Most Viewed</p>
+                        <p>Dinoter husainm</p>
+                    </div>
+                </div>
+                <!-- <div class="works">
                     <div class="titles">
                         <p class="bolding">Recent</p>
                         <p class="bolding right">Most Viewed</p>
@@ -86,7 +108,7 @@
                         <p>Sam Dissuja</p>
                         <p class="right">Dinoter husainm</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="social">
                     <i class="fa-brands fa-facebook-f"></i>
                     <i class="fa-brands fa-twitter"></i>
@@ -97,7 +119,7 @@
     </div>
 
 
-    <script>
+    <!-- <script>
         const load = async () => {
             let token = window.localStorage.getItem("token");
             console.log(token);
@@ -153,7 +175,7 @@
             window.alert("نورتنا  (: ")
             window.location.href = "../"
         }
-    </script>
+    </script> -->
 </body>
 
 </html>
