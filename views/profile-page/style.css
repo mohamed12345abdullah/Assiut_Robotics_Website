@@ -31,8 +31,8 @@ html {
 #logo {
     width: 110px;
     height: 60px;
-    margin-left: 35px;
-    margin-top: 35px;
+    /* margin-left: 35px; */
+    /* margin-top: 35px; */
 }
 
 .content {
@@ -45,6 +45,17 @@ html {
     flex-wrap: nowrap;
     align-content: center;
     align-items: stretch;
+}
+
+.control-buttons-div {
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .left {
@@ -159,41 +170,56 @@ hr {
 /* style nav  */
 nav {
     /* background-color: #104068; */
-    height: max-content;
+    /* margin-bottom: 20px; */
+    padding: 5px 20px;
 }
 
-nav button {
-    margin-top: 50px;
-    margin-right: 1.5rem;
-    float: right;
-    width: 100px;
-    height: 30px;
+.logout-button {
+    margin: 10px 10px;
     background-color: #2aa9f3;
     text-align: center;
     line-height: 30px;
     border-radius: 20px;
     cursor: pointer;
     color: white;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    border: 1.5px solid black;
 }
 
 .control-buttons {
+    height: max-content;
     text-decoration: none;
     color: white;
+    display: block;
+    width: max-content;
 }
 
 #control-panel,
 #head-hr,
 #OC-page,
 #blog-page {
-    margin-top: 50px;
-    margin-right: 1rem;
-    float: right;
-    width: 100px;
-    height: 30px;
+    margin: 10px 10px;
+    width: 120px;
+    height: 40px;
     background-color: #2aa9f3;
+    color: white;
     text-align: center;
-    line-height: 30px;
     border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
 }
 
 @media screen and (max-width: 800px) {
@@ -237,5 +263,16 @@ nav button {
         font-size: 16px;
         margin-bottom: 15%;
         padding: 5px;
+    }
+
+    #control-panel,
+    #head-hr,
+    #OC-page,
+    #blog-page {
+        margin: 10px 10px;
+    }
+
+    .logout-button {
+        margin: 10px 10px;
     }
 }

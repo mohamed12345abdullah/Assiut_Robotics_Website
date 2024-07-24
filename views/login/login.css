@@ -6,7 +6,7 @@
 }
 
 body {
-    background-image: url("photos/background-all-pages.jpg");
+    background-image: url("../all-images/background-all-pages.jpg");
     display: flex;
     flex-direction: column;
     gap: 90px;
