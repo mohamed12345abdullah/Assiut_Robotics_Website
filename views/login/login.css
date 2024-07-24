@@ -141,3 +141,7 @@ form {
 .register-link p a:hover {
     text-decoration: underline;
 }
+
+.message {
+    color: rgb(209 31 37);
+}

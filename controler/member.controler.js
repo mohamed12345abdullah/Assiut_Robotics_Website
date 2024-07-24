@@ -86,7 +86,7 @@ const createAccount = async (req, res) => {
         res.status(201).json({
             status: httpStatusText.SUCCESS,
             data: null,
-            message: "Your account has been successfully created. <br> wait until your request be acceptted",
+            message: "Your account has been successfully created. <br> wait until your request be accepted",
         });
     } catch (error) {
         console.log(error.message);
@@ -132,7 +132,7 @@ const login = async (req, res) => {
                         status: httpStatusText.FAIL,
                         data: null,
                         message:
-                            "Your account has been successfully created. <br> wait until your request be acceptted",
+                            "Your account has been successfully created. <br> wait until your request be accepted",
                     });
                 }
             } else {
