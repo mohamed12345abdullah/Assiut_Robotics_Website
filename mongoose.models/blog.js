@@ -14,7 +14,7 @@ const blogSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: "images/WWW.jpeg",
+        default: "../all-images/WWW.jpeg",
     },
 });
 
