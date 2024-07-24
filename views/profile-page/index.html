@@ -146,16 +146,16 @@
                     const JSONresponse = await response.json();
                     console.log(JSONresponse);
                     if (JSONresponse.data.role < 4) {
-                        document.getElementById('control-panel').style.display = "inline-block";
+                        document.getElementById('control-panel').style.display = "flex";
                     }
                     if ((JSONresponse.data.committee == "HR" && JSONresponse.data.role < 4) || JSONresponse.data.role == 1) {
-                        document.getElementById('head-hr').style.display = "inline-block";
+                        document.getElementById('head-hr').style.display = "flex";
                     }
                     if (JSONresponse.data.committee == "OC") {
-                        document.getElementById('OC-page').style.display = "inline-block";
+                        document.getElementById('OC-page').style.display = "flex";
                     }
                     if (JSONresponse.data.committee == "media") {
-                        document.getElementById('blog-page').style.display = "inline-block";
+                        document.getElementById('blog-page').style.display = "flex";
                     }
                     document.getElementById("nameHuman").innerHTML = JSONresponse.data.name;
                     document.getElementById("email").innerHTML = JSONresponse.data.email;
