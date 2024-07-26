@@ -31,6 +31,15 @@ const memberSchema=new mongoose.Schema({
     avatar:{
         type:String,
         default:"../all-images/human.png"
+    },
+    rate:{
+        type:Number,
+    },
+    alerts:{
+        type:Number
+    },
+    warnings:{
+        type:Number
     }
 })
 

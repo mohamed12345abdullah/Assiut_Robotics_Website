@@ -20,6 +20,7 @@ const asyncWrapper = require("../middlleware/asyncWrapper");
 const sendEmail = require("../utils/sendEmail");
 // otp
 const OTP = require("../utils/otp");
+const { decode } = require("jsonwebtoken");
 
 const verifyEmail = async (req, res) => {
     try {
@@ -224,7 +225,7 @@ const controleHR = async (req, res) => {
     try {
         const { id, committee } = req.body;
 
-        await member.findByIdAndUpdate(id, { committee: "HR " + committee, role: 3 });
+        await member.findByIdAndUpdate(id, { committee: "HR-" + committee, role: 3 });
         res.status(200).json({
             status: httpStatusText.SUCCESS,
             data: null,
@@ -316,6 +317,61 @@ const changePass = async (req, res) => {
     }
 };
 
+
+const rate=async (req,res)=>{
+    try {
+        console.log(req.decoded);
+        const committee= req.decoded.committee.split("-")[0];
+        console.log(committee);
+        if(committee=="HR")
+        {
+            const {ID,rate}=req.body;
+            const MEMBER=await member.findById(ID);
+            // if(MEMBER.committee=="web"){
+            //     MEMBER.rate=9.5;
+            // }else{
+            //     MEMBER.rate=rate;
+            // }
+            MEMBER.rate=rate;
+            if(rate<6){
+                MEMBER.alerts+=1;
+                if(MEMBER.alerts>2){
+                    MEMBER.warnings+=1;
+                    MEMBER.alerts=0;
+
+                }
+            }
+            if(MEMBER.warnings>2){
+                console.log("delete");
+                await member.deleteOne({_id:ID});
+            }
+            MEMBER.save();
+            res.status(200).json({
+                status: httpStatusText.SUCCESS,
+                data: updated,
+                message: "updated success",
+            });
+        }else{
+            res.status(401).send({
+                status: httpStatusText.FAIL,
+                data: null,
+                message: " not HR",
+            }); 
+        }
+
+  
+        
+        res.end("ok")
+    } catch (error) {
+        res.status(400).send({
+            status: httpStatusText.FAIL,
+            data: null,
+            message: error.message,
+        }); 
+    }
+}
+
+
 module.exports = {
     verifyEmail,
     createAccount,
@@ -327,4 +383,5 @@ module.exports = {
     changeHead,
     generateOTP,
     changePass,
+    rate
 };

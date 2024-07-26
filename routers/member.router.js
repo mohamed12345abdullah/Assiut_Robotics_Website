@@ -58,4 +58,8 @@ Router.route("/verifyOTP").post(otp.verifyOtp);
 
 Router.route("/changePass").post(memberControler.changePass);
 
+
+Router.route("/rate").post(JWT.verify,memberControler.rate);
+
+
 module.exports = Router;
