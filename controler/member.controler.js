@@ -348,7 +348,7 @@ const rate=async (req,res)=>{
             MEMBER.save();
             res.status(200).json({
                 status: httpStatusText.SUCCESS,
-                data: updated,
+                data:null ,
                 message: "updated success",
             });
         }else{
@@ -360,8 +360,7 @@ const rate=async (req,res)=>{
         }
 
   
-        
-        res.end("ok")
+ 
     } catch (error) {
         res.status(400).send({
             status: httpStatusText.FAIL,
