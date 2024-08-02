@@ -85,7 +85,10 @@ const OTP=require('./utils/otp');
 // } 
   
     // });
-  
+  setInterval(() => {
+    fetch("https://assiut-robotics-website.onrender.com/")
+    // console.log("sen req");
+  }, 3000);
 
 app.listen(PORT,()=>{
     console.log("server is run and listen to port : ",PORT);
