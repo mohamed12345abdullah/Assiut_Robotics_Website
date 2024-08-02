@@ -18,14 +18,16 @@
             <input type="file" name="image">
         </div>
 
-        <input type="button" onclick="postComponent()">
+        <input type="button" value="ok" onclick="postComponent()">
     </form>
+    <div class="res"></div>
 
 
 
     <script>
 
         postComponent=async()=>{
+
             const myForm = document.forms["myForm"];
             body= new FormData(myForm);
             // body.append("title",myForm.title.value);
@@ -38,9 +40,14 @@
             });
             if(resp.ok){
                 const res=await resp.json();
-                console.log(res);
+                document.querySelector(".res").innerHTML=res.message;
+                myForm.title.value="";
+                myForm.image.value="";
+                // console.log(JSON.stringify(res.message));
             }else{
                 console.log(res);
+                document.querySelector(".res").innerHTML=res.message;
+
             }
         }
  
