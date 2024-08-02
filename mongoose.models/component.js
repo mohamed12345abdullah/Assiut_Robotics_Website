@@ -5,29 +5,32 @@ const componentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image:{
+    type:String
+  },
   price: {
     type: Number,
-    required: true,
+    // required: true,
   },
   taxes: {
     type: Number,
-    required: true,
+    // required: true,
   },
   ads: {
     type: Number,
-    required: true,
+    // required: true,
   },
   discount: {
     type: Number,
-    required: true,
+    // required: true,
   },
   total: {
     type: Number,
-    required: true,
+    // required: true,
   },
   category: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 

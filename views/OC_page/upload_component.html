@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form name="myForm" action="" method="post" enctype="multipart/form-data">
+        <div>
+            <input type="text" name="title">
+
+        </div>
+
+        <div>
+            <input type="file" name="image">
+        </div>
+
+        <input type="button" onclick="postComponent()">
+    </form>
+
+
+
+    <script>
+
+        postComponent=async()=>{
+            const myForm = document.forms["myForm"];
+            body= new FormData(myForm);
+            // body.append("title",myForm.title.value);
+            // body.append("image",myForm.image.value);
+            console.log(body);
+
+            const resp = await fetch("../../components/add", {
+                method: "POST",
+                body:body,
+            });
+            if(resp.ok){
+                const res=await resp.json();
+                console.log(res);
+            }else{
+                console.log(res);
+            }
+        }
+ 
+
+    </script>
+</body>
+
+</html>

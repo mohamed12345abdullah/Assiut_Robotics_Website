@@ -9,9 +9,12 @@ const addComponent = async (req, res) => {
         console.log(req.body);
 
         const { title, price, taxes, ads, discount, total, category } = req.body;
-
+        console.log(req.file.originalname);
+        const component_image=req.myFileName;
+        console.log(req.myFileName);
         const newComponent = await new component({
             title,
+            image:component_image,
             price,
             taxes,
             ads,

@@ -1,0 +1,24 @@
+.components{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
+    justify-content: center;
+    /* justify-items: center; */
+}
+
+.component{
+    text-align: center;
+    width: 300px;
+    /* background-color: aqua; */
+
+}
+
+.component>img{
+    margin-bottom: 10px;
+    width: 100%;
+
+}
