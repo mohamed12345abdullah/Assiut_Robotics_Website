@@ -19,7 +19,7 @@ html {
 
 .container {
     display: flex;
-    height: 80%;
+    height: 100%;
     width: 100%;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -36,7 +36,7 @@ html {
 }
 
 .content {
-    margin-top: 5%;
+    margin: 5% 0;
     width: 100%;
     height: max-content;
     display: flex;
