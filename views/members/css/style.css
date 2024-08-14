@@ -1,0 +1,32 @@
+.bagetitle {
+    animation: welcome 1s 1;
+    transition: 3ms;
+}
+
+@keyframes welcome {
+    0% {
+        left: -50%;
+        opacity: 20%;
+    }
+    50%{
+        opacity: 20%;
+    }
+    100% {
+        left: 0;
+        opacity: 100%;
+    }
+}
+.big{
+    justify-content: center;
+}
+.col-4, .vline{
+    display: none;
+}
+
+/* social media hover */
+.social-icons:hover
+{
+    transform: scale(0.8);
+    transition: 0.5 s;
+    opacity: 0.9;
+}
