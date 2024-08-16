@@ -25,13 +25,13 @@ const addComponent = async (req, res) => {
             category,
         });
 
-        newComponent.save();
+        await newComponent.save();
 
         res.status(200).send({ message: "add component successfully" });
     } catch (error) {
-        res.status(400).send({ message: error });
+        res.status(400).send({ message: error.message });
     }
-};
+}; 
 
 const getCombonent = async (req, res) => {
     try {

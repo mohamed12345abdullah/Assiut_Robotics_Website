@@ -5,22 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        form{
+
+            box-sizing: border-box;
+            border: 1px gray solid;
+            width: 300px;
+            height: 400px;
+            margin-left: calc(50% - 150px);
+            box-shadow: 1px 1px 3px gray;
+
+        }
+        form input,.res{
+            box-sizing: border-box;
+            width: 200px;
+            margin-left: 50px;
+            margin-top: 30px;
+        }
+        input[type="text"],input[type="button"]{
+            border: 1px rgb(130, 198, 247) solid;
+            border-radius: 10px;
+            height: 30px;
+        }
+    </style>
 </head>
 
 <body>
+
     <form name="myForm" action="" method="post" enctype="multipart/form-data">
         <div>
-            <input type="text" name="title">
+            <input type="text" placeholder="component name" name="title">
 
         </div>
 
         <div>
             <input type="file" name="image">
         </div>
+        <div class="submit">
+            <input type="button" value="ok" onclick="postComponent()">
 
-        <input type="button" value="ok" onclick="postComponent()">
+        </div>
+        <div class="res"></div>
     </form>
-    <div class="res"></div>
+    
 
 
 
@@ -45,8 +72,9 @@
                 myForm.image.value="";
                 // console.log(JSON.stringify(res.message));
             }else{
+                const res=await resp.json();
                 console.log(res);
-                document.querySelector(".res").innerHTML=res.message;
+                document.querySelector(".res").innerHTML= res.message;
 
             }
         }

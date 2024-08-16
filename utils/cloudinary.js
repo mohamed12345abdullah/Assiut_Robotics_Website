@@ -11,6 +11,9 @@ cloudinary.config({
 });
 
 const uploadToCloud=async (filename)=> {
+try {
+        
+
     console.log("cloudinary run");
     
    const result=await cloudinary.uploader.upload("uploads/"+filename)
@@ -28,13 +31,13 @@ const uploadToCloud=async (filename)=> {
     })
     console.log(url);
     return url;
-           
+} catch (error) {
+        
+}        
     
 };
 
-uploadToCloud().catch(e=>{
-    console.log(e)
-})
+
 module.exports={
     uploadToCloud
 }
