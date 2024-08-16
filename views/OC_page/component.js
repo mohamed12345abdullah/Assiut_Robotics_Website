@@ -12,7 +12,7 @@ const getComponents = async () => {
         components.forEach(element => {
             container.innerHTML += `
             <div class="component box">
-            <img src="../../uploads/${element.image}" alt="">
+            <img src="${element.image}" alt="">
             <div class="name"> ${element.title}</div>
 
         </div>`
@@ -40,7 +40,7 @@ search.addEventListener("input", () => {
     componentsFounded.forEach(element => {
         container.innerHTML += `
                 <div class="component">
-                <img src="../../uploads/${element.image}" alt="">
+                <img src="${element.image}" alt="">
                 <div class="name"> ${element.title}</div>
     
             </div>`

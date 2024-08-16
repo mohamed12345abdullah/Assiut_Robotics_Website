@@ -1,21 +1,19 @@
 const express = require("express");
-
 const componentControler = require("../controler/component.controler");
 const JWT = require("../middlleware/jwt");
 const Router = express.Router();
 const multer = require("multer");
 
-
-
 const diskStorage = multer.diskStorage({
     destination: (req, file, cb) => {
             cb(null, "uploads/");
+           // console.log("file dest", file);
     },
     filename: (req, file, cb) => {
             const ext = file.mimetype.split("/")[1];
 
             const filename = `${file.originalname.split(".")[0]+Date.now()}.${ext}`;
-            console.log("file", file);
+           console.log("filename:", filename);
             req.myFileName=filename;
             cb(null, filename);
     },

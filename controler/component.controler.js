@@ -4,14 +4,16 @@ const mongoose = require("mongoose");
 mongoose.connect(MONGOURL);
 const component = require("../mongoose.models/component");
 
+const cloudinary=require('../utils/cloudinary');
+
 const addComponent = async (req, res) => {
     try {
-        console.log(req.body);
+       // console.log(req.body);
 
         const { title, price, taxes, ads, discount, total, category } = req.body;
-        console.log(req.file.originalname);
-        const component_image=req.myFileName;
-        console.log(req.myFileName);
+        //console.log(req.file.originalname);
+        const component_image=await cloudinary.uploadToCloud(req.myFileName) ;
+        console.log("file name",req.myFileName);
         const newComponent = await new component({
             title,
             image:component_image,
