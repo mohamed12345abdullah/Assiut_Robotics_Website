@@ -83,7 +83,7 @@ function setupColumns() {
 }
 
 function implement_views() {
-    $.get("../main/header.html", function (data) {
+    $.get("./main/header.html", function (data) {
         $("#myUniqueHeaderID").html(data);
     })
     .done(function () {
@@ -94,7 +94,7 @@ function implement_views() {
         console.error("Error loading HTML content. #Header");
     });
 
-    $.get("../main/footer.html", function (data) {
+    $.get("./main/footer.html", function (data) {
         $("#myUniqueFooterID").html(data);
     })
     .done(function () {
