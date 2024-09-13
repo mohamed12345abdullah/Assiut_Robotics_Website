@@ -34,7 +34,7 @@ const verifyEmail = async (req, res) => {
             html: `
     <p>Please verify your email by clicking on the link below:</p>
     <br><br>
-    <a href="https://assiut-robotics-website.onrender.com/members/createAccount/${token}">Verify your email</a>
+    <a href="https://assiut-robotics-website.vercel.app/members/createAccount/${token}">Verify your email</a>
   `,
         });
         res.status(200).json({
