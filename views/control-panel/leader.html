@@ -141,8 +141,8 @@
             <div data-com="web">web</div>
             <div data-com="HR">HR</div>
             <div data-com="Marketing">Marketing</div>
-            <div data-com="AC machanic">AC mechanic</div>
-            <div data-com="AC electric">AC electric</div>
+            <div data-com="AC-mechanic">AC mechanic</div>
+            <div data-com="AC-electric">AC electric</div>
             <div data-com="OC">OC</div>
             <div data-com="PR">PR</div>
             <div data-com="media">media</div>
@@ -392,7 +392,7 @@
                 console.log(tab.dataset.com);
                 members.forEach(member => {
                     const splitcom = member.committee.split(' ', 1);
-                    console.log(splitcom);
+                    console.log("split com",splitcom);
                     if (splitcom == tab.dataset.com && member.role < 5) {
                         addMembersToCommittee('.members', member)
 
