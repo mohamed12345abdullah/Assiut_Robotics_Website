@@ -1,5 +1,7 @@
 
-
+:root{
+    --defaultColor: #2eade4;
+}
 .header {
     display: flex;
     justify-content: center;
@@ -7,7 +9,7 @@
     margin-top: 90px;
 }
 
-.section1 {
+.pinnedBlog {
     display: flex;
     justify-content: space-between;
     padding: 40px;
@@ -19,7 +21,7 @@
     align-items: flex-end;
 }
 
-.section1 h1 {
+.pinnedBlog h1 {
     margin-top: 0;
 }
 
@@ -46,7 +48,6 @@
 }
 
 .section p {
-    color: #b3c6de;
     margin-right: 15px;
 }
 
@@ -107,23 +108,16 @@
 }
 
 .toggle-content {
-    display: none;
-    color: blue;
+    /* display: none; */
     cursor: pointer;
-    text-decoration: underline;
+    width: 2rem;
+    height: 2rem;
 }
 
 .toggle-content.show {
     display: inline;
 }
 
-.section1 .toggle-content {
-    color: blue;
-}
-
-.section .toggle-content {
-    color: #7b87ff;
-}
 
 .calender {
     height: 35px;
@@ -168,7 +162,18 @@
     flex: 1 0 200px;
     transition: all 0.3s ease;
 }
-
+.content-container h1{
+    margin-bottom: 1rem;
+}
+.text-content{
+    text-align: justify;
+    width: 90%;
+}
+.content-container a{
+    margin: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 .page-container {
     display: flex;
     flex-direction: column;
@@ -229,33 +234,33 @@
         height: 75px;
     }
 
-    .section1 {
+    .pinnedBlog {
         padding: 20px;
         width: 90%;
     }
 
-    .section1 .content-container {
+    .pinnedBlog .content-container {
         flex: 1 0 100px;
     }
 
-    .section1 h1 {
+    .pinnedBlog h1 {
         font-size: 16px;
     }
 
-    .section1 .text-content {
+    .pinnedBlog .text-content {
         font-size: 12px;
     }
 
-    .section1 .toggle-content {
+    .pinnedBlog .toggle-content {
         font-size: 12px;
     }
 
-    .section1 .calender {
+    .pinnedBlog .calender {
         height: 25px;
         width: 25px;
     }
 
-    .section1 .date-text {
+    .pinnedBlog .date-text {
         font-size: 10px;
     }
 
@@ -303,5 +308,183 @@
 
     .section .date-text {
         font-size: 10px;
+    }
+}
+
+
+/* Styling the focus shap */
+
+.focused{
+    animation: large 1s forwards;
+    position: static;
+    padding: 1%;
+    overflow: hidden;
+    background-color: #b3dde4;
+    opacity: 1;
+}
+.focus::before{
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: darking 1s forwards;
+    z-index: 0;
+}
+@keyframes darking {
+    to{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+.focused .text-container{
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 0;
+}
+@media screen and (max-width: 980px) {
+    @keyframes large {
+        to{
+           scale: 1.05;
+        box-shadow: 0px 0px 10px 5px #000000; 
+        }
+    }
+    
+}
+@media screen and (min-width: 980px){
+@keyframes large {
+    to{
+       scale: 1.1;
+    box-shadow: 0px 0px 10px 5px #000000;
+
+        
+    }
+}}
+.focused .text-container .animateIt {
+    width: 100%;
+    text-align: justify;
+    max-height: 100000vh;
+}
+
+.focused .BLOG_IMG{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 5rem;
+}
+.focused .BLOG_IMG img{
+    width:  5rem;   
+    height: 5rem; 
+    object-fit: fill;
+    object-position: center;
+    clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+
+}
+.focused .content-container{
+    margin: 0;
+}
+.focused .content-container a{
+    animation: rotating 0.1s forwards;
+    text-align: center;
+    margin: auto;
+    margin-top: 1rem;
+}
+@keyframes rotating{
+    to{
+        transform: rotateZ(180deg);
+    }
+}
+i:hover{
+    animation: move 1s infinite linear;
+}
+@keyframes move{
+    0%{
+        transform: translateY(0);
+        
+    }
+    25%{
+        transform: translateY(-1px);
+    }
+    75%{
+        transform: translateY(1px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+    
+}
+.Noreadmore{
+    display: none;
+}
+.focused .animateIt{
+    height: fit-content;
+    padding-bottom: 1rem;
+    overflow: hidden;
+    animation: veiw 5s forwards;
+}
+@keyframes veiw{
+    from{
+        max-height: 0;
+    }
+}
+
+.disabled{
+    display: none;
+}
+/* Unfocus shap */
+
+.unfocused{
+    animation: small 1s forwards;
+    position: relative;
+    padding: 1%;
+    overflow: hidden;
+    background-color: #b3dde4;
+    opacity: 1;
+}
+
+@keyframes small {
+    to{
+       scale: 1;
+       box-shadow: 5px 6px 3px #888888;
+    }
+    
+}
+
+.unfocused .content-container a{
+    transform: rotateZ(180deg);
+    animation: InverseRotating 1s forwards;
+}
+@keyframes InverseRotating {
+    to{
+        transform: rotateZ(0deg);
+    }
+}
+.unfocused .animateIt{
+    height: fit-content;
+    overflow: hidden;
+    animation: mini 2s forwards;
+}
+@keyframes mini{
+    to{
+        max-height: 0;
+    }
+}
+
+.nofocus::before{
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: lighting 1s forwards;
+    z-index: 0;
+}
+@keyframes lighting {
+    to{
+        background-color: rgba(0, 0, 0, 0);
     }
 }

@@ -9,28 +9,33 @@ body {
     --dark-color: #19283f;
 }
 
-.logo {
-    margin: auto;
-    background: url(../images/background.jpg);
-    width: 100%;
-    height: 100vh;
-    background-size: contain;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    background-attachment: fixed;
 
+
+/* start nav bar */
+.nav-section a, .nav-section ul, .nav-section li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none !important;
+    color: white !important;
 }
 
-.section1 {
-    display: block;
-    margin: auto;
-    background-color: rgba(0, 0, 0, .5);
-    border-radius: 12px;
-    margin-top: 150px;
-    padding: 15px 45px;
-    width: 480px;
+.nav-section {
+    width: 100%;
+    border-bottom: 3px solid #5da4d0;
+    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(10, 40, 70, .7));
+    font-size: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 8%;
+}
+
+.nav-container {
+    padding-left: 12px;
+    padding-right: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sublogo {
@@ -41,25 +46,32 @@ body {
     height: 60px;
 }
 
-nav {
-    border-bottom: 3px solid #5da4d0;
-    background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(10, 40, 70, .7));
-    font-size: 20px;
+.nav-links {
+    display: flex;
+    gap: 70px;
+    justify-content: space-between;
+    flex-direction: row;
+
 }
 
-.nav-links-2 {
-    color: white !important;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+/* End nav bar */
+/*start logo*/
+.logo {
+    height: calc(100vh - 8%);
+    background: url(../images/background.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
-.nav-links-3 {
-    color: white !important;
-    position: absolute;
-    right: 12%;
-    bottom: 0;
+.section1 {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 12px;
 }
+
+/*End logo*/
 
 .abstract {
     background-color: rgba(10, 40, 70, .5);
@@ -70,6 +82,8 @@ nav {
 
 .text {
     font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 .abstract h1 {
@@ -77,9 +91,20 @@ nav {
     text-align: center;
     background-color: rgba(0, 0, 0, .5);
     padding: 20px;
-    width: 600px;
+
     border-radius: 12px;
-    margin: 50px auto;
+}
+
+.abstract .container {
+    padding-top: 10px;
+}
+
+.abstract .text {
+    font-size: 18px !important;
+}
+
+.abstract p {
+    margin: 0;
 }
 
 .carousel-inner {
@@ -90,7 +115,7 @@ nav {
 }
 
 .carousel {
-    height: 500px;
+    height: 420px;
 }
 
 .carousel img {
@@ -107,71 +132,46 @@ nav {
     }
 }
 
+
 /* footer */
 .footer {
     background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(10, 40, 70, .7));
     border-top: 4px solid #5da4d0;
-}
-
-.footer .facebook {
-    color: #1877f2;
-}
-
-.footer .linkedin {
-    color: #0077b5;
-}
-
-.footer .youtube {
-    color: #ff0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
 
 }
 
-span {
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 80px;
+
+}
+
+.footer p {
+    margin: 0;
     color: #ffc400;
+    font-size: 20px;
 }
 
-
-
-
+.footer .social {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    gap: 10px;
+}
 
 .sectionns {
     background: linear-gradient(to right, rgba(10, 40, 70, .7), rgba(0, 0, 0, .8));
     border-top: 4px solid #5da4d0;
 }
 
-footer div.social {
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    ;
-    margin: auto;
-    overflow-x: hidden;
-    margin: 4px;
-}
-
-footer div a img {
-    width: 90px;
-    padding: 10px 7px;
+.footer div a img {
+    width: 40px;
+    height: 40px;
     transition: all .7s;
-}
-
-.fs-7 {
-    color: white;
-    margin-bottom: 2rem;
-}
-
-footer div a img:hover {
-    transform: scale(1.2) rotateZ(360deg);
-    -webkit-transform: scale(1.2) rotateZ(360deg);
-    -moz-transform: scale(1.2) rotateZ(360deg);
-    -ms-transform: scale(1.2) rotateZ(360deg);
-    -o-transform: scale(1.2) rotateZ(360deg);
-}
-
-footer div p {
-    padding-bottom: 10px;
-    text-align: center;
-    color: white;
-    font-size: 26px;
 }
