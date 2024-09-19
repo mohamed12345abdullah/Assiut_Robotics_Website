@@ -37,7 +37,7 @@
 
 
 
-function modeAction(mode,Blog,Body, BLOG_IMG , textContainer,title,contentContainer,animateIt,content,Hcontent){
+function modeAction(mode,Blog,Body, BLOG_IMG , textContainer,title,contentContainer,animateIt,Hcontent){
     console.log("modeAction ");
     
     if(mode === "no focused"){
@@ -91,31 +91,36 @@ function modeAction(mode,Blog,Body, BLOG_IMG , textContainer,title,contentContai
         Blog.classList.add("focused");
     }
 }
-function readMoreShow(){
+function readMoreShow(toggleButton,id){
     console.log("==================================================================================");
-    
-    const toggleButton = document.querySelectorAll(".toggle-content")[0];
+   
     let BlogId = toggleButton.id;
     let mode = "focused";
-    let BLOG_IMG = document.querySelector(".BLOG_IMG");
-    let contentContainer = document.querySelector(".content-container");
-    let title = document.querySelector(".title");
-    let TextContent = document.querySelector(".text-content");
-    let animateIt = document.querySelector(".animateIt");
-    let Hcontent = document.querySelector(".text-content").textContent;
-    let content = document.querySelector(".text-content").textContent;
+    let BLOG_IMG = document.querySelectorAll(".BLOG_IMG")[id];
+    let contentContainer = document.querySelectorAll(".content-container")[id];
+    let title = document.querySelectorAll(".title")[id];
+    let TextContent = document.querySelectorAll(".text-content")[id];
+    let animateIt = document.querySelectorAll(".animateIt")[id];
+    let Hcontent = document.querySelectorAll(".text-content")[id].textContent;
+    // let content = document.querySelector(".text-content")[id].textContent;
     let Body = document.querySelector("body");
     let Blog = document.getElementById(BlogId);
+    console.log(contentContainer)
+    if(id == 0){
+        Blog.style.backgroundColor = "rgb(43.9875, 174.012, 226.0065, 0.3) !important";
+    }
     toggleButton.addEventListener("click", () => {
-    modeAction(mode,Blog,Body ,BLOG_IMG , contentContainer,title,TextContent,animateIt,content,Hcontent);
+    modeAction(mode,Blog,Body ,BLOG_IMG , contentContainer,title,TextContent,animateIt,Hcontent);
     mode = mode === "no focused" ? "focused" : "no focused";
     })
 }
 
-    
+let toggleButtons = Array.from(document.querySelectorAll(".toggle-content"));
+console.log(toggleButtons)
+toggleButtons.forEach((button,id) => {
+    readMoreShow(button,id);
+})
 
-
-readMoreShow();
 
 function loadBlogs() {
     let blogsContainer = document.querySelector(".unPinnedBlogs");

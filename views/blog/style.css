@@ -318,8 +318,9 @@
     animation: large 1s forwards;
     position: static;
     padding: 1%;
+    height: fit-content;
     overflow: hidden;
-    background-color: #b3dde4;
+    background-color: #eef0e5;
     opacity: 1;
 }
 .focus::before{
@@ -363,7 +364,7 @@
 .focused .text-container .animateIt {
     width: 100%;
     text-align: justify;
-    max-height: 100000vh;
+    max-height: 40vh;
 }
 
 .focused .BLOG_IMG{
@@ -441,7 +442,6 @@ i:hover{
     position: relative;
     padding: 1%;
     overflow: hidden;
-    background-color: #b3dde4;
     opacity: 1;
 }
 

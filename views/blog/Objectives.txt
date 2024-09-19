@@ -52,9 +52,18 @@ Notes :-
 
 7. [ Make Toggle function valid for all element  ]                       Task 7: Make the function that will make these actions valid for all element 
     Status: Not Started
+    Status: Done 19 / 9
 
 Notes :-
 - Add any additional notes or comments here.
+
+8. [ Make creation function  ]                       Task 8: Make the function that will create blogs
+    Status: Not Started
+    Status: Done 19 / 9
+
+Notes :-
+- Add any additional notes or comments here.
+
 
 Notes:
 ------
