@@ -24,7 +24,7 @@ app.use(cors());
 const body_parser=require('body-parser');
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({extended:false}));
-
+ 
 
 
 app.use("/book",express.static(__dirname+"/books "))
