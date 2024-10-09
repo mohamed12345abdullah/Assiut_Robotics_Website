@@ -141,8 +141,8 @@
             <div data-com="web">web</div>
             <div data-com="HR">HR</div>
             <div data-com="Marketing">Marketing</div>
-            <div data-com="AC-mechanic">AC mechanic</div>
-            <div data-com="AC-electric">AC electric</div>
+            <div data-com="AC_mechanic">AC mechanic</div>
+            <div data-com="AC_electric">AC electric</div>
             <div data-com="OC">OC</div>
             <div data-com="PR">PR</div>
             <div data-com="media">media</div>
@@ -353,9 +353,9 @@
                 document.querySelector('.tabs').style.display = 'none';
                 document.querySelector('.newmembers').style.display = 'block';
                 members.forEach(member => {
-                    const splitcom = member.committee.split(' ', 1);
+                    const splitcom = member.committee.split('-', 1);
                     // console.log(splitcom);
-                    if (splitcom == com && member.role < 5) {
+                    if (splitcom == com && member.role < 5 && member.role!=1) {
                         addMembersToCommittee('.members', member)
 
                     }
@@ -391,9 +391,9 @@
                 document.querySelector('.members').innerHTML = '';
                 console.log(tab.dataset.com);
                 members.forEach(member => {
-                    const splitcom = member.committee.split(' ', 1);
+                    const splitcom = member.committee.split('-', 1);
                     console.log("split com",splitcom);
-                    if (splitcom == tab.dataset.com && member.role < 5) {
+                    if (splitcom == tab.dataset.com && member.role < 5 &&member.role!=1) {
                         addMembersToCommittee('.members', member)
 
                     }
