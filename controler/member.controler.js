@@ -58,7 +58,7 @@ const createAccount = async (req, res) => {
     try {
         // console.log(req.body);
         // console.log(req.file);
-        let { name, email, password, committee, gender, phoneNumber } = req.decoded;
+        let { name, email, password, committee, gender, phoneNumber,rate,alerts,warnings } = req.decoded;
         let oldEmail = await member.findOne({ email });
         console.log("old member", oldEmail);
         if (oldEmail) {
@@ -78,6 +78,9 @@ const createAccount = async (req, res) => {
             committee,
             gender,
             phoneNumber,
+            rate,
+            alerts,
+            warnings
             //avatar: req.file.filename
         });
 
@@ -321,7 +324,7 @@ const changePass = async (req, res) => {
 const rate=async (req,res)=>{
     try {
         console.log(req.decoded);
-        const committee= req.decoded.committee.split("-")[0];
+        const committee= req.decoded.committee.split("-");
         console.log(committee);
         if(committee=="HR")
         {

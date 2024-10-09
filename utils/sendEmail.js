@@ -8,8 +8,8 @@ module.exports = async (param) => {
     secure: true, // Use `true` for port 465, `false` for all other ports
     // service:"gmail",
     auth: {
-      user: "abdullah68782325@gmail.com",
-      pass: "vlym gxgh vqut hbme",
+      user: "mohamed12345abdullah@gmail.com",
+      pass: "azcj ouyy tlzg dzob",
     },
   });
 
