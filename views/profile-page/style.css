@@ -210,7 +210,9 @@ nav {
 
 #control-panel,
 #head-hr,
-#OC-page,
+#OC-page1,
+#OC-page2,
+#addComponent,
 #blog-page {
     margin: 10px 10px;
     width: 120px;

@@ -33,11 +33,24 @@
                 </a>
     
             </div>
-            <div id="OC-page">
-                <a href="../OC_page/OC.html" class="control-buttons">
-                    OC page
-                </a>
-    
+            <div id="OC-page1">
+                
+                    <a href="../OC_page/OC.html" class="control-buttons">
+                        component page 1
+                    </a>
+
+            </div>
+            <div id="OC-page2">
+                    <a href="../OC_page/component.html" class="control-buttons">
+                        component page 2
+                    </a>
+
+            </div>
+            <div id="addComponent">
+                    <a href="../OC_page/upload_component.html" class="control-buttons">
+                        upload_component
+                    </a>
+
             </div>
             <div id="blog-page">
                 <a href="../blog/add-blog.html" class="control-buttons">
@@ -160,10 +173,18 @@
                         document.getElementById('control-panel').style.display = "flex";
                     }
                     if ((JSONresponse.data.committee == "HR" && JSONresponse.data.role < 4) || JSONresponse.data.role == 1) {
-                        document.getElementById('head-hr').style.display = "flex";
+                        document.getElementById('head-hr').style.display = "inline-block";
+                        document.getElementById('OC-page1').style.display = "inline-block";
+                        document.getElementById('OC-page2').style.display = "inline-block";
+                        document.getElementById('blog-page').style.display = "inline-block";
+                        document.getElementById('addComponent').style.display = "inline-block";
+
+
                     }
-                    if (JSONresponse.data.committee == "OC") {
-                        document.getElementById('OC-page').style.display = "flex";
+                    if (JSONresponse.data.committee == "OC" ) {
+                        document.getElementById('OC-page1').style.display = "flex";
+                        document.getElementById('OC-page2').style.display = "flex";
+                        document.getElementById('addComponent').style.display = "flex";
                     }
                     if (JSONresponse.data.committee == "media") {
                         document.getElementById('blog-page').style.display = "flex";
