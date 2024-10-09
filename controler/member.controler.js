@@ -25,7 +25,7 @@ const { decode } = require("jsonwebtoken");
 const verifyEmail = async (req, res) => {
     try {
         let { name, email, password, committee, gender, phoneNumber } = req.body;
-        const token = await jwt.generateToken({ name, email, password, committee, gender, phoneNumber }, "5m");
+        const token = await jwt.generateToken({ name, email, password, committee, gender, phoneNumber }, "1h");
         console.log("req.body is : ", req.body);
         await sendEmail({
             email: email,
