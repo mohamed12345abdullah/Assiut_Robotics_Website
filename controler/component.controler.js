@@ -30,6 +30,8 @@ const addComponent = async (req, res) => {
         res.status(200).send({ message: "add component successfully" });
     } catch (error) {
         res.status(400).send({ message: error.message });
+        // console.log(error);
+        
     }
 }; 
 
