@@ -59,9 +59,9 @@
             body= new FormData(myForm);
             // body.append("title",myForm.title.value);
             // body.append("image",myForm.image.value);
-            console.log(body);
+            console.log("form data:",body);
 
-            const resp = await fetch("../../components/add", {
+            const resp = await fetch("https://assiut-robotics-website.vercel.app/components/add", {
                 method: "POST",
                 body:body,
             });
