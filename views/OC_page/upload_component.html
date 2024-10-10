@@ -60,8 +60,8 @@
             // body.append("title",myForm.title.value);
             // body.append("image",myForm.image.value);
             console.log("form data:",body);
-
-            const resp = await fetch("https://assiut-robotics-website.vercel.app/components/add", {
+            // https://assiutrobotics-production.up.railway.app
+            const resp = await fetch("https://assiutrobotics-production.up.railway.app/components/add", {
                 method: "POST",
                 body:body,
             });
