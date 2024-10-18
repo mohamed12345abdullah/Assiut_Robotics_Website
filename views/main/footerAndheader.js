@@ -1,6 +1,6 @@
 function navButtonClick() {
     const topNav = document.getElementById("myTopnav");
-    
+
     if (topNav.classList.contains("responsive")) {
         hideNav();
     } else {
@@ -69,7 +69,7 @@ function setupScrollNav() {
                     }
                 }
             },
-            {passive: true}
+            { passive: true }
         );
     });
 }
@@ -77,32 +77,32 @@ function setupScrollNav() {
 function setupColumns() {
     $(document).ready(function () {
         $(".column").click(function () {
-            this.scrollIntoView({behavior: "smooth", block: "center"});
+            this.scrollIntoView({ behavior: "smooth", block: "center" });
         });
     });
 }
 
 function implement_views() {
-    $.get("../main/header.html", function (data) {
+    $.get("./main/header.html", function (data) {
         $("#myUniqueHeaderID").html(data);
     })
-    .done(function () {
-        console.log("All HTML content loaded successfully. #Header");
-        setupScrollNav();
-    })
-    .fail(function () {
-        console.error("Error loading HTML content. #Header");
-    });
+        .done(function () {
+            console.log("All HTML content loaded successfully. #Header");
+            setupScrollNav();
+        })
+        .fail(function () {
+            console.error("Error loading HTML content. #Header");
+        });
 
-    $.get("../main/footer.html", function (data) {
+    $.get("./main/footer.html", function (data) {
         $("#myUniqueFooterID").html(data);
     })
-    .done(function () {
-        console.log("All HTML content loaded successfully. #Footer");
-    })
-    .fail(function () {
-        console.error("Error loading HTML content. #Footer");
-    });
+        .done(function () {
+            console.log("All HTML content loaded successfully. #Footer");
+        })
+        .fail(function () {
+            console.error("Error loading HTML content. #Footer");
+        });
 }
 
 implement_views();
