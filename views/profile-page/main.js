@@ -46,7 +46,7 @@ const load = async () => {
           document.getElementById("email").innerHTML = JSONresponse.data.email;
           document.getElementById("phone").innerHTML = JSONresponse.data.phoneNumber;
           document.getElementById("specialty").innerHTML = JSONresponse.data.committee;
-          document.getElementById("human").src = `../../uploads/${JSONresponse.data.avatar}`;
+          document.getElementById("human").src = `${JSONresponse.data.avatar}`;
           window.localStorage.setItem("role", JSONresponse.data.role);
           window.localStorage.setItem("committee", JSONresponse.data.committee);
       }
