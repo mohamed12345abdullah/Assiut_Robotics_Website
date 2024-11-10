@@ -227,7 +227,7 @@ const confirm = async (req, res) => {
 const controleHR = async (req, res) => {
     try {
         const { id, committee } = req.body;
-
+        
         await member.findByIdAndUpdate(id, { committee: "HR-" + committee, role: 3 });
         res.status(200).json({
             status: httpStatusText.SUCCESS,
