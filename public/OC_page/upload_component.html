@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+
+            box-sizing: border-box;
+            border: 1px gray solid;
+            width: 300px;
+            height: 400px;
+            margin-left: calc(50% - 150px);
+            box-shadow: 1px 1px 3px gray;
+
+        }
+        form input,.res{
+            box-sizing: border-box;
+            width: 200px;
+            margin-left: 50px;
+            margin-top: 30px;
+        }
+        input[type="text"],input[type="button"]{
+            border: 1px rgb(130, 198, 247) solid;
+            border-radius: 10px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form name="myForm" action="" method="post" enctype="multipart/form-data">
+        <div>
+            <input type="text" placeholder="component name" name="title">
+
+        </div>
+
+        <div>
+            <input type="file" name="image">
+        </div>
+        <div class="submit">
+            <input type="button" value="ok" onclick="postComponent()">
+
+        </div>
+        <div class="res"></div>
+    </form>
+    
+
+
+
+    <script>
+
+        postComponent=async()=>{
+
+            const myForm = document.forms["myForm"];
+            body= new FormData(myForm);
+            // body.append("title",myForm.title.value);
+            // body.append("image",myForm.image.value);
+            console.log("form data:",body);
+            // https://assiutrobotics-production.up.railway.app
+            const resp = await fetch("https://assiut-robotics-zeta.vercel.app/components/add", {
+                method: "POST",
+                body:body,
+            });
+            if(resp.ok){
+                const res=await resp.json();
+                document.querySelector(".res").innerHTML=res.message;
+                myForm.title.value="";
+                myForm.image.value="";
+                // console.log(JSON.stringify(res.message));
+            }else{
+                const res=await resp.json();
+                console.log(res);
+                document.querySelector(".res").innerHTML= res.message;
+
+            }
+        }
+ 
+
+    </script>
+</body>
+
+</html>

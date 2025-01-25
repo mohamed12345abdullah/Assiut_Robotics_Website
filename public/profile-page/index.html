@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="../all-images/logo.ico" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&family=Roboto+Condensed:wght@300&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="load()">
+    <div class="magnify disabled"><img id="magnified" src=""></div>
+
+
+    <nav>
+
+        <a href="../index.html" class="control-buttons">
+            <img id="logo" src="../all-images/logo.png">
+        </a>
+        <div class="control-buttons-div">
+            <div id="control-panel">
+                <a href="../control-panel/leader.html" class="control-buttons">
+                    control page
+                </a>
+    
+            </div>
+            <div id="OC-page1">
+                
+                    <a href="../OC_page/OC.html" class="control-buttons">
+                        component page 1
+                    </a>
+
+            </div>
+            <div id="OC-page2">
+                    <a href="../OC_page/component.html" class="control-buttons">
+                        component page 2
+                    </a>
+
+            </div>
+            <div id="addComponent">
+                    <a href="../OC_page/upload_component.html" class="control-buttons">
+                        upload_component
+                    </a>
+
+            </div>
+            <div id="blog-page">
+                <a href="../blog/add-blog.html" class="control-buttons">
+                    Add blog
+                </a>
+    
+            </div>
+            <div id="head-hr">
+                <a href="../control-panel/addHrTocommittee.html" class="control-buttons">
+                    make hr admin
+                </a>
+    
+            </div>
+    
+            <button class="logout-button" onclick="logout()">LOG OUT</button>
+    
+        </div>
+    </nav>
+    
+
+
+    <div class="container">
+
+        <div class="content">
+            <div class="left">
+                <img id="human" src="#" alt="notfound">
+                <div class="info">
+                    <h2 id="nameHuman">Hembo Tingor</h2>
+                    <p id="specialty">Web Designer</p>
+                    <form  name="profile_pic" enctype="multipart/form-data">
+                        <input type="file" name="image" id="changePhoto" class="disabled">
+                        <input type="hidden" name="token"  class="disabled">
+                        <label id="change" for="changePhoto"><i class="fa-regular fa-pen-to-square"></i></label>  
+                    </form>
+                </div>
+            </div>
+
+            <div class="right">
+                <p class="title bolding">Information</p>
+                <hr />
+                <div class="contact">
+                    <div>
+                        <p class="bolding">Email</p>
+                        <p id="email">mfng@gmail.com</p>
+                    </div>
+                    <div>
+                        <p class="bolding">Phone</p>
+                        <p id="phone">98764512398</p>
+                    </div>
+                    <!-- <div class="titles">
+                        
+                        
+                    </div>
+                    <div class="infoo">
+                        
+                        
+                    </div> -->
+                </div>
+                <p class="title bolding">Achievements</p>
+                <hr />
+                <div class="contact">
+                    <div>
+                        <p class="bolding">Rating</p>
+                        <p>Sam Dissuja</p>
+                    </div>
+                    <div>
+                        <p class="bolding">Warnings</p>
+                        <p>Dinoter husainm</p>
+                    </div>
+                </div>
+                <!-- <div class="works">
+                    <div class="titles">
+                        <p class="bolding">Recent</p>
+                        <p class="bolding right">Most Viewed</p>
+                    </div>
+                    <div class="infoo">
+                        <p>Sam Dissuja</p>
+                        <p class="right">Dinoter husainm</p>
+                    </div>
+                </div> -->
+                <p class="title bolding">Technical</p>
+                <hr />
+                <div class="contact">
+                    <div>
+                        <p>Electrical</p>
+                    </div>
+                    <div>
+                        <p>Mechanical</p>
+                    </div>
+                </div>
+                <div class="social">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let id;
+        const load = async () => {
+            if (token) {
+                let response = await fetch("https://assiut-robotics-zeta.vercel.app/members/verify", {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("token") // update token to be in the header
+                    },
+                });
+
+                if (!response.ok) {
+
+                    window.location.href = "../login/login.html"
+                } else {
+                    const JSONresponse = await response.json();
+                    console.log(JSONresponse);
+                    id = JSONresponse.data.id;
+                    edit()
+
+                    if (JSONresponse.data.role < 4) {
+                        document.getElementById('control-panel').style.display = "flex";
+                    }
+                    if ((JSONresponse.data.committee == "HR" && JSONresponse.data.role < 4) || JSONresponse.data.role == 1) {
+                        document.getElementById('head-hr').style.display = "inline-block";
+                        document.getElementById('OC-page1').style.display = "inline-block";
+                        document.getElementById('OC-page2').style.display = "inline-block";
+                        document.getElementById('blog-page').style.display = "inline-block";
+                        document.getElementById('addComponent').style.display = "inline-block";
+
+
+                    }
+                    if (JSONresponse.data.committee == "OC" ) {
+                        document.getElementById('OC-page1').style.display = "flex";
+                        document.getElementById('OC-page2').style.display = "flex";
+                        document.getElementById('addComponent').style.display = "flex";
+                    }
+                    if (JSONresponse.data.committee == "media") {
+                        document.getElementById('blog-page').style.display = "flex";
+                    }
+                    document.getElementById("nameHuman").innerHTML = JSONresponse.data.name;
+                    document.getElementById("email").innerHTML = JSONresponse.data.email;
+                    document.getElementById("phone").innerHTML = JSONresponse.data.phoneNumber;
+                    document.getElementById("specialty").innerHTML = JSONresponse.data.committee;
+                    document.getElementById("human").src =JSONresponse.data.avatar;
+                    document.getElementById("magnified").src = JSONresponse.data.avatar;
+                    window.localStorage.setItem("role", JSONresponse.data.role);
+                    window.localStorage.setItem("committee", JSONresponse.data.committee);
+                    
+                }
+            } else {
+                window.location.href = "../login/login.html"
+
+            }
+
+
+        }
+
+        const logout = () => {
+            window.localStorage.removeItem("token");
+            document.querySelector(".container").style.display = "none";
+            window.alert("نورتنا  (: ")
+            window.location.href = "../"
+        }
+      
+      
+        function edit() {
+           let field = document.getElementById("changePhoto");
+           
+           field.addEventListener("change", (e) => {
+                let form = document.forms["profile_pic"];
+                let body = new FormData(form);
+                
+               
+                // let obj = {
+                //     token: token,
+                //     // ID: id,
+                //     file: e.target.files[0]
+                // }     
+                // console.log(obj); // token : token, ID: undefined, file: File
+
+                fetch("https://assiut-robotics-zeta.vercel.app/members/changeProfileImage", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("token") // update token to be in the header
+                    },
+                    body: body
+                }).then(res => res.json()).then(data => {
+                    console.log(data);
+                }).catch(err => {
+                    console.log(err);
+                })
+            })
+        }
+        function magnifyImage(){
+            let img = document.getElementById("human");
+            let magnify = document.querySelector(".magnify");
+            
+            img.addEventListener('click',() =>{
+                magnify.classList.remove('disabled')
+            })
+
+            magnify.addEventListener('click',() =>{
+                magnify.classList.add('disabled')
+            })
+        }
+        magnifyImage()
+    </script>
+
+
+</body>
+
+</html>

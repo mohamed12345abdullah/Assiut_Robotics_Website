@@ -1,0 +1,79 @@
+To-Do List
+==========
+
+1. [ Layout ]                                   Task 1: Fix bugs in the design and make it good                    
+    Status: In Progress
+    Status: Done       15/9/2024
+
+Notes :-
+- Add any additional notes or comments here.
+
+
+2. [ Style the popup output ]                   Task 2: Style how it will appear after selecting a specific blog
+    Status: Not Started
+    Status: Done       15/9/2024
+
+Notes :-
+- Add any additional notes or comments here.
+3. [ Style background Of popup output ]         Task 3: Style how the background of the selected blog will appear
+    Status: Not Started
+    Status: Done       15/9/2024
+
+Notes :-
+- Add any additional notes or comments here.
+
+4. [ popup Animation  ]                         Task 4: Animation when clicking on a blog
+    Status: Not Started
+    Status: Done       15/9/2024
+
+Notes :-
+- Add any additional notes or comments here.
+
+5. [ deselect Animation ]                       Task 5: Animation when clicking out of the blog
+    Status: Not Started
+    Status: Done       17/9/2024
+
+Notes :-
+- Add any additional notes or comments here.
+
+6. [ Toggle function ]                       Task 6: Make the function that will make these actions
+    Status: Not Started
+    Status: In Progress 
+    Status: Done  18 /9  
+
+Notes for me :-
+ remaining bugs to fix:
+ 1. fix the unfocused animation Done
+ 2. fix no focused mode Done
+ 3. fix the toggle button  Done
+ 
+Notes :-
+- Add any additional notes or comments here.
+
+7. [ Make Toggle function valid for all element  ]                       Task 7: Make the function that will make these actions valid for all element 
+    Status: Not Started
+    Status: Done 19 / 9
+
+Notes :-
+- Add any additional notes or comments here.
+
+8. [ Make creation function  ]                       Task 8: Make the function that will create blogs
+    Status: Not Started
+    Status: in Progress
+    Status: Done
+
+Notes :-
+- Add any additional notes or comments here.
+
+
+9. [ explain the code and make it readable  ]  
+    Status: Not Started
+    Status: Done
+
+Notes :-
+- Add any additional notes or comments here.
+
+
+Notes:
+------
+- Add any additional notes or comments here.

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  
+    <head>
+        <title>OC page</title>
+        <link rel="stylesheet" href="OC.css">
+    </head>
+    <body >
+      <div class="head">
+        <div class="logo"> 
+          <img src="../all-images/logo.png" class="sublogo">   <!--not D:\OC_page\logo.png--> 
+        </div>
+        <h1>Lab components</h1>
+      </div>
+    <div class="crud">
+    <div class="input">
+      <input type="text" id="title" placeholder="title">
+      <div class="price">
+        <input  oninput="getTotal()" type="number" id="price" placeholder="price">
+        <input oninput="getTotal()" type="number" id="taxes" placeholder="taxes">
+        <input  oninput="getTotal()" type="number" id="ads" placeholder="ads">
+        <input  oninput="getTotal()" type="number" id="discount" placeholder="discount">
+        <small id="total"></small>
+      </div>
+      <input type="number" id="count" placeholder="count">
+      <input type="text" id="category" placeholder="category">
+
+      <button id="submit">Create</button>
+    </div>
+
+    <div class="output">
+    <div class="search-box">
+        <input onkeyup="searchdata(this.value)" type="text" id="search" placeholder="search">
+        <div class="btn-search">
+            <button onclick="searchq(this.id)" id="search-title">Search By Title</button>
+            <button onclick="searchq(this.id)" id="search-cat">Search By Category</button>
+            
+        </div>
+        <div  id="delALL"></div>
+    </div>
+    
+   
+      <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>price</th>
+            <th>taxes</th>
+            <th>ads</th>
+            <th>discount</th>
+            <th>total</th>
+            <th>category</th>
+            <th>update</th>
+            <th>delete</th>
+
+        </tr>
+        </thead>
+        <tbody id="body">
+          
+        </tbody>
+      </table>
+      
+
+
+    </div>
+    </div>
+        <script src="OC.js"></script>
+    </body>
+</html>

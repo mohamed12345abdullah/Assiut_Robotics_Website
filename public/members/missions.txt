@@ -1,0 +1,23 @@
+Mission 1:
+Task: HALL OF FRAME 
+Status: Not Started  Done
+Notes: This will includes the higher rated members in all committees
+
+Mission 2:
+Task: Design the ui to be good for mobile
+Status: Not Started 
+Notes: 
+
+    //when members is active
+    // remove from span class disabled
+    // when click on span 
+     // give span class rotate
+     // give info class visible
+
+
+
+Mission 3:
+Task: hr and ac doesn't wrote in this form so you have to get all members who are in hr or ac 
+Status: Not Started  Done
+Notes: use regular expression
+

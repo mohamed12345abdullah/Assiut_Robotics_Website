@@ -1,0 +1,94 @@
+.components {
+    margin-top: 30px;
+    width: 90%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
+    justify-content: center;
+    /* justify-items: center; */
+}
+
+.component {
+    text-align: center;
+    width: 300px;
+    /* background-color: aqua; */
+
+}
+
+.component>img {
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
+    object-fit: contain;
+    background-size: contain;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.input input {
+    width: 90%;
+    background-color: rgb(53, 49, 49);
+    color: white;
+    height: max-content;
+    margin: 4px 0px;
+    border: none;
+    outline: none;
+    padding: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/* Styling for placeholder text */
+.input input::placeholder {
+    color: #bfbfbf; /* Light gray color for better visibility */
+    opacity: 1; /* Ensure the placeholder is fully opaque */
+}
+
+/* Ensure compatibility with different browsers */
+.input input::-webkit-input-placeholder {
+    color: #bfbfbf; /* Light gray color for better visibility */
+}
+
+.input input:-ms-input-placeholder {
+    color: #bfbfbf; /* Light gray color for better visibility */
+}
+
+.input input::-ms-input-placeholder {
+    color: #bfbfbf; /* Light gray color for better visibility */
+}
+
+.input input::placeholder {
+    color: #bfbfbf; /* Light gray color for better visibility */
+}
+
+.box {
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    margin: 20px;
+    max-width: 600px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 2px solid black;
+}
+
+.name {
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+}
