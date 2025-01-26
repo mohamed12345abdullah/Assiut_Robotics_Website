@@ -84,9 +84,9 @@ Router.route("/changeProfileImage").post(
     
                 // Upload image to Cloudinary using the utility function
                 const filePath = __dirname+'../public/'+req.file.path; 
-                console.log(filePath);
+                console.log("file path",filePath);
                 
-                const imageUrl = await uploadToCloud(req.file.filePath); // Passing the file path to Cloudinary
+                const imageUrl = await uploadToCloud(req.file.path); // Passing the file path to Cloudinary
                 req.imageUrl=imageUrl;
                 console.log("uploaded to cloudinary");
                 
