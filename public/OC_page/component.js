@@ -2,8 +2,9 @@
 var components = [];
 const container = document.getElementById("mainComponents");
 
+
 const getComponents = async () => {
-    const response = await fetch("https://assiutrobotics-production.up.railway.app/components/getComponents")
+    const response = await fetch("https://assiut-robotics-zeta.vercel.app/components/getComponents")
     if (response.ok) {
         const res = await response.json()
         components = res.data;
@@ -11,10 +12,10 @@ const getComponents = async () => {
 
         components.forEach(element => {
             container.innerHTML += `
-            <div class="component box">
+            <div class="component box" ">
             <img src="${element.image}" alt="">
             <div class="name"> ${element.title}</div>
-
+            
         </div>`
         });
 
@@ -31,25 +32,27 @@ console.log("run ");
 const search = document.querySelector(".search-input");
 search.addEventListener("input", () => {
     var componentsFounded = components.filter((component) => {
-        console.log(component.title.includes(search.value));
-        return component.title.includes(search.value)
-    })
+        return component.title.toLowerCase().includes(search.value.toLowerCase());
+    });
     console.log("component founded", componentsFounded);
 
     container.innerHTML = "";
     componentsFounded.forEach(element => {
         container.innerHTML += `
                 <div class="component box">
-                <img src="${element.image}" alt="">
-                <div class="name"> ${element.title}</div>
-    
-            </div>`
+                    <img src="${element.image}" alt="">
+                    <div class="name"> ${element.title}</div>
+                </div>`
     });
 });
 
 search.addEventListener("focusout", () => {
     console.log("out of focus");
-    container.innerHTML = "";
-    getComponents();
+
+    if (search.value.trim() === "") {
+        container.innerHTML = "";
+        getComponents();
+    }
+
 });
 
