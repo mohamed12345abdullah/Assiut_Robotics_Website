@@ -4,7 +4,7 @@ const memberControler = require("../controler/member.controler");
 const JWT = require("../middlleware/jwt");
 const Router = express.Router();
 const multer = require("multer");
-
+const path=require("path")
 
 
 
@@ -83,11 +83,11 @@ Router.route("/changeProfileImage").post(
                 }
     
                 // Upload image to Cloudinary using the utility function
-                const filePath = __dirname+'../public/'+req.file.path; 
-                console.log("file path",filePath);
-                
-                const imageUrl = await uploadToCloud(req.file.path); // Passing the file path to Cloudinary
-                req.imageUrl=imageUrl;
+                const filePath = path.join(__dirname,req.file.path); 
+                console.log("file path",req.file.path);
+                const upload= uploadToCloud()
+                const imageUrl = await upload(req.file.path); // Passing the file path to Cloudinary
+                req.imageUrl=imageUrl;   
                 console.log("uploaded to cloudinary");
                 
                 next()

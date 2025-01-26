@@ -28,11 +28,17 @@ const changeProfileImage=asyncWrapper(async(req,res)=>{
     
     //  const{ID}=req.body;
      const oldMember = await member.findOne({email});
-     console.log(oldMember)
+     console.log(oldMember.email)
     if(!oldMember){
         const error=createError(404,httpStatusText.SUCCESS,"user not found ")
         throw (error)
         
+    }
+    console.log("image  Url==================",req.imageUrl);
+
+    if(!req.imageUrl){
+        const error=createError(404,httpStatusText.SUCCESS,"image url")
+        throw (error)
     }
     
     oldMember.avatar=req.imageUrl;

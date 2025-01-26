@@ -10,7 +10,10 @@ cloudinary.config({
     api_secret:"Pv53x9A3EkgBa3b_1H7O1Wu_sWc"
 });
 
-const uploadToCloud=async (filename)=> {
+const uploadToCloud=
+()=>{
+
+return async (filename)=> {
 try {
         
 
@@ -18,7 +21,7 @@ try {
     
    const result=await cloudinary.uploader.upload(filename)
 
-//    console.log(result);
+   console.log("ersultttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",result);
     const url=cloudinary.url(result.public_id,{
             transformation:{
                     fetch_format:"auto",
@@ -32,10 +35,11 @@ try {
     console.log(url);
     return url;
 } catch (error) {
-        res.status(399).json({status:399,message:"from cloudinart"})
+    error.message="errrrrrrrrrrrr"
+      return (error)
 }        
     
-};
+}};
 
 
 module.exports={
