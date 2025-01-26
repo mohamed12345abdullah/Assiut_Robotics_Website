@@ -30,7 +30,7 @@ let prodata=[];
 //   prodata = [];
 // }                      //  this code replaced with get the data from DB 
 const getComponents=async()=>{
-  const res=await fetch("https://assiutrobotics-production.up.railway.app/components/getComponents")
+  const res=await fetch("https://assiut-robotics-zeta.vercel.app/components/getComponents")
   if(res.ok){
     const response=await res.json();
     console.log(response);
@@ -300,7 +300,7 @@ const pushToDB=async(data)=>{
   try {
     console.log(data);
 
-  const res=await fetch("../../components/add",{
+  const res=await fetch("https://assiut-robotics-zeta.vercel.app/components/add",{
     method:"post",
     headers:{
       "Content-Type":"application/json"
@@ -321,7 +321,7 @@ const pushToDB=async(data)=>{
 
 
 const deleteAll=async()=>{
-  const res = await fetch("https://assiutrobotics-production.up.railway.app/components/deleteAll")
+  const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/deleteAll")
   if(res.ok){
     const response=await res.json();
     console.log(await response);

@@ -74,23 +74,23 @@ let id;
             window.location.href = "../"
         }
       
-      
         function edit() {
            let field = document.getElementById("changePhoto");
            
            field.addEventListener("change", (e) => {
                 let form = document.forms["profile_pic"];
                 
-                let body = new FormData(form);             
+                let body = new FormData(form);  
+                console.log(body)
                 
                 fetch("https://assiutroboticswebsite-production.up.railway.app/members/changeProfileImage", {
                     method: "POST",
                     headers: {
-                        "content-type": "application/json",
                         "Authorization": Token // update token to be in the header
                     },
                     body: body
                 }).then(res => res.json()).then(data => {
+                    document.getElementById("human").src = data.data.avatar;
                     console.log(data);
                 }).catch(err => {
                     console.log(err);
