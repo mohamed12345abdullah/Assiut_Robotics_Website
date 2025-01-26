@@ -45,7 +45,7 @@ const { uploadToCloud } = require("../utils/cloudinary");
 
 const diskStorage = multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, "uploads/"); // Save locally before uploading to Cloudinary
+            cb(null, "public/"); // Save locally before uploading to Cloudinary
         },
         filename: (req, file, cb) => {
             const ext = file.mimetype.split("/")[1];
@@ -84,7 +84,7 @@ Router.route("/changeProfileImage").post(
     
                 // Upload image to Cloudinary using the utility function
                 const filePath = path.join(__dirname,req.file.path); 
-                console.log("file path",req.file.path);
+                console.log("file path",filePath);
                 const upload= uploadToCloud()
                 const imageUrl = await upload(req.file.path); // Passing the file path to Cloudinary
                 req.imageUrl=imageUrl;   
