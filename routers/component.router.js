@@ -43,7 +43,8 @@ Router.route("/add").post(
             }
 
             // Upload image to Cloudinary using the utility function
-            const imageUrl = await uploadToCloud(req.file.path); // Passing the file path to Cloudinary
+            const upload= uploadToCloud()
+            const imageUrl = await upload(req.file.path); // Passing the file path to Cloudinary
             req.imageUrl=imageUrl;
             next()
         //     res.status(200).json({
