@@ -2,27 +2,26 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Components</title>
     <link rel="stylesheet" href="component.css">
+    <link rel="stylesheet" href="../main/footerAndheader.css" />
+
 </head>
 
 <body>
-
-    <div class="input">
-        <input class="search-input" type="search" onfocus="" placeholder="Search">
+    <div id="myUniqueHeaderID"></div>
+    <div class="container">
+        <div class="input">
+            <input class="search-input" type="search" onfocus="" placeholder="Search">
+        </div>
+        <section class="components" id="mainComponents"></section>
     </div>
 
-\
-
-    <section class="components" id="mainComponents">
-    </section>
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../main/footerAndheader.js" defer></script>
     <script src="component.js"></script>
-
 </body>
 
 </html>

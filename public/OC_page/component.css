@@ -1,3 +1,10 @@
+body{
+    background-color: #eef0e5;
+}
+
+.topnav {
+    position: absolute !important;
+}
 .components {
     margin-top: 30px;
     width: 90%;
@@ -34,17 +41,18 @@
     align-content: center;
     justify-content: center;
     align-items: center;
+    margin-top: 15px;
 }
 
 .input input {
-    width: 90%;
+    width: 80%;
     background-color: rgb(53, 49, 49);
     color: white;
-    height: max-content;
+    height: 35px;
     margin: 4px 0px;
     border: none;
     outline: none;
-    padding: 8px;
+    padding: 5px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -84,6 +92,12 @@
     cursor: pointer;
     background-color: #fff;
     border: 2px solid black;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+}
+.box:hover {
+    transform: scale(1.1); 
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.8); 
 }
 
 .name {
@@ -91,4 +105,21 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 1.5;
+}
+.info-box {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 296px;
+    height: 332px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    display: none;
 }
