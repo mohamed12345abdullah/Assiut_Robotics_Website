@@ -1,13 +1,18 @@
+//const { log } = require("node:console");
+
 let id;
         const load = async () => {
+            let token = localStorage.getItem("token");
             if (token) {
+                console.log(token);
+                
                 let response = await fetch("https://assiut-robotics-zeta.vercel.app/members/verify", {
                     method: "post",
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("token") // update token to be in the header
                     },
-                });
+                }).then(res => res.json()).catch(err => console.log(err));
 
                 if (!response.ok) {
 
@@ -50,12 +55,10 @@ let id;
                 }
             } else {
                 window.location.href = "../login/login.html"
-
             }
 
 
         }
-
         const logout = () => {
             window.localStorage.removeItem("token");
             document.querySelector(".container").style.display = "none";

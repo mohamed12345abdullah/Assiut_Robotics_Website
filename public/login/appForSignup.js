@@ -11,7 +11,6 @@ try {
         }
         console.log("input", password, confirm_password);
     })
-
     document.forms['signupForm'].addEventListener('submit', async (event) => {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
