@@ -82,19 +82,12 @@ let id;
                 let form = document.forms["profile_pic"];
                 
                 let body = new FormData(form);             
-                // let obj = {
-                //     token: token,
-                //     // ID: id,
-                //     file: e.target.files[0]
-                // }     
-                // console.log(obj); // token : token, ID: undefined, file: File
                 
-                
-                fetch("https://assiut-robotics-zeta.vercel.app/members/changeProfileImage", {
+                fetch("https://assiutroboticswebsite-production.up.railway.app/members/changeProfileImage", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
-                        // "Authorization": Token // update token to be in the header
+                        "Authorization": Token // update token to be in the header
                     },
                     body: body
                 }).then(res => res.json()).then(data => {
