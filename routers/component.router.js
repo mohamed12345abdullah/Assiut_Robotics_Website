@@ -8,7 +8,7 @@ const { uploadToCloud } = require("../utils/cloudinary");
 // Multer configuration
 const diskStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/"); // Save locally before uploading to Cloudinary
+        cb(null, "public/"); // Save locally before uploading to Cloudinary
     },
     filename: (req, file, cb) => {
         const ext = file.mimetype.split("/")[1];
