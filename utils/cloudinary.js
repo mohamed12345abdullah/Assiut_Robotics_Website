@@ -32,7 +32,7 @@ try {
     console.log(url);
     return url;
 } catch (error) {
-        
+        res.status(399).json({status:399,message:"from cloudinart"})
 }        
     
 };
