@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.tabs {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.tab {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+.tab.active {
+    background: #007bff;
+    color: white;
+}
+.container {
+    display: none;
+}
+.container.active {
+    display: block;
+}
+.card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+}
+.pending {
+    color: gray;
+}

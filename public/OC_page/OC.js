@@ -41,7 +41,7 @@ const updateComponent = async (formData) => {
     for (let [key, value] of formData.entries()) {
       dataObject[key] = value;
     }
-    
+
     const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/update", {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ const updateComponent = async (formData) => {
           title: dataObject.title,
           price: dataObject.price,
           category: dataObject.category
-          
+
         }
       })
     });
@@ -287,7 +287,7 @@ const pushToDB = async (formData) => {
       let response = await res.json();
       console.log(response);
       getComponents();
-  
+
     }
 
   } catch (error) {
