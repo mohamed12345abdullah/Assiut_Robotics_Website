@@ -1,107 +1,94 @@
 let title = document.getElementById('title');
 let price = document.getElementById('price');
-let taxes = document.getElementById('taxes');
-let ads = document.getElementById('ads');
-let discount = document.getElementById('discount');
-let total = document.getElementById('total');
 let count = document.getElementById('count');
 let category = document.getElementById('category');
+let componentLocation = document.getElementById('componentLocation');
+let imageInput = document.getElementById('image');
 let submit = document.getElementById('submit');
 let mood = 'create';
 let it;
 let searchmood = 'title';
-function getTotal() {
 
-  if (price.value != '') {
-    let result = (+price.value + +taxes.value + +ads.value) - +discount.value;
-    total.innerHTML = result;
-    total.style.background = "rgb(27, 81, 161)";
-  }
-  else {
-    total.innerHTML = '';
-    total.style.background = 'rgb(192, 13, 13)';
-  }
-}
-let prodata=[];
+let prodata = [];
 // if (localStorage.product != null) {
 //   prodata = JSON.parse(localStorage.product);
 // }
 // else {
 //   prodata = [];
 // }                      //  this code replaced with get the data from DB 
-const getComponents=async()=>{
-  const res=await fetch("https://assiut-robotics-zeta.vercel.app/components/getComponents")
-  if(res.ok){
-    const response=await res.json();
+const getComponents = async () => {
+  const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/getComponents")
+  if (res.ok) {
+    const response = await res.json();
     console.log(response);
-    prodata=await response.data;
+    prodata = await response.data;
     read();
   }
-  else{
-    const response=await res.json();
+  else {
+    const response = await res.json();
     console.log(response.message);
   }
 }
- getComponents();
+getComponents();
 
- const updateComponent=async(id,newpro)=>{
+const updateComponent = async (formData) => {
   try {
-    let data={
-      id,
-      newpro
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
     }
-    
-  const res=await fetch("https://assiut-robotics-zeta.vercel.app/components/update",{
-    method:"post",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify(data)
+    const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/update", {
+      method: "POST",
+      body: formData
+    });
+    if (res.ok) {
+      const response = await res.json();
+      console.log(response.message);
 
-  })
-  if(res.ok){
-    const response=await res.json()
-    console.log(await response.message);
-  }else{
-    const response=await res.json()
-    console.log(await response.message);
-  }
-  } catch (error) {
-    
-  }
- }
- 
-submit.onclick = function () {
-
-  let newpro = {
-    title: title.value,
-    price: price.value,
-    taxes: taxes.value,
-    ads: ads.value,
-    discount: discount.value,
-    total: total.innerHTML,
-    count: count.value,
-    category: category.value,
-  }
-
-  if (title.value != '' && price.value > 0 && taxes.value >= 0 && ads.value >= 0 && discount.value >= 0 && count.value <= 100 && category.value != '') {
-    if (mood == 'create') {
-      // if (newpro.count > 1) {   i comment this if else becouse if newpro.count ==1 the for loop will run once 
-        for (let i = 0; i < newpro.count; i++) {
-          // prodata.push(newpro); // now i will push in the mongooe data base
-          pushToDB(newpro);
-          getComponents();
-        }
-      // }
-      // else {
-      //   prodata.push(newpro);
-      // }
-    }
-    else {
-      // prodata[it] = newpro;   // update
-      let id=prodata[it]._id
-      updateComponent(id,newpro);
       getComponents();
+      read();
+    } else {
+      const response = await res.json();
+      console.log(response.message);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+let form = document.getElementById('componentForm');
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+  if (title.value != '' && price.value > 0 && count.value <= 100 && category.value != '') {
+    if (mood == 'create') {
+
+      let countValue = Number(count.value) || 1;
+      for (let i = 0; i < countValue; i++) {
+        let formData = new FormData();
+        formData.append('title', title.value);
+        formData.append('price', price.value);
+        formData.append('count', '1');
+        formData.append('location', componentLocation.value);
+        formData.append('category', category.value);
+        if (imageInput.files.length > 0) {
+          formData.append('image', imageInput.files[0]);
+        }
+        pushToDB(formData);
+      }
+    } else {
+
+      let id = prodata[it]._id;
+      let formData = new FormData();
+      formData.append('id', id);
+      formData.append('title', title.value);
+      formData.append('price', price.value);
+      // formData.append('location', componentLocation.value);
+      formData.append('category', category.value);
+
+      // if (imageInput.files.length > 0) {
+      //   formData.append('image', imageInput.files[0]);
+      // }
+
+      updateComponent(formData);
       mood = 'create';
       submit.innerHTML = 'Create';
       count.style.display = 'block';
@@ -109,38 +96,27 @@ submit.onclick = function () {
     clear();
   }
 
-  // localStorage.setItem('product', JSON.stringify(prodata));
-
-
   read();
-}
+});
+
 
 read();
 function clear() {
   title.value = '';
   price.value = '';
-  taxes.value = '';
-  ads.value = '';
-  discount.value = '';
-  total.innerHTML = '';
   count.value = '';
   category.value = '';
-  total.style.background = 'rgb(192, 13, 13)';
+  componentLocation.value = '';
+  imageInput.value = '';
 }
 function read() {
   let table = "";
   for (let i = 0; i < prodata.length; i++) {
-    
-
     table += `
     <tr>
             <td>${i + 1}</td>
             <td>${prodata[i].title}</td>
             <td>${prodata[i].price}</td>
-            <td>${prodata[i].taxes}</td>
-            <td>${prodata[i].ads}</td>
-            <td>${prodata[i].discount}</td>
-            <td>${prodata[i].total}</td>
             <td>${prodata[i].category}</td>
             <td><button  onclick="update(${i}) " id='update'>Update</button></td>
             <td><button  onclick="del(${i})" id='delete'>Delete</button></td>
@@ -155,11 +131,7 @@ function read() {
     deALL.innerHTML = `
       <button  onclick="delAll()" id="deleteAll">Delete All ( ${prodata.length} )</button>
       `
-
-
-
   }
-
   else {
     deALL.innerHTML = '';
   }
@@ -167,27 +139,27 @@ function read() {
 
 
 
-const deleteOne=async(id)=>{
-  data={
+const deleteOne = async (id) => {
+  data = {
     id
   }
-  const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/deleteOne",{
-    method:"post",
-    headers:{
-      "Content-Type":"application/json"
+  const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/deleteOne", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json"
     },
-    body:JSON.stringify(data)
+    body: JSON.stringify(data)
 
   })
-  if(res.ok){
-    const response=await res.json();
+  if (res.ok) {
+    const response = await res.json();
     console.log(await response);
     // prodata=await response.data;
     getComponents();
     read();
   }
-  else{
-    const response=await res.json();
+  else {
+    const response = await res.json();
     console.log(await response.message);
   }
 }
@@ -199,7 +171,7 @@ function del(item) {
   localStorage.product = JSON.stringify(prodata);
   read();
 }
- function delAll() {
+function delAll() {
   // localStorage.clear();
   // prodata.splice(0);
   deleteAll();
@@ -210,13 +182,9 @@ function del(item) {
 function update(item) {
   title.value = prodata[item].title;
   price.value = prodata[item].price;
-  taxes.value = prodata[item].taxes;
-  ads.value = prodata[item].ads;
-  discount.value = prodata[item].discount;
-  total.innerHTML = prodata[item].total;
-  total.style.background = 'rgb(27, 81, 161)';
   count.style.display = 'none';
   category.value = prodata[item].category;
+  componentLocation.value = prodata[item].location;
   mood = 'update';
   submit.innerHTML = 'Update';
   it = item;
@@ -255,10 +223,6 @@ function searchdata(value) {
             <td>${i + 1}</td>
             <td>${prodata[i].title}</td>
             <td>${prodata[i].price}</td>
-            <td>${prodata[i].taxes}</td>
-            <td>${prodata[i].ads}</td>
-            <td>${prodata[i].discount}</td>
-            <td>${prodata[i].total}</td>
             <td>${prodata[i].category}</td>
             <td><button  onclick="update(${i})" id='update'>Update</button></td>
             <td><button  onclick="del(${i})" id='delete'>Delete</button></td>
@@ -276,10 +240,6 @@ function searchdata(value) {
                 <td>${i + 1}</td>
                 <td>${prodata[i].title}</td>
                 <td>${prodata[i].price}</td>
-                <td>${prodata[i].taxes}</td>
-                <td>${prodata[i].ads}</td>
-                <td>${prodata[i].discount}</td>
-                <td>${prodata[i].total}</td>
                 <td>${prodata[i].category}</td>
                 <td><button  onclick="update(${i})" id='update'>Update</button></td>
                 <td><button  onclick="del(${i})" id='delete'>Delete</button></td>
@@ -295,42 +255,41 @@ function searchdata(value) {
 }
 
 
-
-const pushToDB=async(data)=>{
+const pushToDB = async (formData) => {
   try {
-    console.log(data);
-
-  const res=await fetch("https://assiut-robotics-zeta.vercel.app/components/add",{
-    method:"post",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify(data)
-  })
-  if(res.ok){
-    let response=res.json();
-    console.log(await response);
+    console.log(formData);
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
     }
+
+    const res = await fetch("https://assiutroboticswebsite-production.up.railway.app/components/add", {
+      method: "post",
+      body: formData
+    })
+    if (res.ok) {
+      let response = await res.json();
+      console.log(response);
+      getComponents();
   
-} catch (error) {
+    }
+
+  } catch (error) {
     console.log(error);
-}
+  }
 
 }
 
-
-
-const deleteAll=async()=>{
+const deleteAll = async () => {
   const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/deleteAll")
-  if(res.ok){
-    const response=await res.json();
+  if (res.ok) {
+    const response = await res.json();
     console.log(await response);
     // prodata=await response.data;
     getComponents();
     read();
   }
-  else{
-    const response=await res.json();
+  else {
+    const response = await res.json();
     console.log(await response.message);
   }
 }

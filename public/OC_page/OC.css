@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    
 }
 
 body {
@@ -9,12 +10,40 @@ body {
     font-weight: bold;
 }
 
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/*Small*/
+@media (min-width:768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+/*meduim*/
+@media (min-width:992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+/*large*/
+@media (min-width:1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
 .head {
-    display: flex;
-    gap: 20px;
+    width: 90%;
+    margin: 20px auto;
     text-align: center;
     text-transform: uppercase;
-    margin: 40px 20px;
+
 }
 
 .head h1 {
@@ -25,11 +54,15 @@ body {
     width: 110px;
     height: 60px;
     flex-basis: 20%;
-    margin-left: 35px;
+}
+.head  .container{
+    display: flex;
+    margin-left: 60px;
 }
 
-.crud {
-    width: 80%;
+.crud,.crud .container {
+    /* width: 80%; */
+    width: 90%;
     margin: auto;
 }
 
