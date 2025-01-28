@@ -55,7 +55,9 @@
                 <div class="sort-section">
                     <label>Sort by:</label>
                     <select id="sortSelect">
-                        <option value="dueDate">Due Date</option>
+                        <option value="">Start Date</option>
+                        <option value="">End Date</option>
+
                     </select>
                     <select id="sortOrder">
                         <option value="asc">Ascending</option>
@@ -63,14 +65,22 @@
                     </select>
                 </div>
             </div>
-
             <!-- Task List -->
             <div class="task-list" id="taskList">
-                <div class="task-card medium">
-                    <h3>Marketing Campaign</h3>
-                    <p>Develop quarterly digital marketing strategy</p>
-                    <p>Due: Apr 1, 2024</p>
+                <div class="task-card ">
+                    <h2>Marketing Campaign</h2>
+                    <div class="task-description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit? Tempora
+                        cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione architecto
+                        assumenda dolores perspiciatis! Aliquid, ipsa libero.
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi suscipit in ea repellendus quia
+                        distinctio ad voluptatum aliquam, blanditiis, provident est molestiae maiores eaque soluta enim.
+                        Nostrum iusto minus perspiciatis.
+                    </div>
+                    <h3>Start Date : Apr 1, 2024</h3>
+                    <h3>End Date: Apr 1, 2024</h3>
                     <p>Assigned: Mike Johnson</p>
+                    <button>Show</button>
                     <button>Edit</button>
                     <button>Delete</button>
                 </div>
@@ -85,29 +95,57 @@
                 <h2>Create New Task</h2>
                 <form id="taskForm">
                     <input type="text" id="taskTitle" placeholder="Task Title" required>
-
                     <textarea id="taskDescription" placeholder="Task Description" required></textarea>
                     <input type="url" name="" id="" placeholder="addition URL">
-
                     <label>Start Date:</label>
                     <input type="date" id="taskStartDate" required>
                     <label>End Date:</label>
                     <input type="date" id="taskEndDate" required>
 
-                    <label>Assign Team Members:</label>
-                    <select id="taskMembers" multiple>
-                        <option value="1">John Doe</option>
-                        <option value="2">Jane Smith</option>
-                        <option value="3">Mike Johnson</option>
-                        <option value="4">Sarah Williams</option>
-                    </select>
-
-                    <button type="submit">Add Task</button>
+                    <div class="assign-team-members">
+                        <label for="taskMembers">Assign Team Members:</label>
+                        <div class="members-list">
+                            <div class="member-item">
+                                <input type="checkbox" id="member1" value="1">
+                                <label for="member1">John Doe</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member2" value="2">
+                                <label for="member2">Jane Smith</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member3" value="3">
+                                <label for="member3">Mike Johnson</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member4" value="4">
+                                <label for="member4">Sarah Williams</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member5" value="5">
+                                <label for="member5">Emily Davis</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member6" value="6">
+                                <label for="member6">David Brown</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member7" value="7">
+                                <label for="member7">Laura Wilson</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member8" value="8">
+                                <label for="member8">Chris Johnson</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button type="submit">Add Task</button>
+                    </div>
                 </form>
             </div>
-
             <!-- Task List -->
-            <div class="task-list" id="taskList"></div>
+            <!-- <div class="task-list" id="taskList"></div> -->
         </div>
     </div>
 
