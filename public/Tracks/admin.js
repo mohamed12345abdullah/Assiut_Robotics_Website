@@ -1,5 +1,5 @@
 // Global variable for server URL
-const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api'; // Replace with your server URL
+const serverUrl = 'http://localhost:3000/Tracks/api'; // Replace with your server URL
 
 // State management
 let tracks = [];
@@ -69,7 +69,7 @@ async function getCourses(trackId) {
         'Content-Type': 'application/json',
       },
     });
-    init()
+    // init()
     const jsonResponse=await response.json();
     console.log(jsonResponse.data);
     return jsonResponse.data;
@@ -173,7 +173,7 @@ async function editCourseApi(Tid,Cid,courseData) {
       },
       body:JSON.stringify(courseData)
     });
-    init()
+    
   } catch (error) {
     console.error('Error deleting task:', error);
   }
@@ -503,6 +503,10 @@ async function loadCourseTasks() {
 function showTrackModal() {
   document.getElementById('track-modal-title').textContent = 'Add Track';
   document.getElementById('track-form').reset();
+  document.getElementById('track-id').value="";
+  console.log("reset form",   document.getElementById('track-form'));
+
+  
   trackModal.classList.add('active');
 }
 
@@ -513,6 +517,7 @@ function closeTrackModal() {
 function showCourseModal() {
   document.getElementById('course-modal-title').textContent = 'Add Course';
   document.getElementById('course-form').reset();
+  document.getElementById('course-id').value=""
   courseModal.classList.add('active');
 }
 
@@ -523,6 +528,7 @@ function closeCourseModal() {
 function showTaskModal() {
   document.getElementById('task-modal-title').textContent = 'Add Task';
   document.getElementById('task-form').reset();
+  document.getElementById('task-id').value="";
   taskModal.classList.add('active');
 }
 
@@ -548,7 +554,7 @@ async function handleTrackSubmit(event) {
       
 
       // tracks[index] = formData;
-      await editTrackApi( formData.id,formData);
+      await editTrackApi( tracks[index]._id,formData);
     } else {
       await addTrack(formData);
 
@@ -577,17 +583,20 @@ async function handleCourseSubmit(event) {
 
   if (formData.id) {
     const index = courses[trackId].findIndex(c => c._id === formData.id);
-    console.log(courses[trackId][0]._id);
+    console.log(courses[trackId]);
     console.log(formData.id);
+    console.log(index);
     
     
     if (index !== -1) {
-      await editCourseApi(trackId,formData.id,formData)
-      courses[trackId][index] = formData;
+      console.log(trackId,courses[trackId][index]._id);
+      
+      await editCourseApi(trackId,courses[trackId][index]._id,formData)
+      // courses[trackId][index] = formData;
     } else {
       await addCourse(trackId,formData);
 
-      // courses[trackId].push(formData);
+      courses[trackId].push(formData);
     }
   }
       courses[trackId] = await getCourses(trackId);
@@ -622,7 +631,7 @@ async function handleTaskSubmit(event) {
       tasks[courseId][index] = formData;
     } else {
       await addTaskApi(trackId,courseId,formData);
-      tasks[courseId].push(formData);
+      // tasks[courseId].push(formData);
     }
   }
   
