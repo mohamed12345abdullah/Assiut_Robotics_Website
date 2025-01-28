@@ -1,5 +1,5 @@
 async function fetchCommittees() {
-    const response = await fetch('/api/committees');
+    const response = await fetch('http://localhost:3000/api/committees');
     return response.json();
 }
 
