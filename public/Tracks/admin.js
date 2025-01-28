@@ -1,5 +1,5 @@
 // Global variable for server URL
-const serverUrl = 'http://localhost:3000/Tracks/api'; // Replace with your server URL
+const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api'; // Replace with your server URL
 
 // State management
 let tracks = [];
