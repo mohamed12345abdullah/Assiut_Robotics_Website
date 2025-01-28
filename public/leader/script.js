@@ -1,5 +1,7 @@
+const mainURL = "https://assiut-robotics-zeta.vercel.app/";
+
 async function fetchCommittees() {
-    const response = await fetch('http://localhost:3000/api/committees');
+    const response = await fetch(`${mainURL}api/committees`);
     return response.json();
 }
 
@@ -54,12 +56,12 @@ function switchTab(index) {
 }
 
 async function removeMember(committeeId, memberId) {
-    await fetch(`/api/committees/${committeeId}/members/${memberId}`, { method: 'DELETE' });
+    await fetch(`${mainURL}api/committees/${committeeId}/members/${memberId}`, { method: 'DELETE' });
     location.reload();
 }
 
 async function approveMember(committeeId, memberId) {
-    await fetch(`/api/committees/${committeeId}/approve`, {
+    await fetch(`${mainURL}api/committees/${committeeId}/approve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ memberId })
@@ -68,7 +70,7 @@ async function approveMember(committeeId, memberId) {
 }
 
 async function setHead(committeeId, memberId) {
-    await fetch(`/api/committees/${committeeId}/set-head`, {
+    await fetch(`${mainURL}api/committees/${committeeId}/set-head`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ memberId })
