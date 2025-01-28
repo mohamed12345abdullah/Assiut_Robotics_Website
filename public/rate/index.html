@@ -7,11 +7,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="container">
+    <div id="navbar">
+        <img src="../all-images/logo.ico" id="logo" width="100px" height="auto" alt="Logo">
         <h1>Rate</h1>
-        <div id="rate">
-            
+    </div>
+    <div id="header">
+        <h2>Name of rater</h2>
+        <div id="comittee">
+            <p class="active">committee</p>
+
         </div>
+    </div>
+    <div id="rate">
+        <div class="member" id="${i}">
+            <label id="progressbar" class="bar" for="rate"><div></div></label>
+
+            <h1>Task name</h1>
+            <h2>mazen</h2>
+            
+            <form action="">
+                <input type="number" name="rate" class="input" id="rate" placeholder="Rate of 10" max="10">
+                <label for="rate" class="percent">--%</label>
+
+                <button class="btn ensure " id="${i}">ensure</button>
+            </form>
+        </div>
+    </div>
     <script src="app.js"> </script>
 </body>
 </html>
