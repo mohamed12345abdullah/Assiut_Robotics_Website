@@ -1,16 +1,71 @@
 body{
     background-color: #eef0e5;
-
-}
-h1{
-    text-align: center;
-    margin: 0;
-    font-size: 3vw;
-    background-color: #39a7ff;
-    color: #fff;
     font-family: 'Courier New', Courier, monospace;
 
 }
+#navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+#navbar img {
+    margin-right: auto;
+}
+#navbar h1 {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+    font-size: 3rem;
+    font-weight: bolder;
+}
+
+#header{
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f8f8;
+    font-weight: bolder;
+    align-items: center;
+    margin-top: 10px;
+}
+#header h2{
+    font-size: 2rem;
+}
+#header p{
+    font-size: 1.5rem;
+    padding: 1rem;
+    
+
+}
+.active{
+    background-color: #39a7ff   ;
+    background-color: #39a7ff   ;
+    color: #f8f8f8;
+}
+#header p:hover{
+    cursor: pointer;
+    animation: underline 01s infinite linear;
+}
+@keyframes underline{
+    25%{
+        transform: translateY(15%);
+
+    }
+    50%{
+        transform: translateY(0%);
+
+    }
+    75%{
+        transform: translateY(-15%);
+
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+
+
 #rate{
     display: flex;
     flex-direction: row;
@@ -19,11 +74,14 @@ h1{
     align-items: center;
     margin-top: 10px;
     gap: 1rem;
+    color: #eef0e5;
 }
 .member{
     overflow: hidden;
     width: 20%;
     min-height: 25vh;
+    padding: 0!important;
+    padding-bottom: 1rem !important;
     font-family: 'Courier New', Courier, monospace;
 }
 @media screen and (max-width: 768px){
@@ -44,9 +102,16 @@ h1{
     align-items: center;
     gap: 1rem;  
 }
+.member h1{
+    margin: 0
+}
+.member h2{
+    margin: 0
+}
 .input{
-    border: solid 1px #000;
+    border: solid 1px #383737;
     height: 20px;
+    color: #000 !important;
    
 }
 .btn{
@@ -54,25 +119,42 @@ h1{
     border-radius: 5%;
     padding: 1%;
     cursor: pointer;
-    width: 30%;
+    width: 50%;
     height: 3rem;
+    background-color: #fff;
 }
 .btn:hover{
-    opacity: 0.8;
-}
-.rate{
-    border: solid 1px #000;
-    border-radius: 5%;
-    padding: 1%;
-    cursor: pointer;
-    justify-self: self-end;
-    font-size: 2vw;
-    height: fit-content;
-}
-.rate:hover{
     opacity: 0.8;
 }
 
 .disabled{
     display: none;
+}
+
+#progressbar{
+    width: 100%;
+    overflow: hidden;
+    height: 10px;
+    background-color: #f8f8f8;
+    margin-top: 0;
+    border: 0px;
+    border-radius: 2%;
+}
+#progressbar div{
+    height: 100%;
+    width: 50%;
+    border: 0;
+    background-color: gold;
+    transition: width 0.5s;
+}
+.percent{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: #fff;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
 }
