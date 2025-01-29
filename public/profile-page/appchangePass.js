@@ -20,6 +20,8 @@ function nextStep(step) {
 }
 
 async function sendreq (data){
+    let bino = document.querySelector(".bino");
+    bino.classList.remove("disabling");
     fetch(urls[step],{
     method: "POST",
     headers: {
@@ -27,6 +29,7 @@ async function sendreq (data){
     },
     body: data
     }).then((res) => {
+        bino.classList.add("disabling");
         if(res.ok)
         {
             

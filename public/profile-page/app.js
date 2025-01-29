@@ -17,6 +17,14 @@ const load = async () => {
                 "Authorization": Token // update token to be in the header
             },
         }).then(res => {
+            let bino = document.querySelector(".bino");
+            let container = document.querySelector(".container");  
+            let nav = document.getElementsByTagName("nav")[0];
+            let body = document.getElementsByTagName("body")[0];
+            body.classList.remove("loading");  
+            bino.classList.add("disabled");
+            nav.classList.remove("disabled");
+            container.classList.remove("disabled");
 
             return res.json();
         }).then((res) => {

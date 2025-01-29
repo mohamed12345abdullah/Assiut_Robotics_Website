@@ -12,17 +12,25 @@
         <p></p>
         <form id="step0">
             <input type="email" name="email" id="email" placeholder="Email">
-            <button type="submit" id="changePass">continue</button>
+            <button type="submit" class="btn" id="changePass">continue</button>
         </form>
-        <form id="step1" class="disabled">
+        <form id="step1" class="disabled" style="display: none;">
             <input type="number" name="code" id="code" placeholder="OPT">
-            <button type="submit" id="verify">verify</button>
+            <button type="submit" class="btn"  id="verify">verify</button>
         </form>
-        <form id="step2" class="disabled">
+        <form id="step2" class="disabled" style="display: none;">
             <input type="password" name="newPassword" id="pass" placeholder="Password">
             <input type="password" id="confirm" placeholder="confirm Password">
-            <button type="submit" id="change">Change password</button>
+            <button type="submit" class="btn"  id="change">Change password</button>
         </form>
+
+        <!-- binooo -->
+        <div class="bino load disabling">
+            <div class="bino_head">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
     </div>
     <script src="appchangePass.js"></script>
 </body>
