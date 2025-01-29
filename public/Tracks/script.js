@@ -57,17 +57,108 @@ const DEMO_DATA = {
   }
 };
 
+
+
+
+
+// Global variable for server URL
+const serverUrl = 'http://localhost:3000/Tracks/api'; // Replace with your server URL
+// https://assiut-robotics-zeta.vercel.app/members/verify
+// State management
+// API Functions
+async function getTracks() {
+  try {
+    const response = await fetch(`${serverUrl}/getAllTracks`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+      
+      const jsonResponse= await response.json();
+      console.log(jsonResponse.data);
+      return jsonResponse.data;
+      
+  } catch (error) {
+    console.error('Error fetching tracks:', error.message);
+  }
+}
+
+async function getCourses(trackId) {
+  try {
+    const response = await fetch(`${serverUrl}/getCourses/${trackId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    // init()
+    const jsonResponse=await response.json();
+    console.log(jsonResponse.data);
+    return jsonResponse.data;
+    
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+  }
+}
+
+async function getTasks(trackId,courseId) {
+  try {
+    const response = await fetch(`${serverUrl}/course/${trackId}/${courseId}/tasks`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const jsonResponse=await response.json();
+    console.log(jsonResponse);
+    return jsonResponse.data;
+    
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+}
+
+async function addCourse(event,courseId) {
+  event.stopPropagation();
+    console.log("add course function ",courseId);
+const data={
+    trackId:currentTrackId,
+    courseId
+}
+const token='berear '+window.localStorage.getItem('token')
+    try {
+      const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/joinCourse`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization':token
+        },
+        body:JSON.stringify(data)
+      });
+      const jsonResponse=await response.json();
+      console.log(jsonResponse);
+      return jsonResponse.data;
+      
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }  
+    
+}
+
+
 // State management
 let currentView = 'tracks';
 let tracks = [];
 let selectedTrack = null;
 let selectedCourse = null;
+let currentTrackId;
 
 // Mock API endpoints for testing
 const API = {
-  getTracks: () => Promise.resolve(DEMO_DATA.tracks),
-  getCourses: (trackId) => Promise.resolve(DEMO_DATA.courses[trackId] || []),
-  getTasks: (courseId) => Promise.resolve(DEMO_DATA.tasks[courseId] || [])
+  getTracks: async() => await getTracks(),
+  getCourses: async(trackId) => await getCourses(trackId) || [],
+  getTasks: async(trackId,courseId) =>await getTasks(trackId,courseId)|| []
 };
 
 // DOM Elements
@@ -118,7 +209,7 @@ function updateNavigation() {
 // Render track cards
 function renderTracks() {
   cardsContainer.innerHTML = tracks.map(track => `
-    <div class="card" onclick="handleTrackClick('${track.id}')">
+    <div class="card" onclick="handleTrackClick('${track._id}')">
       <div class="card-header">
         <div class="card-icon">
           <i data-lucide="${track.icon === 'web' ? 'globe' : track.icon === 'embedded' ? 'cpu' : 'code-2'}"></i>
@@ -133,12 +224,19 @@ function renderTracks() {
 // Render course cards
 function renderCourses(courses) {
   cardsContainer.innerHTML = courses.map(course => `
-    <div class="card" onclick="handleCourseClick('${course.id}')">
+    <div class="card" onclick="handleCourseClick('${course._id}')">
       <div class="card-header">
         <div class="card-icon">
           <i data-lucide="book-open"></i>
         </div>
         <h3 class="card-title">${course.name}</h3>
+       
+        <label onclick="addCourse(event,'${course._id}')"> 
+          <div class="meta-item">
+            <i data-lucide="circle-play"></i>
+            <span>start course </span>
+          </div>
+        </label>
       </div>
     </div>
   `).join('');
@@ -155,12 +253,13 @@ function renderTasks(tasks) {
       <div class="card-meta">
         <div class="meta-item">
           <i data-lucide="clock"></i>
-          <span>${task.estimatedTime}</span>
+          <span>${task.time}</span>
         </div>
         <div class="meta-item">
           <i data-lucide="star"></i>
           <span>${task.score} points</span>
         </div>
+
       </div>
     </div>
   `).join('');
@@ -171,8 +270,9 @@ function renderTasks(tasks) {
 async function handleTrackClick(trackId) {
   showLoading();
   try {
+    currentTrackId=trackId;
     const courses = await API.getCourses(trackId);
-    selectedTrack = tracks.find(t => t.id === trackId);
+    selectedTrack = tracks.find(t => t._id === trackId);
     selectedTrack.courses = courses;
     selectedCourse = null;
     currentView = 'courses';
@@ -188,8 +288,8 @@ async function handleTrackClick(trackId) {
 async function handleCourseClick(courseId) {
   showLoading();
   try {
-    const tasks = await API.getTasks(courseId);
-    selectedCourse = selectedTrack.courses.find(c => c.id === courseId);
+    const tasks = await API.getTasks(currentTrackId,courseId);
+    selectedCourse = selectedTrack.courses.find(c => c._id === courseId);
     selectedCourse.tasks = tasks;
     currentView = 'tasks';
     updateNavigation();
@@ -204,9 +304,9 @@ async function handleCourseClick(courseId) {
 function handleTaskClick(task) {
   document.getElementById('modal-title').textContent = task.name;
   document.getElementById('modal-description').textContent = task.description;
-  document.getElementById('modal-time').textContent = task.estimatedTime;
+  document.getElementById('modal-time').textContent = task.time;
   document.getElementById('modal-score').textContent = `${task.score} points`;
-  document.getElementById('modal-materials').href = task.dataLink;
+  document.getElementById('modal-materials').href = task.materialLink;
   document.getElementById('modal-submit').href = task.submissionLink;
   modal.classList.add('active');
 }

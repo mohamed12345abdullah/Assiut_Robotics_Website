@@ -175,7 +175,23 @@ async function editCourseApi(Tid,Cid,courseData) {
     });
     
   } catch (error) {
-    console.error('Error deleting task:', error);
+    console.error('Error editing  Course:', error);
+  }
+}
+async function editTaskApi(Tid,Cid,taskId,TaskData) {
+  try {
+    console.log("editTaskApi");
+    
+    await fetch(`${serverUrl}/${Tid}/course/${Cid}/task/update/${taskId}`, {
+      method: 'PUT',
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(TaskData)
+    });
+    
+  } catch (error) {
+    console.error('Error editing task:', error);
   }
 }
 
@@ -206,13 +222,15 @@ async function deleteCourseApi(trackId, courseId) {
   }
 }
 
-async function deleteTask(courseId, taskId) {
+async function deleteTaskApi(trackId,courseId, taskId) {
   try {
-    await fetch(`${serverUrl}/courses/${courseId}/tasks/${taskId}`, {
+    await fetch(`${serverUrl}/${trackId}/course/${courseId}/task/delete/${taskId}`, {
       method: 'DELETE',
     });
+    console.log("task deleted    :)");
+    
   } catch (error) {
-    console.error('Error deleting task:', error);
+    console.log('Error deleting task:', error);
   }
 }
 
@@ -264,19 +282,20 @@ function renderCourses(trackId) {
   lucide.createIcons();
 }
 
-function renderTasks(courseId) {
+async function renderTasks(trackId,courseId) {
   const grid = document.getElementById('tasks-grid');
-  const courseTasks = tasks[courseId] || [];
+  // await getTasks(trackId,courseId)
+  const courseTasks =await getTasks(trackId,courseId);
 
   grid.innerHTML = courseTasks.map(task => `
     <div class="admin-card">
       <div class="admin-card-header">
         <h3 class="admin-card-title">${task.name}</h3>
         <div class="admin-card-actions">
-          <button class="action-button edit-button" onclick="editTask('${task.id}')">
+          <button class="action-button edit-button" onclick="editTask('${task._id}')">
             <i data-lucide="edit"></i>
           </button>
-          <button class="action-button delete-button" onclick="deleteTask('${courseId}', '${task.id}')">
+          <button class="action-button delete-button" onclick="deleteTask('${task._id}')">
             <i data-lucide="trash-2"></i>
           </button>
         </div>
@@ -284,7 +303,7 @@ function renderTasks(courseId) {
       <div class="task-meta">
         <div class="meta-item">
           <i data-lucide="clock"></i>
-          <span>${task.estimatedTime}</span>
+          <span>${task.time}</span>
         </div>
         <div class="meta-item">
           <i data-lucide="star"></i>
@@ -496,7 +515,7 @@ async function loadCourseTasks() {
   if (!tasks[courseId]) {
     tasks[courseId] = await getTasks(trackId,courseId);
   }
-  renderTasks(courseId);
+  renderTasks(trackId,courseId);
 }
 
 // Modal functions
@@ -614,10 +633,10 @@ async function handleTaskSubmit(event) {
     id: document.getElementById('task-id').value || Date.now().toString(),
     name: document.getElementById('task-name').value,
     description: document.getElementById('task-description').value,
-    estimatedTime: document.getElementById('task-time').value,
+    time: document.getElementById('task-time').value,
     score: parseInt(document.getElementById('task-score').value),
-    dataLink: document.getElementById('task-data-link').value,
-    submissionLink: document.getElementById('task-submission-link').value
+    materialLink: document.getElementById('task-data-link').value,
+    // submissionLink: document.getElementById('task-submission-link').value
   };
  
   // In a real app, this would be an API call
@@ -627,15 +646,20 @@ async function handleTaskSubmit(event) {
   
   if (formData.id) {
     const index = tasks[courseId].findIndex(t => t._id === formData.id);
+    console.log(index)
     if (index !== -1) {
-      tasks[courseId][index] = formData;
+      console.log("update task" );
+      await editTaskApi(trackId,courseId,formData.id,formData);
+      // tasks[courseId][index] = formData;
     } else {
+      console.log("push Task");
+      
       await addTaskApi(trackId,courseId,formData);
       // tasks[courseId].push(formData);
     }
   }
   
-  renderTasks(courseId);
+  renderTasks(trackId,courseId);
   closeTaskModal();
 }
 
@@ -665,18 +689,26 @@ function editCourse(id) {
 }
 
 function editTask(id) {
+  console.log("edit TAsk function");
+
   const courseId = document.getElementById('task-course-select').value;
-  const task = tasks[courseId]?.find(t => t.id === id);
+  console.log("course id",courseId);
+  console.log("task id",tasks[courseId][0]._id);
+
+  const task = tasks[courseId]?.find(t => t._id === id);
   if (!task) return;
+  // console.log("edit TAsk function");
+  console.log("id:",id);
+  console.log("task._id",task._id);
   
   document.getElementById('task-modal-title').textContent = 'Edit Task';
-  document.getElementById('task-id').value = task.id;
+  document.getElementById('task-id').value = task._id;
   document.getElementById('task-name').value = task.name;
   document.getElementById('task-description').value = task.description;
-  document.getElementById('task-time').value = task.estimatedTime;
+  document.getElementById('task-time').value = task.time;
   document.getElementById('task-score').value = task.score;
-  document.getElementById('task-data-link').value = task.dataLink;
-  document.getElementById('task-submission-link').value = task.submissionLink;
+  document.getElementById('task-data-link').value = task.materialLink;
+  // document.getElementById('task-submission-link').value = task.submissionLink;
   
   taskModal.classList.add('active');
 }
@@ -714,16 +746,17 @@ async function deleteCourse(Cid) {
   }
 }
 
-// function deleteTask(id) {
-//   if (!confirm('Are you sure you want to delete this task?')) return;
-  
-//   const courseId = document.getElementById('task-course-select').value;
-//   const index = tasks[courseId]?.findIndex(t => t.id === id);
-//   if (index !== -1) {
-//     tasks[courseId].splice(index, 1);
-//     renderTasks(courseId);
-//   }
-// }
+function deleteTask(taskId) {
+  if (!confirm('Are you sure you want to delete this task?')) return;
+  const trackId = document.getElementById('task-track-select').value;
+  const courseId = document.getElementById('task-course-select').value;
+  const index = tasks[courseId].findIndex(t => t._id === taskId );
+  if (index !== -1) {
+    tasks[courseId].splice(index, 1);
+    deleteTaskApi(trackId,courseId,taskId);
+    renderTasks(trackId,courseId);
+  }
+}
 
 // // Initialize the page
 // init();
