@@ -9,7 +9,6 @@ const load = async () => {
         console.log(token);
         Token = "Bearer " + localStorage.getItem("token");
         console.log(Token);
-
         let response = await fetch("https://assiut-robotics-zeta.vercel.app/members/verify", {
             method: "GET",
             headers: {
