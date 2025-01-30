@@ -1,119 +1,341 @@
-//const { log } = require("node:console");
-let Token;
-let email;
-let id;
-const load = async () => {
-    let token = localStorage.getItem("token");
 
-    if (localStorage.hasOwnProperty("token")) {
-        console.log(token);
-        Token = "Bearer " + localStorage.getItem("token");
-        console.log(Token);
-        let response = await fetch("https://assiut-robotics-zeta.vercel.app/members/verify", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": Token // update token to be in the header
-            },
-        }).then(res => {
-            let bino = document.querySelector(".bino");
-            let container = document.querySelector(".container");  
-            let nav = document.getElementsByTagName("nav")[0];
-            let body = document.getElementsByTagName("body")[0];
-            body.classList.remove("loading");  
-            bino.classList.add("disabled");
-            nav.classList.remove("disabled");
-            container.classList.remove("disabled");
+        
+// API URLs
+const API_URL = 'https://assiut-robotics-zeta.vercel.app/members/login';
+const VERIFY_URL = 'https://assiut-robotics-zeta.vercel.app/members/verify';
+const CHANGE_AVATAR_URL = 'https://assiutroboticswebsite-production.up.railway.app/members/changeProfileImage';
+const SUBMIT_TASK_URL = 'https://assiut-robotics-zeta.vercel.app/members/submitTask';
 
-            return res.json();
-        }).then((res) => {
-            {
-                const JSONresponse = res;
-                console.log(JSONresponse);
-                id = JSONresponse.data.id;
-                edit()
+// State management
+let currentMemberData = null;
+let currentTrackId = null;
+let currentCourseId = null;
+let currentTaskId = null;
 
-                if (JSONresponse.data.role < 4) {
-                    document.getElementById('control-panel').style.display = "flex";
-                }
-                if ((JSONresponse.data.committee == "HR" && JSONresponse.data.role < 4) || JSONresponse.data.role == 1) {
-                    document.getElementById('head-hr').style.display = "inline-block";
-                    document.getElementById('OC-page1').style.display = "inline-block";
-                    document.getElementById('OC-page2').style.display = "inline-block";
-                    document.getElementById('blog-page').style.display = "inline-block";
-                    document.getElementById('addComponent').style.display = "inline-block";
+// DOM Elements
+const userAvatar = document.getElementById('userAvatar');
+const userName = document.getElementById('userName');
+const userRole = document.getElementById('userRole');
+const userEmail = document.getElementById('userEmail');
+const userCommittee = document.getElementById('userCommittee');
+const userPhone = document.getElementById('userPhone');
+const userStatus = document.getElementById('userStatus');
+const tracksList = document.getElementById('tracksList');
+const coursesContainer = document.getElementById('coursesContainer');
+const tasksContainer = document.getElementById('tasksContainer');
+const courseTasksTitle = document.getElementById('courseTasksTitle');
+const progressBarFill = document.getElementById('progressBarFill');
+const progressText = document.getElementById('progressText');
+const darkModeToggle = document.getElementById('darkModeToggle');
+const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+const avatarInput = document.getElementById('avatarInput');
+const submitTaskModal = document.getElementById('submitTaskModal');
+const submitTaskForm = document.getElementById('submitTaskForm');
 
+// Verify token
+async function verifyToken() {
+ const token = localStorage.getItem('token');
+    console.log("verifying");
+    
+  if (!token) return false;
 
-                }
-                if (JSONresponse.data.committee == "OC") {
-                    document.getElementById('OC-page1').style.display = "flex";
-                    document.getElementById('OC-page2').style.display = "flex";
-                    document.getElementById('addComponent').style.display = "flex";
-                }
-                if (JSONresponse.data.committee == "media") {
-                    document.getElementById('blog-page').style.display = "flex";
-                }
-                document.getElementById("nameHuman").innerHTML = JSONresponse.data.name;
-                document.getElementById("email").innerHTML = JSONresponse.data.email;
-                email = JSONresponse.data.email;
-                document.getElementById("phone").innerHTML = JSONresponse.data.phoneNumber;
-                document.getElementById("specialty").innerHTML = JSONresponse.data.committee;
-                document.getElementById("human").src = JSONresponse.data.avatar;
-                document.getElementById("magnified").src = JSONresponse.data.avatar;
-                window.localStorage.setItem("role", JSONresponse.data.role);
-                window.localStorage.setItem("committee", JSONresponse.data.committee);
-            }
-        }).catch(err => console.log(err));
-
-
-
-
+  try {
+    const response = await fetch(VERIFY_URL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const data = await response.json();
+    console.table(data.data);
+    if (data.data) {
+    //   localStorage.setItem('token', data.data.token);
+      currentMemberData = data.data.memberData;
+      renderMemberData(data.data);
+      
     } else {
-        window.location.href = "../login/login.html"
+      console.log('Invalid data format received from API', data);
     }
-
-
-}
-const logout = () => {
-    window.localStorage.removeItem("token");
-    document.querySelector(".container").style.display = "none";
-    window.alert("نورتنا  (: ")
-    window.location.href = "../"
+    return response.ok;
+  } catch (error) {
+    console.error('Token verification failed:', error);
+    return false;
+  }
 }
 
-function edit() {
-    let field = document.getElementById("changePhoto");
+// Fetch member data from API
+// async function fetchMemberData() {
+//   try {
+//     const loginData = {
+//       email: "mohamed12345abdullah@gmail.com",
+//       password: "Abdullah123$"
+//     };
 
-    field.addEventListener("change", (e) => {
-        let form = document.forms["profile_pic"];
+//     const response = await fetch(API_URL, {
+//       method: "POST",
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(loginData)
+//     });
 
-        let body = new FormData(form);
-        console.log(body)
+//     const data = await response.json();
+//     console.log(data);
+//     if (data.status === "success" && data.data.memberData) {
+//       localStorage.setItem('token', data.data.token);
+//       currentMemberData = data.data.memberData;
+      
+      
+//       renderMemberData(data.data);
+      
+//     } else {
+//       console.error('Invalid data format received from API');
+//     }
+//   } catch (error) {
+//     console.error('Error fetching member data:', error);
+//   }
+// }
 
-        fetch("https://assiutroboticswebsite-production.up.railway.app/members/changeProfileImage", {
-            method: "POST",
-            headers: {
-                "Authorization": Token // update token to be in the header
-            },
-            body: body
-        }).then(res => res.json()).then(data => {
-            document.getElementById("human").src = data.data.avatar;
-            console.log(data);
-        }).catch(err => {
-            console.log(err);
-        })
-    })
+// Change avatar
+async function changeAvatar(file) {
+  const token = localStorage.getItem('token');
+  if (!token || !file) return;
+
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    const response = await fetch(CHANGE_AVATAR_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      userAvatar.src = data.avatar;
+      window.location.reload();
+    }
+  } catch (error) {
+    console.error('Error changing avatar:', error);
+  }
 }
-function magnifyImage() {
-    let img = document.getElementById("human");
-    let magnify = document.querySelector(".magnify");
 
-    img.addEventListener('click', () => {
-        magnify.classList.remove('disabled')
-    })
+// Submit task
+async function submitTask(submissionLink) {
+  const token = localStorage.getItem('token');
+ 
+  if (!token) return;
 
-    magnify.addEventListener('click', () => {
-        magnify.classList.add('disabled')
-    })
+  try {
+    const response = await fetch(SUBMIT_TASK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        trackId: currentTrackId,
+        courseId: currentCourseId,
+        taskId: currentTaskId,
+        submissionLink
+      })
+    });
+
+    if (response.ok) {
+      // Refresh the tasks display
+      const currentTrack = currentMemberData.startedTracks[currentTrackId];
+      if (currentTrack) {
+        renderTasks(currentTrack.track.courses[currentCourseId].tasks);
+      }
+    }
+  } catch (error) {
+    console.error('Error submitting task:', error);
+  }
 }
-magnifyImage()
+
+// Render member profile data
+function renderMemberData(data) {
+  userAvatar.src = data.avatar;
+  userAvatar.alt = `${data.name}'s avatar`;
+  userName.textContent = data.name;
+  userRole.textContent = data.role;
+  userEmail.textContent = data.email;
+  userCommittee.textContent = data.committee;
+  userPhone.textContent = data.phoneNumber;
+  userStatus.textContent = data.verified ? 'Verified' : 'Pending';
+  userStatus.className = `status-badge ${data.verified ? 'verified' : 'pending'}`;
+  
+  renderTracks(data.startedTracks);
+}
+
+// Render tracks list
+function renderTracks(tracks) {
+  tracksList.innerHTML = '';
+  tracks.forEach((trackData, index) => {
+    const trackElement = document.createElement('div');
+    trackElement.className = 'track-item';
+    trackElement.textContent = trackData.track.name;
+    trackElement.dataset.trackIndex = index;
+    
+    trackElement.addEventListener('click', () => {
+      document.querySelectorAll('.track-item').forEach(el => el.classList.remove('active'));
+      trackElement.classList.add('active');
+      currentTrackId = trackData.track._id;
+      renderCourses(trackData.track.courses);
+      courseTasksTitle.textContent = trackData.track.name;
+    });
+    
+    tracksList.appendChild(trackElement);
+  });
+}
+
+// Render courses for selected track
+function renderCourses(courses) {
+  coursesContainer.innerHTML = '';
+  tasksContainer.style.display = 'none';
+  
+  courses.forEach((course, index) => {
+    const courseElement = document.createElement('div');
+    courseElement.className = 'course-item';
+    courseElement.textContent = course.name;
+    courseElement.dataset.courseIndex = index;
+    
+    courseElement.addEventListener('click', () => {
+      document.querySelectorAll('.course-item').forEach(el => el.classList.remove('active'));
+      courseElement.classList.add('active');
+      currentCourseId = course._id;
+      renderTasks(course.tasks);
+    });
+    
+    coursesContainer.appendChild(courseElement);
+  });
+}
+
+// Render tasks for selected course
+function renderTasks(tasks) {
+  const tasksList = document.getElementById('tasksList');
+  tasksList.innerHTML = '';
+  tasksContainer.style.display = 'block';
+  
+  // Calculate progress
+  const completedTasks = tasks.filter(task => task.submittedAt).length;
+  const progressPercentage = (completedTasks / tasks.length) * 100;
+  
+  progressBarFill.style.width = `${progressPercentage}%`;
+  progressText.textContent = `${Math.round(progressPercentage)}% Complete`;
+  
+  tasks.forEach(task => {
+    const taskElement = document.createElement('div');
+    taskElement.className = 'task-item';
+    
+    const taskHeader = document.createElement('div');
+    taskHeader.className = 'task-header';
+    
+    const taskTitle = document.createElement('h3');
+    taskTitle.className = 'task-title';
+    taskTitle.textContent = task.name || task.title;
+    
+    const taskDeadline = document.createElement('div');
+    taskDeadline.className = 'task-deadline';
+    taskDeadline.innerHTML = `<i class="icon clock-icon"></i> Due ${task.time   }`;
+    
+    taskHeader.appendChild(taskTitle);
+    taskHeader.appendChild(taskDeadline);
+    
+    const taskDescription = document.createElement('p');
+    taskDescription.className = 'task-description';
+    taskDescription.textContent = task.description;
+
+    const taskURL = document.createElement('a');
+    taskURL.className = 'task-description';
+    taskURL.href = task.materialLink;
+    taskURL.innerText = "Material Link";
+    
+    const taskMeta = document.createElement('div');
+    taskMeta.className = 'task-meta';
+    
+    if (task.submittedAt && task.score) {
+      const taskScore = document.createElement('span');
+      taskScore.className = 'task-score';
+      taskScore.textContent = `Score: ${task.score}/10`;
+      taskMeta.appendChild(taskScore);
+    }
+    
+    const taskStatus = document.createElement('span');
+    taskStatus.className = 'task-status';
+    
+    if (!task.submittedAt) {
+      const submitButton = document.createElement('button');
+      submitButton.className = 'submit-task-btn';
+      submitButton.textContent = 'Submit Task';
+      submitButton.addEventListener('click', () => {
+        currentTaskId = task._id;
+        submitTaskModal.style.display = 'block';
+      });
+      taskStatus.appendChild(submitButton);
+    } else {
+      taskStatus.textContent = 'Completed';
+    }
+    
+    taskMeta.appendChild(taskStatus);
+    
+    taskElement.appendChild(taskHeader);
+    taskElement.appendChild(taskDescription);
+    taskElement.appendChild(taskURL);
+    taskElement.appendChild(taskMeta);
+    
+    tasksList.appendChild(taskElement);
+  });
+}
+
+// Event Listeners
+changeAvatarBtn.addEventListener('click', () => {
+  avatarInput.click();
+});
+
+avatarInput.addEventListener('change', (e) => {
+  if (e.target.files && e.target.files[0]) {
+    changeAvatar(e.target.files[0]);
+  }
+});
+
+submitTaskForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submissionLink = document.getElementById('submissionLink').value;
+  await submitTask(submissionLink);
+  submitTaskModal.style.display = 'none';
+  submitTaskForm.reset();
+});
+
+document.querySelector('.cancel-btn').addEventListener('click', () => {
+  submitTaskModal.style.display = 'none';
+  submitTaskForm.reset();
+});
+
+// Dark mode toggle
+function initializeDarkMode() {
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  document.body.classList.toggle('dark-mode', isDarkMode);
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  });
+}
+
+// Initialize application
+async function initialize() {
+    console.log("intialize ")
+  const isValid = await verifyToken();
+//   if (!isValid) {
+//     await fetchMemberData();
+//   }
+  initializeDarkMode();
+}
+
+// Start the application
+initialize();

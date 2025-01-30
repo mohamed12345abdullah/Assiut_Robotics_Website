@@ -1,0 +1,365 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    /* background-image: url(../images/background-all-pages.jpg); */
+    background-color: #eef0e5;
+    background-size: cover;
+    background-position: center;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo {
+    width: 110px;
+    height: 60px;
+    /* margin-left: 35px; */
+    /* margin-top: 35px; */
+}
+
+.content {
+    margin: 5% 0;
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: stretch;
+}
+
+.control-buttons-div {
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.left {
+    display: flex;
+    width: 25%;
+    background-image: linear-gradient(to left, #2aa9f3 5%, #8ecff2);
+    /* background-image: linear-gradient(to right, #2aa9f3 50%,#fff); */
+    color: #fff;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.left img {
+    margin: 20px;
+    border: 2px solid #104068;
+    border-radius: 50%;
+    width: 10rem;
+    cursor: pointer;
+}
+
+
+.left .info {
+    /* margin: -20% 29%; */
+    text-align: center;
+}
+
+.info h2 {
+    font-size: 27px;
+    margin-bottom: 15%;
+}
+
+.info p {
+    font-size: 25px;
+    margin-bottom: 20%;
+}
+
+.info i {
+    cursor: pointer;
+}
+
+.right {
+    width: 60%;
+    background-color: #fff;
+    padding-top: 2%;
+}
+
+hr {
+    width: 80%;
+    margin: 5px auto;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: stretch;
+    padding: 2% 2% 2% 10%;
+}
+
+.contact p {
+    padding: 5px 0;
+}
+
+.contact .titles,
+.works .titles {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 18%;
+    padding-top: 5%;
+}
+
+.title {
+    margin-left: 10%;
+    padding-bottom: 0.5%;
+}
+
+.bolding {
+    font-size: 22px;
+    font-weight: 600;
+    color: #104068;
+}
+
+.infoo {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 18%;
+    padding-top: 1%;
+    font-size: 18px;
+    color: #858585;
+}
+
+.social {
+    width: 15%;
+    padding-left: 10%;
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    color: #104068;
+    margin-bottom: 2%;
+}
+
+.social i {
+    cursor: pointer;
+    margin: 10px;
+}
+
+
+/* style nav  */
+nav {
+    /* background-color: #104068; */
+    /* margin-bottom: 20px; */
+    padding: 5px 20px;
+}
+
+.control-buttons-div{
+
+    margin-bottom: 50px;
+}
+
+.logout-button {
+    margin: 10px 10px;
+    background-color: #2aa9f3;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    border: 1.5px solid black;
+}
+
+.control-buttons {
+    height: max-content;
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: max-content;
+}
+
+#control-panel,
+#head-hr,
+#OC-page1,
+#OC-page2,
+#addComponent,
+#blog-page {
+    margin: 10px 10px;
+    width: 120px;
+    height: 40px;
+    background-color: #2aa9f3;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        height: max-content;
+    }
+
+    .content {
+        flex-direction: column;
+        /* padding: 0 50px; */
+        margin: 5% 10px;
+        width: 95%;
+        align-items: center;
+    }
+
+    .left {
+        width: 90%;
+        padding: 20px 10px;
+    }
+
+    .right {
+        width: 90%;
+        padding: 20px 10px;
+    }
+
+    .left img {
+        margin: 10px;
+        border: 2px solid #104068;
+        border-radius: 50%;
+        height: 80px;
+        width: 80px;
+    }
+
+    .info h2 {
+        font-size: 18px;
+        margin-bottom: 10%;
+        padding: 5px;
+    }
+
+    .info p {
+        font-size: 16px;
+        margin-bottom: 15%;
+        padding: 5px;
+    }
+
+    #control-panel,
+    #head-hr,
+    #OC-page,
+    #blog-page {
+        margin: 10px 10px;
+    }
+
+    .logout-button {
+        margin: 10px 10px;
+    }
+}
+.disabled{
+    display: none !important;
+}
+.magnify{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.magnify img{
+    width: 50%;
+    border-radius: 10px;
+}
+.disabled{
+    display: none;
+}
+/* -------------bino style --------------- */
+.loading{
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.bino{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background: #2daee2;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.bino_head {
+    margin-top: 2% ;
+    width: 60%;
+    height: 30%;
+    background-color: aliceblue;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    gap: 15%;
+}
+.eye{
+    margin-bottom: 10%;
+    background-color: #2daee2;
+    width: 15%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+}
+.load{
+    animation: loadbody 1.25s infinite ease-in-out ; 
+}
+.load .bino_head div{
+    animation: loadbody 1.25s infinite ease-in-out ; 
+}
+@keyframes loadbody {
+    0%{
+        transform:   translateY(0px);
+    }
+    50%{
+        transform:   translateY(-50%);
+
+    }
+    100%{
+        transform:   translateY(0px);
+    }
+}
