@@ -94,9 +94,11 @@ if(!token){
           return window.location.href="../login/login.html"
         }
       console.log(jsonResponse);
+      window.alert(jsonResponse.message)
       return jsonResponse.data;
       
     } catch (error) {
+      window.alert(error.message)
 
       console.log('Error fetching tasks:', error.message);
     }  
