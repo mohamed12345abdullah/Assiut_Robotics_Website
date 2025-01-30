@@ -1,9 +1,9 @@
-const mainURL = "http://localhost:3000/members/getAllMembers";
+const mainURL = "https://assiut-robotics-zeta.vercel.app";
 
 async function fetchCommittees() {
     try {
         // Fetch the data from the API
-        const response = await fetch(mainURL);
+        const response = await fetch(`${mainURL}/members/getAllMembers`);
 
         // Parse the response as JSON
         const data = await response.json();
@@ -69,15 +69,17 @@ function renderContainers(committees) {
         container.appendChild(membersHeading);
 
         if (committee && committee.length > 0) {
+            committee
             committee.forEach(member => {
                 const memberCard = document.createElement('div');
                 memberCard.className = 'card';
 
                 memberCard.innerHTML = `
                     <p>${member.name} (${member.role})</p>
-                    <button onclick="removeMember(${committee.id}, '${member._id}')">Remove</button>
+                    <button onclick="approveMember( '${member.email}','${true}')">accept</button>
+                    <button onclick="approveMember( '${member.email}','${false}')">Remove</button>
                     ${member.role !== 'Head'
-                        ? `<button onclick="setHead(${committee.id}, '${member._id}')">Set Head</button>`
+                        ? `<button onclick="setHead('${member._id}')">Set Head</button>`
                         : ''
                     }
                 <button onclick="showMemberInfo(${JSON.stringify(member).replace(/"/g, '&quot;')})">Show Info</button>
@@ -195,22 +197,52 @@ async function removeMember(committeeId, memberId) {
     location.reload();
 }
 
-async function approveMember(committeeId, memberId) {
-    await fetch(`${mainURL}api/committees/${committeeId}/approve`, {
+async function approveMember(email, accepted) {
+    try {
+        
+        console.log(email,accepted);
+        
+    const token=window.localStorage.getItem('token')
+    const res=await fetch(`https://assiut-robotics-zeta.vercel.app/members/confirm`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ memberId })
+        headers: {
+             'Content-Type': 'application/json',
+             'authorization':`Bearer ${token}`
+            
+            },
+        body: JSON.stringify({email,accepted})
     });
-    location.reload();
+    const response=await res.json();
+    alert(response.message)
+    console.log(response);
+    
+    // location.reload();
+} catch (error) {
+       window.alert(error.message) 
+}
 }
 
-async function setHead(committeeId, memberId) {
-    await fetch(`${mainURL}api/committees/${committeeId}/set-head`, {
+async function setHead(memberId) {
+    const token=window.localStorage.getItem('token')
+
+    try{
+    const res=await fetch(`https://assiut-robotics-zeta.vercel.app/members/changeHead`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization':`Bearer ${token}`
+           
+           },
         body: JSON.stringify({ memberId })
     });
+    const response=await res.json();
+    alert(response.message)
+    console.log(response);
+    
     location.reload();
+} catch (error) {
+       window.alert(error.message) 
+}
 }
 
 

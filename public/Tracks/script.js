@@ -1,68 +1,11 @@
 // Sample data for testing
-const DEMO_DATA = {
-  tracks: [
-    { id: '1', name: 'Web Development', icon: 'web' },
-    { id: '2', name: 'Embedded Systems', icon: 'embedded' },
-    { id: '3', name: 'Mobile Development', icon: 'default' }
-  ],
-  courses: {
-    '1': [
-      { id: '101', name: 'HTML & CSS Fundamentals' },
-      { id: '102', name: 'JavaScript Basics' },
-      { id: '103', name: 'React Development' }
-    ],
-    '2': [
-      { id: '201', name: 'Arduino Programming' },
-      { id: '202', name: 'Raspberry Pi Projects' },
-      { id: '203', name: 'IoT Fundamentals' }
-    ],
-    '3': [
-      { id: '301', name: 'Android Development' },
-      { id: '302', name: 'iOS Development' },
-      { id: '303', name: 'Flutter & Dart' }
-    ]
-  },
-  tasks: {
-    '101': [
-      {
-        id: '1001',
-        name: 'Build a Portfolio Website',
-        description: 'Create a personal portfolio website using HTML and CSS. Include an about section, projects section, and contact form.',
-        estimatedTime: '4 hours',
-        score: 100,
-        dataLink: '#',
-        submissionLink: '#'
-      },
-      {
-        id: '1002',
-        name: 'Responsive Landing Page',
-        description: 'Design and build a responsive landing page for a fictional product using flexbox and grid.',
-        estimatedTime: '3 hours',
-        score: 80,
-        dataLink: '#',
-        submissionLink: '#'
-      }
-    ],
-    '102': [
-      {
-        id: '2001',
-        name: 'Interactive Form Validation',
-        description: 'Build a form with client-side validation using JavaScript. Include email, password, and custom field validations.',
-        estimatedTime: '2 hours',
-        score: 60,
-        dataLink: '#',
-        submissionLink: '#'
-      }
-    ]
-  }
-};
 
 
 
 
 
 // Global variable for server URL
-const serverUrl = 'http://localhost:3000/Tracks/api'; // Replace with your server URL
+const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api'; // Replace with your server URL
 // https://assiut-robotics-zeta.vercel.app/members/verify
 // State management
 // API Functions
@@ -126,7 +69,13 @@ const data={
     trackId:currentTrackId,
     courseId
 }
-const token='berear '+window.localStorage.getItem('token')
+// window.localStorage.getItem('token')
+const token=window.localStorage.getItem("token")
+if(!token){
+
+      window.alert('you need to login ')
+      return window.location.href="../login/login.html"
+  }
     try {
       const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/joinCourse`, {
         method: 'POST',
@@ -136,12 +85,19 @@ const token='berear '+window.localStorage.getItem('token')
         },
         body:JSON.stringify(data)
       });
+      
       const jsonResponse=await response.json();
+      if(jsonResponse.status==401)
+        {
+          window.alert('you need to login ')
+          return window.location.href="../login/login.html"
+        }
       console.log(jsonResponse);
       return jsonResponse.data;
       
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+
+      console.log('Error fetching tasks:', error.message);
     }  
     
 }
