@@ -69,6 +69,7 @@ const data={
     trackId:currentTrackId,
     courseId
 }
+
 // window.localStorage.getItem('token')
 const token=window.localStorage.getItem("token")
 if(!token){
@@ -81,7 +82,7 @@ if(!token){
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'authorization':token
+          'authorization':`bearer ${token}`
         },
         body:JSON.stringify(data)
       });
