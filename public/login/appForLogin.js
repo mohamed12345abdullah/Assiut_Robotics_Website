@@ -17,7 +17,7 @@ try {
             console.log('aaa', JSONresponse);
             window.localStorage.setItem('token', JSONresponse.data.token);
             document.querySelector(".message").innerHTML = JSONresponse.message;
-            window.location.href = "../profile-page/index.html"
+            window.location.href = "../profile-page/coursesDashboard/index.html"
         }
 
 

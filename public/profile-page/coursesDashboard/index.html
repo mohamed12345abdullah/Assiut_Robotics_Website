@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+  <header>
+    <div class="header-content">
+      <h1>Member Dashboard</h1>
+      <div class="user-info">
+        <div class="avatar-container">
+          <img id="userAvatar" alt="User avatar" class="avatar">
+          <button id="changeAvatarBtn" class="change-avatar-btn">Change Photo</button>
+          <input type="file" id="avatarInput" accept="image/*" style="display: none">
+        </div>
+        <div>
+          <p id="userName" class="user-name"></p>
+          <p id="userRole" class="user-role"></p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="dashboard-grid">
+      <!-- Profile Card -->
+      <div class="card profile-card">
+        <div class="card-header">
+          <i class="icon user-icon"></i>
+          <h2>Profile Info</h2>
+        </div>
+        <div class="profile-info">
+          <p><span>Email:</span> <span id="userEmail"></span></p>
+          <p><span>Committee:</span> <span id="userCommittee"></span></p>
+          <p><span>Phone:</span> <span id="userPhone"></span></p>
+          <p><span>Status:</span> <span id="userStatus" class="status-badge"></span></p>
+        </div>
+      </div>
+
+      <!-- Tracks Card -->
+      <div class="card tracks-card">
+        <div class="card-header">
+          <i class="icon book-icon"></i>
+          <h2>Current Tracks</h2>
+        </div>
+        <div id="tracksList" class="tracks-list"></div>
+      </div>
+
+      <!-- Courses and Tasks Card -->
+      <div class="card courses-tasks-card">
+        <div class="card-header">
+          <i class="icon tasks-icon"></i>
+          <h2 id="courseTasksTitle">Select a Track</h2>
+        </div>
+        
+        <div id="coursesContainer" class="courses-container"></div>
+
+        <div id="tasksContainer" class="tasks-container">
+          <div class="progress-bar-container">
+            <div class="progress-label">Course Progress</div>
+            <div class="progress-bar">
+              <div id="progressBarFill" class="progress-bar-fill"></div>
+            </div>
+            <div id="progressText" class="progress-text">0%</div>
+          </div>
+          <div id="tasksList" class="tasks-list"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Submit Task Modal -->
+  <div id="submitTaskModal" class="modal">
+    <div class="modal-content">
+      <h2>Submit Task</h2>
+      <form id="submitTaskForm">
+        <div class="form-group">
+          <label for="submissionLink">Submission Link:</label>
+          <input type="url" id="submissionLink" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Submit</button>
+          <button type="button" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <button id="darkModeToggle" class="dark-mode-toggle">
+    <i class="icon moon-icon"></i>
+  </button>
+
+  <script src="app.js"></script>
+</body>
+</html>
