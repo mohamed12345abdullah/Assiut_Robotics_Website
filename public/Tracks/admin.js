@@ -1,8 +1,7 @@
-// Global variable for server URL
+  // Global variable for server URL
 const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api'; // Replace with your server URL
 // https://assiut-robotics-zeta.vercel.app/members/verify
 // State management
-https://assiut-robotics-zeta.vercel.app/Tracks/api/getAllTracks
 let tracks = [];
 let courses = {};
 let tasks = {};
