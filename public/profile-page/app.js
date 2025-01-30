@@ -31,6 +31,10 @@ const changeAvatarBtn = document.getElementById('changeAvatarBtn');
 const avatarInput = document.getElementById('avatarInput');
 const submitTaskModal = document.getElementById('submitTaskModal');
 const submitTaskForm = document.getElementById('submitTaskForm');
+const bino = document.getElementsByClassName('bino')[0];
+const body = document.getElementsByTagName('body')[0];
+const main = document.getElementsByTagName('main')[0];
+const header = document.getElementsByTagName('header')[0];
 
 // Verify token
 async function verifyToken() {
@@ -48,10 +52,15 @@ async function verifyToken() {
       }
     });
     const data = await response.json();
-    console.table(data.data);
+    console.log(data);
     if (data.data) {
     //   localStorage.setItem('token', data.data.token);
-      currentMemberData = data.data.memberData;
+      bino.classList.add('disabled');
+      body.classList.remove('loading');
+      main.classList.remove('disabled');
+      header.classList.remove('disabled');
+      
+      currentMemberData = data.data;
       renderMemberData(data.data);
       
     } else {
@@ -153,7 +162,7 @@ async function submitTask(submissionLink) {
       }
     }
   } catch (error) {
-    console.error('Error submitting task:', error);
+    alert(error);
   }
 }
 

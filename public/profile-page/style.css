@@ -413,3 +413,63 @@
     opacity: 0.8;
     transform: scale(1.1);
   }
+  .disabled{
+    display: none !important;
+  }
+
+  /* Binooooo */
+
+  @keyframes loadbody {
+    0%{
+        transform:   translateY(0px);
+    }
+    50%{
+        transform:   translateY(-50%);
+
+    }
+    100%{
+        transform:   translateY(0px);
+    }
+}
+.loading{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bino{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background: #2daee2;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.bino_head {
+    margin-top: 2% ;
+    width: 60%;
+    height: 30%;
+    background-color: aliceblue;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    gap: 15%;
+}
+.eye{
+    margin-bottom: 10%;
+    background-color: #2daee2;
+    width: 15%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+}
+.load{
+    animation: loadbody 1.25s infinite ease-in-out ; 
+}
+.load .bino_head div{
+    animation: loadbody 1.25s infinite ease-in-out ; 
+}
