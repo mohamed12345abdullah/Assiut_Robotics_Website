@@ -1,5 +1,5 @@
 // Global variable for server URL
-const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api'; // Replace with your server URL
+const serverUrl = 'http://localhost:3000/Tracks/api'; // Replace with your server URL
 // https://assiut-robotics-zeta.vercel.app/members/verify
 // State management
 let tracks = [];
@@ -158,7 +158,7 @@ async function editTrackApi(id,trackData) {
     });
     init()
   } catch (error) {
-    console.error('Error deleting task:', error);
+    console.error('Error  editing Track:', error);
   }
 }
 
@@ -746,14 +746,14 @@ async function deleteCourse(Cid) {
   }
 }
 
-function deleteTask(taskId) {
+async function deleteTask(taskId) {
   if (!confirm('Are you sure you want to delete this task?')) return;
   const trackId = document.getElementById('task-track-select').value;
   const courseId = document.getElementById('task-course-select').value;
   const index = tasks[courseId].findIndex(t => t._id === taskId );
   if (index !== -1) {
     tasks[courseId].splice(index, 1);
-    deleteTaskApi(trackId,courseId,taskId);
+    await deleteTaskApi(trackId,courseId,taskId);
     renderTasks(trackId,courseId);
   }
 }
