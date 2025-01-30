@@ -334,7 +334,9 @@ async function initialize() {
 //   if (!isValid) {
 //     await fetchMemberData();
 //   }
-  initializeDarkMode();
+  if(!isValid)
+    window.location.href = '../login/login.html';
+initializeDarkMode();
 }
 
 // Start the application
