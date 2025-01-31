@@ -392,3 +392,43 @@ select {
     padding: 1rem;
   }
 }
+
+
+
+
+
+
+
+
+
+
+#members-section {
+  display: none;
+}
+
+#members-section.active {
+  display: block;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #3b82f6;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  background-color: #f3f4f6;
+}
+
+.members-dashboard {
+  padding: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+}

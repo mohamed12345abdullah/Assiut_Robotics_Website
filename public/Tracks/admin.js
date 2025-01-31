@@ -361,93 +361,273 @@ async function loadCourseTasks() {
 }
 
 // View course members and progress
+// async function viewCourseMembers(courseId) {
+//   try {
+//     const members = await getCourseMembers(courseId);
+//     const course = courses[currentTrackId].find(c => c._id === courseId);
+//     const tasks = await getTasks(currentTrackId, courseId);
+    
+//     const modalContent = document.createElement('div');
+//     modalContent.className = 'course-members-modal';
+    
+//     modalContent.innerHTML = `
+//       <div class="modal-header">
+//         <h2>${course.name} - Member Progress</h2>
+//         <button class="close-button" onclick="closeMembersModal()">&times;</button>
+//       </div>
+//       <div class="members-dashboard">
+//         <div class="dashboard-stats">
+//           <div class="stat-card">
+//             <h3>Total Members</h3>  
+//             <p>${members.length}</p>
+//           </div>
+//           <div class="stat-card">
+//             <h3>Total Tasks</h3>
+//             <p>${tasks.length}</p>
+//           </div>
+//         </div>
+//         <div class="members-list">
+//           ${members.map(member => {
+//             const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+//             const submittedTasks = memberProgress?.submittedTasks || [];
+//             const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
+            
+//             return `
+//               <div class="member-card">
+//                 <div class="member-info">
+//                   <h4>${member.name}</h4>
+//                   <p>${member.email}</p>
+//                   <div class="progress-bar">
+//                     <div class="progress" style="width: ${completionRate}%"></div>
+//                     <span>${completionRate}% complete</span>
+//                   </div>
+//                 </div>
+//                 <div class="task-submissions">
+//                   <h5>Task Submissions</h5>
+//                   <div class="tasks-grid">
+//                     ${tasks.map(task => {
+//                       const submission = submittedTasks.find(s => s.task === task._id);
+//                       return `
+//                         <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
+//                           <h6>${task.name}</h6>
+//                           ${submission ? `
+//                             <div class="submission-details">
+//                               <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
+//                               <a href="${submission.submissionLink}" target="_blank" class="view-submission">
+//                                 <i data-lucide="external-link"></i>
+//                                 View Submission
+//                               </a>
+//                               ${submission.evaluation ? `
+//                                 <p class="evaluation">Evaluation: ${submission.evaluation}</p>
+//                               ` : `
+//                                 <button onclick="evaluateSubmission('${member._id}', '${task._id}', '${submission._id}')" class="evaluate-button">
+//                                   Add Evaluation
+//                                 </button>
+//                               `}
+//                             </div>
+//                           ` : '<p class="pending-text">Not submitted yet</p>'}
+//                         </div>
+//                       `;
+//                     }).join('')}
+//                   </div>
+//                 </div>
+//               </div>
+//             `;
+//           }).join('')}
+//         </div>
+//       </div>
+//     `;
+
+//     console.log(membersModal);
+    
+//     membersModal.innerHTML = '';
+//     membersModal.appendChild(modalContent);
+//     membersModal.classList.add('active');
+//     lucide.createIcons();
+//   } catch (error) {
+//     console.log('Error loading member progress:', error);
+//   }
+// }
+// async function viewCourseMembers(courseId) {
+//   try {
+//     const members = await getCourseMembers(courseId);
+//     const course = courses[currentTrackId].find(c => c._id === courseId);
+//     const tasks = await getTasks(currentTrackId, courseId);
+    
+//     const modalContent = document.createElement('div');
+//     modalContent.className = 'course-members-modal';
+    
+//     modalContent.innerHTML = `
+//       <div class="modal-header">
+//         <h2>${course.name} - Member Progress</h2>
+//         <button class="close-button" onclick="closeMembersModal()">&times;</button>
+//       </div>
+//       <div class="members-dashboard">
+//         <div class="dashboard-stats">
+//           <div class="stat-card">
+//             <h3>Total Members</h3>  
+//             <p>${members.length}</p>
+//           </div>
+//           <div class="stat-card">
+//             <h3>Total Tasks</h3>
+//             <p>${tasks.length}</p>
+//           </div>
+//         </div>
+//         <div class="members-list">
+//           ${members.map(member => {
+//             const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+//             const submittedTasks = memberProgress?.submittedTasks || [];
+//             const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
+            
+//             return `
+//               <div class="member-card">
+//                 <div class="member-info">
+//                   <h4>${member.name}</h4>
+//                   <p>${member.email}</p>
+//                   <div class="progress-bar">
+//                     <div class="progress" style="width: ${completionRate}%"></div>
+//                     <span>${completionRate}% complete</span>
+//                   </div>
+//                 </div>
+//                 <div class="task-submissions">
+//                   <h5>Task Submissions</h5>
+//                   <div class="tasks-grid">
+//                     ${tasks.map(task => {
+//                       const submission = submittedTasks.find(s => s.task === task._id);
+//                       return `
+//                         <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
+//                           <h6>${task.name}</h6>
+//                           ${submission ? `
+//                             <div class="submission-details">
+//                               <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
+//                               <a href="${submission.submissionLink}" target="_blank" class="view-submission">
+//                                 <i data-lucide="external-link"></i>
+//                                 View Submission
+//                               </a>
+//                               <form onsubmit="submitEvaluation(event, '${member._id}', '${task._id}', '${submission._id}')">
+//                                 <label>Rate:</label>
+//                                 <input type="number" name="rate" min="0" max="100" required value="${submission.rate || ''}" />
+//                                 <label>Notes:</label>
+//                                 <textarea name="notes" required>${submission.notes || ''}</textarea>
+//                                 <button type="submit" class="evaluate-button">Save Evaluation</button>
+//                               </form>
+//                             </div>
+//                           ` : '<p class="pending-text">Not submitted yet</p>'}
+//                         </div>
+//                       `;
+//                     }).join('')}
+//                   </div>
+//                 </div>
+//               </div>
+//             `;
+//           }).join('')}
+//         </div>
+//       </div>
+//     `;
+
+//     console.log(membersModal);
+    
+//     membersModal.innerHTML = '';
+//     membersModal.appendChild(modalContent);
+//     membersModal.classList.add('active');
+//     lucide.createIcons();
+//   } catch (error) {
+//     console.log('Error loading member progress:', error);
+//   }
+// }
+
+
 async function viewCourseMembers(courseId) {
   try {
+    // Hide current active section and show members section
+    membersSection=document.getElementById('members-section')
+    document.querySelector('.admin-section.active').classList.remove('active');
+    membersSection.classList.add('active');
+    
     const members = await getCourseMembers(courseId);
     const course = courses[currentTrackId].find(c => c._id === courseId);
     const tasks = await getTasks(currentTrackId, courseId);
-    
-    const modalContent = document.createElement('div');
-    modalContent.className = 'course-members-modal';
-    
-    modalContent.innerHTML = `
-      <div class="modal-header">
-        <h2>${course.name} - Member Progress</h2>
-        <button class="close-button" onclick="closeMembersModal()">&times;</button>
-      </div>
-      <div class="members-dashboard">
-        <div class="dashboard-stats">
-          <div class="stat-card">
-            <h3>Total Members</h3>  
-            <p>${members.length}</p>
-          </div>
-          <div class="stat-card">
-            <h3>Total Tasks</h3>
-            <p>${tasks.length}</p>
-          </div>
+
+    // Set section title
+    document.getElementById('members-section-title').textContent = 
+      `${course.name} - Member Progress`;
+
+    // Build members content
+    const membersContent = document.getElementById('members-content');
+    membersContent.innerHTML = `
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>Total Members</h3>  
+          <p>${members.length}</p>
         </div>
-        <div class="members-list">
-          ${members.map(member => {
-            const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
-            const submittedTasks = memberProgress?.submittedTasks || [];
-            const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
-            
-            return `
-              <div class="member-card">
-                <div class="member-info">
-                  <h4>${member.name}</h4>
-                  <p>${member.email}</p>
-                  <div class="progress-bar">
-                    <div class="progress" style="width: ${completionRate}%"></div>
-                    <span>${completionRate}% complete</span>
-                  </div>
-                </div>
-                <div class="task-submissions">
-                  <h5>Task Submissions</h5>
-                  <div class="tasks-grid">
-                    ${tasks.map(task => {
-                      const submission = submittedTasks.find(s => s.task === task._id);
-                      return `
-                        <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
-                          <h6>${task.name}</h6>
-                          ${submission ? `
-                            <div class="submission-details">
-                              <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
-                              <a href="${submission.submissionLink}" target="_blank" class="view-submission">
-                                <i data-lucide="external-link"></i>
-                                View Submission
-                              </a>
-                              ${submission.evaluation ? `
-                                <p class="evaluation">Evaluation: ${submission.evaluation}</p>
-                              ` : `
-                                <button onclick="evaluateSubmission('${member._id}', '${task._id}', '${submission._id}')" class="evaluate-button">
-                                  Add Evaluation
-                                </button>
-                              `}
-                            </div>
-                          ` : '<p class="pending-text">Not submitted yet</p>'}
-                        </div>
-                      `;
-                    }).join('')}
-                  </div>
+        <div class="stat-card">
+          <h3>Total Tasks</h3>
+          <p>${tasks.length}</p>
+        </div>
+      </div>
+      <div class="members-list">
+        ${members.map(member => {
+          const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+          const submittedTasks = memberProgress?.submittedTasks || [];
+          const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
+          
+          return `
+            <div class="member-card">
+              <div class="member-info">
+                <h4>${member.name}</h4>
+                <p>${member.email}</p>
+                <div class="progress-bar">
+                  <div class="progress" style="width: ${completionRate}%"></div>
+                  <span>${completionRate}% complete</span>
                 </div>
               </div>
-            `;
-          }).join('')}
-        </div>
+              <div class="task-submissions">
+                <h5>Task Submissions</h5>
+                <div class="tasks-grid">
+                  ${tasks.map(task => {
+                    const submission = submittedTasks.find(s => s.task === task._id);
+                    return `
+                      <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
+                        <h6>${task.name}</h6>
+                        ${submission ? `
+                          <div class="submission-details">
+                            <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
+                            <a href="${submission.submissionLink}" target="_blank" class="view-submission">
+                              <i data-lucide="external-link"></i>
+                              View Submission
+                            </a>
+                            <form onsubmit="submitEvaluation(event, '${member._id}', '${task._id}', '${submission._id}')">
+                              <label>Rate:</label>
+                              <input type="number" name="rate" min="0" max="100" required value="${submission.rate || ''}" />
+                              <label>Notes:</label>
+                              <textarea name="notes" required>${submission.notes || ''}</textarea>
+                              <button type="submit" class="evaluate-button">Save Evaluation</button>
+                            </form>
+                          </div>
+                        ` : '<p class="pending-text">Not submitted yet</p>'}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
       </div>
     `;
 
-    console.log(membersModal);
-    
-    membersModal.innerHTML = '';
-    membersModal.appendChild(modalContent);
-    membersModal.classList.add('active');
     lucide.createIcons();
   } catch (error) {
     console.log('Error loading member progress:', error);
   }
 }
+
+function goBackToCourses() {
+  document.getElementById('members-section').classList.remove('active');
+  document.getElementById('courses-section').classList.add('active');
+}
+
+
 
 // Modal functions
 function showTrackModal() {
@@ -550,13 +730,14 @@ async function handleCourseSubmit(event) {
 // }
 
 // Evaluation function
-async function evaluateSubmission(memberId, taskId, submissionId) {
-  const evaluation = prompt('Enter evaluation for this submission:');
-  if (!evaluation) return;
-
+async function evaluateSubmission(memberId, taskId, submissionId,rate,notes) {
+  // const evaluation = prompt('Enter evaluation for this submission:');
+  // if (!evaluation) return;
+  //   console.log(memberId,taskId,submissionId);
+    
   try {
-    const response = await fetch(`${serverUrl}/evaluate-submission`, {
-      method: 'POST',
+    const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/tasks/${taskId}/submissions/${submissionId}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -564,7 +745,8 @@ async function evaluateSubmission(memberId, taskId, submissionId) {
         memberId,
         taskId,
         submissionId,
-        evaluation
+        rate,
+        notes
       })
     });
 
@@ -578,6 +760,16 @@ async function evaluateSubmission(memberId, taskId, submissionId) {
     console.error('Error submitting evaluation:', error);
     alert('Failed to submit evaluation');
   }
+}
+
+function submitEvaluation(event, memberId, taskId, submissionId) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const rate = form.rate.value;
+  const notes = form.notes.value;
+
+  evaluateSubmission(memberId, taskId, submissionId, rate, notes);
 }
 
 // Initialize
