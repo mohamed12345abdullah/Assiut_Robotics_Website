@@ -165,7 +165,7 @@ async function submitTask(submissionLink) {
     }  
       const res=await response.json()
       console.log(res);
-      
+      alert(res.message)
   } catch (error) {
     alert(error);
   }
