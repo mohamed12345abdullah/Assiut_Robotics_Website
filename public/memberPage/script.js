@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:3000/members/getAllMembers';
+const API_URL = 'https://assiut-robotics-zeta.vercel.app/members/getAllMembers';
 
 // DOM Elements
 const leaderSection = document.getElementById('leaderSection');
