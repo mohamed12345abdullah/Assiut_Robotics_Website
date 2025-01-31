@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Submission Form</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="taskForm">
+            <div class="form-group">
+                <label for="submissionLink">رابط التسليم:</label>
+                <input 
+                    type="url" 
+                    id="submissionLink" 
+                    name="submissionLink"
+                    placeholder="https://drive.google.com/... أو رابط آخر"
+                    pattern="https://.*"
+                    required
+                >
+            </div>
+
+            <button type="submit">إرسال</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('taskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = {
+                submissionLink: document.getElementById('submissionLink').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('تم تسليم المهمة بنجاح 🎉');
+                    document.getElementById('taskForm').reset();
+                } else {
+                    alert(`خطأ: ${result.error || 'حدث خطأ غير متوقع'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('فشل الاتصال بالخادم ⚠️');
+            }
+        });
+    </script>
+</body>
+</html>

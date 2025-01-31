@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Courses</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav class="breadcrumb">
+        <span class="breadcrumb-item active" id="tracks-nav">Tracks</span>
+        <span class="breadcrumb-separator" id="track-separator" style="display: none;">
+          <i data-lucide="chevron-right"></i>
+        </span>
+        <span class="breadcrumb-item" id="track-nav" style="display: none;"></span>
+        <span class="breadcrumb-separator" id="course-separator" style="display: none;">
+          <i data-lucide="chevron-right"></i>
+        </span>
+        <span class="breadcrumb-item" id="course-nav" style="display: none;"></span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+    </div>
+
+    <div id="cards-container" class="cards-grid"></div>
+
+    <div id="task-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title"></h2>
+          <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-description"></p>
+          <div class="task-meta">
+            <div class="meta-item">
+              <i data-lucide="clock"></i>
+              <span id="modal-time"></span>
+            </div>
+            <div class="meta-item">
+              <i data-lucide="star"></i>
+              <span id="modal-score"></span>
+            </div>
+          </div>
+          <div class="task-links">
+            <a id="modal-materials" href="#" target="_blank" rel="noopener noreferrer" class="task-link materials">
+              <i data-lucide="external-link"></i>
+              View Task Materials
+            </a>
+            <a id="modal-submit" href="#" target="_blank" rel="noopener noreferrer" class="task-link submit">
+              <i data-lucide="external-link"></i>
+              Submit Task
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

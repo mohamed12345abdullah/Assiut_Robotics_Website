@@ -1,12 +1,3 @@
-
-
-// // Initialize the page
-// init();
-
-
-
-
-
 // Global variable for server URL
 const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api';
 
@@ -139,7 +130,7 @@ async function addCourse(trackId, courseData) {
   }
 }
 
-async function addTaskApi(trackId, courseId, taskData) {
+async function addTask(trackId, courseId, taskData) {
   try {
     const response = await fetch(`${serverUrl}/${trackId}/course/${courseId}/task/add`, {
       method: 'POST',
@@ -154,7 +145,7 @@ async function addTaskApi(trackId, courseId, taskData) {
   }
 }
 
-async function editTrackApi(id, trackData) {
+async function editTrack(id, trackData) {
   try {
     await fetch(`${serverUrl}/update/${id}`, {
       method: 'PUT',
@@ -169,7 +160,7 @@ async function editTrackApi(id, trackData) {
   }
 }
 
-async function editCourseApi(trackId, courseId, courseData) {
+async function editCourse(trackId, courseId, courseData) {
   try {
     await fetch(`${serverUrl}/${trackId}/course/update/${courseId}`, {
       method: 'PUT',
@@ -197,7 +188,7 @@ async function editTaskApi(trackId, courseId, taskId, taskData) {
   }
 }
 
-async function deleteTrackApi(id) {
+async function deleteTrack(id) {
   try {
     await fetch(`${serverUrl}/delete/${id}`, {
       method: 'DELETE',
@@ -208,7 +199,7 @@ async function deleteTrackApi(id) {
   }
 }
 
-async function deleteCourseApi(trackId, courseId) {
+async function deleteCourse(trackId, courseId) {
   try {
     await fetch(`${serverUrl}/${trackId}/course/delete/${courseId}`, {
       method: 'DELETE',
@@ -218,7 +209,7 @@ async function deleteCourseApi(trackId, courseId) {
   }
 }
 
-async function deleteTaskApi(trackId, courseId, taskId) {
+async function deleteTask(trackId, courseId, taskId) {
   try {
     await fetch(`${serverUrl}/${trackId}/course/${courseId}/task/delete/${taskId}`, {
       method: 'DELETE',
@@ -285,9 +276,9 @@ async function renderCourses(trackId) {
 
 async function renderTasks(trackId, courseId) {
   const grid = document.getElementById('tasks-grid');
-  tasks = await getTasks(trackId, courseId);
+  const courseTasks = await getTasks(trackId, courseId);
 
-  grid.innerHTML = tasks.map(task => `
+  grid.innerHTML = courseTasks.map(task => `
     <div class="admin-card">
       <div class="admin-card-header">
         <h3 class="admin-card-title">${task.name}</h3>
@@ -526,28 +517,28 @@ async function handleCourseSubmit(event) {
   closeCourseModal();
 }
 
-// async function handleTaskSubmit(event) {
-//   event.preventDefault();
-//   const formData = {
-//     name: document.getElementById('task-name').value,
-//     description: document.getElementById('task-description').value,
-//     time: document.getElementById('task-time').value,
-//     score: parseInt(document.getElementById('task-score').value),
-//     materialLink: document.getElementById('task-data-link').value,
-//     submissionLink: document.getElementById('task-submission-link').value
-//   };
+async function handleTaskSubmit(event) {
+  event.preventDefault();
+  const formData = {
+    name: document.getElementById('task-name').value,
+    description: document.getElementById('task-description').value,
+    time: document.getElementById('task-time').value,
+    score: parseInt(document.getElementById('task-score').value),
+    materialLink: document.getElementById('task-data-link').value,
+    submissionLink: document.getElementById('task-submission-link').value
+  };
   
-//   const taskId = document.getElementById('task-id').value;
+  const taskId = document.getElementById('task-id').value;
   
-//   if (taskId) {
-//     await editTaskApi(currentTrackId, currentCourseId, taskId, formData);
-//   } else {
-//     await addTask(currentTrackId, currentCourseId, formData);
-//   }
+  if (taskId) {
+    await editTaskApi(currentTrackId, currentCourseId, taskId, formData);
+  } else {
+    await addTask(currentTrackId, currentCourseId, formData);
+  }
   
-//   await renderTasks(currentTrackId, currentCourseId);
-//   closeTaskModal();
-// }
+  await renderTasks(currentTrackId, currentCourseId);
+  closeTaskModal();
+}
 
 // Evaluation function
 async function evaluateSubmission(memberId, taskId, submissionId) {
@@ -586,249 +577,5 @@ async function init() {
   renderTracks();
   updateTrackSelectors();
 }
-
-
-
-// Modal functions
-function showTrackModal() {
-  document.getElementById('track-modal-title').textContent = 'Add Track';
-  document.getElementById('track-form').reset();
-  document.getElementById('track-id').value="";
-  console.log("reset form",   document.getElementById('track-form'));
-
-  
-  trackModal.classList.add('active');
-}
-
-function closeTrackModal() {
-  trackModal.classList.remove('active');
-}
-
-function showCourseModal() {
-  document.getElementById('course-modal-title').textContent = 'Add Course';
-  document.getElementById('course-form').reset();
-  document.getElementById('course-id').value=""
-  courseModal.classList.add('active');
-}
-
-function closeCourseModal() {
-  courseModal.classList.remove('active');
-}
-
-function showTaskModal() {
-  document.getElementById('task-modal-title').textContent = 'Add Task';
-  document.getElementById('task-form').reset();
-  document.getElementById('task-id').value="";
-  taskModal.classList.add('active');
-}
-
-function closeTaskModal() {
-  taskModal.classList.remove('active');
-}
-
-// // Form handlers
-async function handleTrackSubmit(event) {
-  event.preventDefault();
-  const formData = {
-    id: document.getElementById('track-id').value || Date.now().toString(),
-    name: document.getElementById('track-name').value,
-    icon: document.getElementById('track-icon').value
-  };
-  
-  // In a real app, this would be an API call
-  init()
-  if (formData.id) {
-    const index = tracks.findIndex(t => t._id === formData.id);
-    if (index !== -1) {
-      // update
-      
-
-      // tracks[index] = formData;
-      await editTrackApi( tracks[index]._id,formData);
-    } else {
-      await addTrack(formData);
-
-      // tracks.push(formData);
-    }
-  }
-  
-  renderTracks();
-  updateTrackSelectors();
-  closeTrackModal();
-}
-
-async function handleCourseSubmit(event) {
-  event.preventDefault();
-  const trackId = document.getElementById('course-track-select').value;
-  const formData = {
-    id: document.getElementById('course-id').value || Date.now().toString(),
-    name: document.getElementById('course-name').value
-  };
-  
-  // In a real app, this would be an API call
-  if (!courses[trackId]) {
-    courses[trackId] = [];
-  }
-  
-
-  if (formData.id) {
-    const index = courses[trackId].findIndex(c => c._id === formData.id);
-    console.log(courses[trackId]);
-    console.log(formData.id);
-    console.log(index);
-    
-    
-    if (index !== -1) {
-      console.log(trackId,courses[trackId][index]._id);
-      
-      await editCourseApi(trackId,courses[trackId][index]._id,formData)
-      // courses[trackId][index] = formData;
-    } else {
-      await addCourse(trackId,formData);
-
-      courses[trackId].push(formData);
-    }
-  }
-      courses[trackId] = await getCourses(trackId);
-
-  renderCourses(trackId);
-  closeCourseModal();
-}
-
-async function handleTaskSubmit(event) {
-  event.preventDefault();
-  const courseId = document.getElementById('task-course-select').value;
-  const trackId = document.getElementById('task-track-select').value;
-
-  const formData = {
-    id: document.getElementById('task-id').value || Date.now().toString(),
-    name: document.getElementById('task-name').value,
-    description: document.getElementById('task-description').value,
-    time: document.getElementById('task-time').value,
-    score: parseInt(document.getElementById('task-score').value),
-    materialLink: document.getElementById('task-data-link').value,
-    // submissionLink: document.getElementById('task-submission-link').value
-  };
- 
-  // In a real app, this would be an API call
-  if (!tasks[courseId]) {
-    tasks[courseId] = [];
-  }
-  
-  if (formData.id) {
-    const index = tasks.findIndex(t => t._id === formData.id);
-    console.log(index)
-    if (index !== -1) {
-      console.log("update task" );
-      await editTaskApi(trackId,courseId,formData.id,formData);
-      // tasks[courseId][index] = formData;
-    } else {
-      console.log("push Task");
-      
-      await addTaskApi(trackId,courseId,formData);
-      // tasks[courseId].push(formData);
-    }
-  }
-  
-  renderTasks(trackId,courseId);
-  closeTaskModal();
-}
-
-// // Edit functions
-async function editTrack(id) {
-  const track = tracks.find(t => t._id === id);
-  if (!track) return;
-
-  document.getElementById('track-modal-title').textContent = 'Edit Track';
-  document.getElementById('track-id').value = track._id;
-  document.getElementById('track-name').value = track.name;
-  document.getElementById('track-icon').value = track.icon;
-  
-  trackModal.classList.add('active');
-}
-
-function editCourse(id) {
-  const trackId = document.getElementById('course-track-select').value;
-  const course = courses[trackId]?.find(c => c._id === id);
-  if (!course) return;
-  
-  document.getElementById('course-modal-title').textContent = 'Edit Course';
-  document.getElementById('course-id').value = course._id;
-  document.getElementById('course-name').value = course.name;
-  
-  courseModal.classList.add('active');
-}
-
-function editTask(id) {
-  console.log("edit TAsk function");
-
-  const courseId = document.getElementById('task-course-select').value;
-  console.log("course id",courseId);
-  console.log("task id",tasks);
-
-  const task = tasks?.find(t => t._id === id);
-  // if (!task) return;
-  // console.log("edit TAsk function");
-  console.log("id:",id);
-  // console.log("task._id",task._id);
-  
-  document.getElementById('task-modal-title').textContent = 'Edit Task';
-  document.getElementById('task-id').value = task._id;
-  document.getElementById('task-name').value = task.name;
-  document.getElementById('task-description').value = task.description;
-  document.getElementById('task-time').value = task.time;
-  document.getElementById('task-score').value = task.score;
-  document.getElementById('task-data-link').value = task.materialLink;
-  // document.getElementById('task-submission-link').value = task.submissionLink;
-  
-  taskModal.classList.add('active');
-}
-
-// // Delete functions
-function deleteTrack(id) {
-  if (!confirm('Are you sure you want to delete this track?')) return;
-  
-  const index = tracks.findIndex(t => t._id === id);
-  if (index !== -1) {
-    // tracks.splice(index, 1);
-    deleteTrackApi(id);
-    delete courses[id];
-    renderTracks();
-    updateTrackSelectors();
-  }
-}
-
-async function deleteCourse(Cid) {
-  if (!confirm('Are you sure you want to delete this course?')) return;
-  
-  const trackId = document.getElementById('course-track-select').value;
-  console.log(Cid);
-  // console.log(trackId);
-  
-
-  const index = courses[trackId].findIndex(c => c._id === Cid);
-  console.log(index);
-  
-  if (index !== -1) {
-    await deleteCourseApi(trackId,Cid)
-    courses[trackId].splice(index, 1);
-    // delete tasks[Cid];
-    renderCourses(trackId);
-  }
-}
-
-async function deleteTask(taskId) {
-  if (!confirm('Are you sure you want to delete this task?')) return;
-  const trackId = document.getElementById('task-track-select').value;
-  const courseId = document.getElementById('task-course-select').value;
-  const index = tasks.findIndex(t => t._id === taskId );
-  if (index !== -1) {
-    // tasks[courseId].splice(index, 1);
-    await deleteTaskApi(trackId,courseId,taskId);
-    renderTasks(trackId,courseId);
-  }
-}
-
-
 
 init();
