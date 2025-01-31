@@ -47,10 +47,14 @@ async function verifyToken() {
     const response = await fetch(VERIFY_URL, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+
         'Authorization': `Bearer ${token}`
       }
     });
+    if(!response.ok){
+      window.location.href = '../login/login.html';
+    }
+    
     const data = await response.json();
     console.log(data);
     if (data.data) {
@@ -344,12 +348,12 @@ function initializeDarkMode() {
 // Initialize application
 async function initialize() {
     console.log("intialize ")
-  const isValid = await verifyToken();
+   await verifyToken();
 //   if (!isValid) {
 //     await fetchMemberData();
 //   }
-  if(!isValid)
-    window.location.href = '../login/login.html';
+  // if(!isValid)
+
 initializeDarkMode();
 }
 
