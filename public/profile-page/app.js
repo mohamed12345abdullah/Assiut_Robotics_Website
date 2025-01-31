@@ -139,7 +139,8 @@ async function submitTask(submissionLink) {
   const token = localStorage.getItem('token');
  
   if (!token) return;
-
+  console.log(token);
+  
   try {
     const response = await fetch(SUBMIT_TASK_URL, {
       method: 'POST',
@@ -161,7 +162,10 @@ async function submitTask(submissionLink) {
       if (currentTrack) {
         renderTasks(currentTrack.track.courses[currentCourseId].tasks);
       }
-    }
+    }  
+      const res=await response.json()
+      console.log(res);
+      
   } catch (error) {
     alert(error);
   }
