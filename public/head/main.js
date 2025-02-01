@@ -2,8 +2,8 @@
 var addNewTaskSection = document.getElementById("addNewTask")
 var tasksSection = document.getElementById("tasksPage")
 var membersSection=document.getElementById("membersPage")
-const committee = window.localStorage.getItem('committee');
 const adminData = JSON.parse(localStorage.getItem('data'));
+const committee = adminData.committee;
 console.log(adminData);
 
 const form = document.getElementById('taskForm')
@@ -170,7 +170,7 @@ let membersData = []; // Store all members and their tasks here
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchMembers();
-    displayTasks();
+    displayTasks(adminData.tasks, adminData._id);
 });
 form.addEventListener('submit', function (event) {
     event.preventDefault();
