@@ -292,6 +292,20 @@
   .submit-task-btn:hover {
     opacity: 0.9;
   }
+  .submit-task-course {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .submit-task-btn:course {
+    opacity: 0.9;
+  }
   
   .dark-mode-toggle {
     position: fixed;

@@ -1020,7 +1020,4 @@ async function deleteTask(taskId) {
     renderTasks(trackId,courseId);
   }
 }
-
-
-
 init();
