@@ -186,20 +186,22 @@ async function submitCurrentTask(submissionLink) {
   console.log(token);
   
   try {
+    console.log(currentTaskId);
+    
     const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/submitMemberTask/${currentTaskId}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        submissionLink
+        submissionUrl:submissionLink
       })
     });
 
     if (response.ok) {
       // Refresh the tasks display
-        window.reload()
+        window.location.reload()
     }  
       const res=await response.json()
       console.log(res);
@@ -416,6 +418,11 @@ function renderCurrentTasks(tasks) {
     taskPoints.className = 'task-points';
     taskPoints.textContent = `Points: ${task.points}`;
     taskMeta.appendChild(taskPoints);
+    // show rate 
+    const rate = document.createElement('span');
+    rate.className = 'task-points';
+    rate.textContent = `rate: ${task.rate}`;
+    taskMeta.appendChild(rate);
 
     // عرض تقييم headEvaluation و hrEvaluation
     if (task.headEvaluation !== -1 && task.hrEvaluation !== -1) {
@@ -428,7 +435,10 @@ function renderCurrentTasks(tasks) {
       submitButton.className = 'submit-task-btn';
       submitButton.textContent = 'Submit Task';
       submitButton.addEventListener('click', () => {
+        
         currentTaskId = task._id;
+        console.log(currentTaskId);
+
         submitTaskModal.style.display = 'block';
       });
       taskMeta.appendChild(submitButton);
