@@ -178,12 +178,19 @@
     <div class="popup-content">
         <span class="close-btn" onclick="closePopup()">&times;</span>
         <h2>Edit Task</h2>
+        <button>X</button>
         <form id="editTaskForm">
             <label for="editTitle">Title:</label>
             <input type="text" id="editTitle" required>
 
             <label for="editDescription">Description:</label>
             <textarea id="editDescription" required></textarea>
+            
+            <label for="editPoints">Points:</label>
+            <input type="number" id="editPoints" required></textarea>
+
+            <label for="editHeadPercent">headPercent:</label>
+            <input type="number" id="editHeadPercent" required></textarea>
 
             <label for="editStartDate">Start Date:</label>
             <input type="date" id="editStartDate" required>
@@ -193,9 +200,6 @@
 
             <label for="editTaskUrl">Task URL:</label>
             <input type="url" id="editTaskUrl">
-            
-            <label for="rate">Task URL:</label>
-            <input type="number" id="rate" min="0" max="10">
 
             <button type="submit">Save Changes</button>
         </form>

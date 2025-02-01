@@ -301,22 +301,38 @@ function displayTasks(tasks, memberId) {
         list.innerHTML = ''; // Clear existing tasks
 
         tasks.forEach(task => {
+           
             const taskCard = document.createElement('div');
             taskCard.className = 'task-card';
             taskCard.innerHTML = `
+             <h2 id="submitted" style = "display : none"><a href ="${task.submissionLink}">Submmitted at ${new Date (task.submissionDate).toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            })} </a> </h2>
                 <h3>${task.title}</h3>
+               
                 <p>${task.description}</p>
+                <p>Points : ${task.points}</p>
                 <p> head percent is ${task.headPercent}%</p>
                 <p> hr percent is ${100- task.headPercent}%</p>
                 <p>Start Date: ${new Date(task.startDate).toLocaleDateString()}</p>
                 <p>Deadline: ${new Date(task.deadline).toLocaleDateString()}</p>
-                <p>Rate of the head: ${task.headEvaluation * task.points * task.headPercent / 10000}%</p>
-                <p>Rate of the hr: ${task.hrEvaluation * task.points *(100 - task.headPercent) /10000 }%</p>
+                <p>Rate of the head: ${task.headEvaluation}%</p>
+                <p>Rate of the hr: ${task.hrEvaluation }%</p>
                 <p>Task URL: <a href="${task.taskUrl}" target="_blank">${task.taskUrl}</a></p>
+                
                 <button onclick="editTask('${memberId}', '${task._id}')">Edit</button>
                 <button onclick="deleteTask('${memberId}', '${task._id}')">Delete</button>
                 <button onclick="rateTask('${memberId}', '${task._id}')">Rate</button>
             `;
+            if(task.submissionLink != '*'){
+                const submitted = taskCard.querySelector('#submitted');
+                submitted.style.display = 'block';
+            }
             console.log(list);
             
             list.appendChild(taskCard);
@@ -348,6 +364,8 @@ function openEditTaskPopup(task, memberId, taskId, member) {
     // Populate the form with task details
     document.getElementById('editTitle').value = task.title;
     document.getElementById('editDescription').value = task.description;
+    document.getElementById('editPoints').value = task.points;
+    document.getElementById('editHeadPercent').value = task.headPercent;
     document.getElementById('editStartDate').value = task.startDate.split('T')[0]; // Convert to YYYY-MM-DD format
     document.getElementById('editDeadline').value = task.deadline.split('T')[0]; // Convert to YYYY-MM-DD format
     document.getElementById('editTaskUrl').value = task.taskUrl;
@@ -365,17 +383,21 @@ function openEditTaskPopup(task, memberId, taskId, member) {
             newDescription: document.getElementById('editDescription').value,
             StartDate: document.getElementById('editStartDate').value + 'T00:00:00.000Z', // Convert to ISO format
             deadline: document.getElementById('editDeadline').value + 'T00:00:00.000Z', // Convert to ISO format
-            taskUrl: document.getElementById('editTaskUrl').value
-        };
-        if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl) {
+            taskUrl: document.getElementById('editTaskUrl').value,
+            points: document.getElementById('editPoints').value,
+            headPercent: document.getElementById('editHeadPercent').value,
+        }; 
+        if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl && updatedTask.points && updatedTask.headPercent && updatedTask.hrPercent) {
             task.title = updatedTask.newTitle;
             task.description = updatedTask.newDescription;
             task.StartDate = updatedTask.StartDate;
             task.deadline = updatedTask.deadline;
             task.taskUrl = updatedTask.taskUrl;
-            // if(rate)
-            //     task.rate = rate;
-        // Call a function to update the task (you can implement this)
+            task.points = updatedTask.points;
+            task.headPercent = updatedTask.headPercent;
+            task.hrPercent = 100-task.headPercent;
+            console.log(task);
+            
         editrequest(memberId,taskId,member);
         // Close the popup
         closePopup();

@@ -732,12 +732,13 @@ button:hover {
 }
 
 .popup-content {
+    overflow: scroll;
+    height: 60%;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 500px;
+    width: 90% !important;
 }
 
 .popup-content h2 {
