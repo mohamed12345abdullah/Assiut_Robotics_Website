@@ -66,6 +66,7 @@ async function verifyToken() {
       header.classList.remove('disabled');
       
       currentMemberData = data.data;
+      renderCurrentTasks(data.data.tasks)
       renderMemberData(data.data);
       
     } else {
@@ -74,7 +75,7 @@ async function verifyToken() {
     return response.ok;
   } catch (error) {
 
-    console.error('Token verification failed:', error);
+    console.error('Token verification failed:', error.message);
     return false;
   }
 }
@@ -173,9 +174,43 @@ async function submitTask(submissionLink) {
       console.log(res);
       alert(res.message)
   } catch (error) {
-    alert(error);
+    alert(error.message);
   }
 }
+
+
+async function submitCurrentTask(submissionLink) {
+  const token = localStorage.getItem('token');
+ 
+  if (!token) return;
+  console.log(token);
+  
+  try {
+    const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/submitMemberTask/${currentTaskId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        submissionLink
+      })
+    });
+
+    if (response.ok) {
+      // Refresh the tasks display
+        window.reload()
+    }  
+      const res=await response.json()
+      console.log(res);
+      alert(res.message)
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+
 
 // Render member profile data
 function renderMemberData(data) {
@@ -297,11 +332,14 @@ function renderTasks(tasks) {
     
     if (!task.submittedAt) {
       const submitButton = document.createElement('button');
-      submitButton.className = 'submit-task-btn';
+      submitButton.className = 'submit-task-course';
       submitButton.textContent = 'Submit Task';
       submitButton.addEventListener('click', () => {
         currentTaskId = task._id;
-        submitTaskModal.style.display = 'block';
+        // submitTaskModal.style.display = 'block';
+        const submitUrl=prompt("add your sloution link");
+        if(submitUrl)
+         submitTask(submitUrl);
       });
       taskStatus.appendChild(submitButton);
     } else {
@@ -319,6 +357,93 @@ function renderTasks(tasks) {
   });
 }
 
+
+
+
+
+
+//render Current tasks that not for Tracks
+
+function renderCurrentTasks(tasks) {
+  const tasksList = document.getElementById('CurrentTasksList');
+  tasksList.innerHTML = '';
+  tasksContainer.style.display = 'block';
+
+  // حساب نسبة التقدم بناءً على المهام التي لها تقييم
+  const completedTasks = tasks.filter(task => task.headEvaluation !== -1 && task.hrEvaluation !== -1).length;
+  const progressPercentage = (tasks.length > 0) ? (completedTasks / tasks.length) * 100 : 0;
+
+  progressBarFill.style.width = `${progressPercentage}%`;
+  progressText.textContent = `${Math.round(progressPercentage)}% Complete`;
+
+  tasks.forEach(task => {
+    const taskElement = document.createElement('div');
+    taskElement.className = 'task-item';
+
+    const taskHeader = document.createElement('div');
+    taskHeader.className = 'task-header';
+
+    const taskTitle = document.createElement('h3');
+    taskTitle.className = 'task-title';
+    taskTitle.textContent = task.title;
+
+    const taskStartDate = document.createElement('div');
+    taskStartDate.className = 'task-deadline';
+    taskStartDate.innerHTML = `<i class="icon clock-icon"></i> start ${new Date(task.startDate).toLocaleDateString()}`;
+    const taskDeadline = document.createElement('div');
+    taskDeadline.className = 'task-deadline';
+    taskDeadline.innerHTML = `<i class="icon clock-icon"></i> Deadline ${new Date(task.deadline).toLocaleDateString()}`;
+
+    taskHeader.appendChild(taskTitle);
+    taskHeader.appendChild(taskStartDate);
+    taskHeader.appendChild(taskDeadline);
+
+    const taskDescription = document.createElement('p');
+    taskDescription.className = 'task-description';
+    taskDescription.textContent = task.description;
+
+    const taskURL = document.createElement('a');
+    taskURL.className = 'task-link';
+    taskURL.href = task.taskUrl;
+    taskURL.textContent = "Material Link";
+    taskURL.target = "_blank";
+
+    const taskMeta = document.createElement('div');
+    taskMeta.className = 'task-meta';
+
+    // عرض النقاط
+    const taskPoints = document.createElement('span');
+    taskPoints.className = 'task-points';
+    taskPoints.textContent = `Points: ${task.points}`;
+    taskMeta.appendChild(taskPoints);
+
+    // عرض تقييم headEvaluation و hrEvaluation
+    if (task.headEvaluation !== -1 && task.hrEvaluation !== -1) {
+      const taskEvaluation = document.createElement('span');
+      taskEvaluation.className = 'task-evaluation';
+      taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, HR Eval: ${task.hrEvaluation}`;
+      taskMeta.appendChild(taskEvaluation);
+    } else {
+      const submitButton = document.createElement('button');
+      submitButton.className = 'submit-task-btn';
+      submitButton.textContent = 'Submit Task';
+      submitButton.addEventListener('click', () => {
+        currentTaskId = task._id;
+        submitTaskModal.style.display = 'block';
+      });
+      taskMeta.appendChild(submitButton);
+    }
+
+    taskElement.appendChild(taskHeader);
+    taskElement.appendChild(taskDescription);
+    taskElement.appendChild(taskURL);
+    taskElement.appendChild(taskMeta);
+
+    tasksList.appendChild(taskElement);
+  });
+}
+
+
 // Event Listeners
 changeAvatarBtn.addEventListener('click', () => {
   avatarInput.click();
@@ -333,7 +458,7 @@ avatarInput.addEventListener('change', (e) => {
 submitTaskForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const submissionLink = document.getElementById('submissionLink').value;
-  await submitTask(submissionLink);
+  await submitCurrentTask(submissionLink);
   submitTaskModal.style.display = 'none';
   submitTaskForm.reset();
 });
