@@ -48,10 +48,14 @@ async function verifyToken() {
     const response = await fetch(VERIFY_URL, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+
         'Authorization': `Bearer ${token}`
       }
     });
+    if(!response.ok){
+      window.location.href = '../login/login.html';
+    }
+    
     const data = await response.json();
     console.log(data);
     if (data.data) {
@@ -69,6 +73,7 @@ async function verifyToken() {
     }
     return response.ok;
   } catch (error) {
+
     console.error('Token verification failed:', error);
     return false;
   }
@@ -140,7 +145,8 @@ async function submitTask(submissionLink) {
   const token = localStorage.getItem('token');
  
   if (!token) return;
-
+  console.log(token);
+  
   try {
     const response = await fetch(SUBMIT_TASK_URL, {
       method: 'POST',
@@ -162,7 +168,10 @@ async function submitTask(submissionLink) {
       if (currentTrack) {
         renderTasks(currentTrack.track.courses[currentCourseId].tasks);
       }
-    }
+    }  
+      const res=await response.json()
+      console.log(res);
+      alert(res.message)
   } catch (error) {
     alert(error);
   }
@@ -348,12 +357,12 @@ function initializeDarkMode() {
 // Initialize application
 async function initialize() {
     console.log("intialize ")
-  const isValid = await verifyToken();
+   await verifyToken();
 //   if (!isValid) {
 //     await fetchMemberData();
 //   }
-  if(!isValid)
-    window.location.href = '../login/login.html';
+  // if(!isValid)
+
 initializeDarkMode();
 }
 

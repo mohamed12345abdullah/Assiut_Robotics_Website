@@ -1,10 +1,21 @@
+
+
+// // Initialize the page
+// init();
+
+
+
+
+
 // Global variable for server URL
-const serverUrl = 'http://localhost:3000/Tracks/api'; // Replace with your server URL
-// https://assiut-robotics-zeta.vercel.app/members/verify
+const serverUrl = 'https://assiut-robotics-zeta.vercel.app/Tracks/api';
+
 // State management
 let tracks = [];
 let courses = {};
 let tasks = {};
+let currentTrackId;
+let currentCourseId;
 
 // DOM Elements
 const trackSection = document.getElementById('tracks-section');
@@ -14,6 +25,7 @@ const tabButtons = document.querySelectorAll('.tab-button');
 const trackModal = document.getElementById('track-modal');
 const courseModal = document.getElementById('course-modal');
 const taskModal = document.getElementById('task-modal');
+const membersModal = document.getElementById('members-modal');
 
 // Initialize Lucide icons
 lucide.createIcons();
@@ -22,11 +34,11 @@ lucide.createIcons();
 tabButtons.forEach(button => {
   button.addEventListener('click', () => {
     const tabName = button.dataset.tab;
-
+    
     // Update active tab button
     tabButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
-
+    
     // Update active section
     document.querySelectorAll('.admin-section').forEach(section => {
       section.classList.remove('active');
@@ -34,13 +46,6 @@ tabButtons.forEach(button => {
     document.getElementById(`${tabName}-section`).classList.add('active');
   });
 });
-
-// Load initial data
-async function init() {
-  tracks = await getTracks();
-  renderTracks();
-  updateTrackSelectors();
-}
 
 // API Functions
 async function getTracks() {
@@ -51,11 +56,8 @@ async function getTracks() {
         'Content-Type': 'application/json',
       },
     });
-      
-      const jsonResponse= await response.json();
-      console.log(jsonResponse.data);
-      return jsonResponse.data;
-      
+    const jsonResponse = await response.json();
+    return jsonResponse.data;
   } catch (error) {
     console.error('Error fetching tracks:', error.message);
   }
@@ -69,17 +71,14 @@ async function getCourses(trackId) {
         'Content-Type': 'application/json',
       },
     });
-    // init()
-    const jsonResponse=await response.json();
-    console.log(jsonResponse.data);
+    const jsonResponse = await response.json();
     return jsonResponse.data;
-    
   } catch (error) {
     console.error('Error fetching courses:', error);
   }
 }
 
-async function getTasks(trackId,courseId) {
+async function getTasks(trackId, courseId) {
   try {
     const response = await fetch(`${serverUrl}/course/${trackId}/${courseId}/tasks`, {
       method: 'GET',
@@ -87,12 +86,26 @@ async function getTasks(trackId,courseId) {
         'Content-Type': 'application/json',
       },
     });
-    const jsonResponse=await response.json();
-    console.log(jsonResponse);
+    const jsonResponse = await response.json();
     return jsonResponse.data;
-    
   } catch (error) {
     console.error('Error fetching tasks:', error);
+  }
+}
+
+async function getCourseMembers(courseId) {
+  try {
+    const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/getMembersJoinedCourse/${courseId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const jsonResponse = await response.json();
+    return jsonResponse.members;
+  } catch (error) {
+    console.error('Error fetching course members:', error);
+    return [];
   }
 }
 
@@ -105,7 +118,6 @@ async function addTrack(trackData) {
       },
       body: JSON.stringify(trackData),
     });
-    init()
     return await response.json();
   } catch (error) {
     console.error('Error adding track:', error);
@@ -127,7 +139,7 @@ async function addCourse(trackId, courseData) {
   }
 }
 
-async function addTaskApi(trackId,courseId, taskData) {
+async function addTaskApi(trackId, courseId, taskData) {
   try {
     const response = await fetch(`${serverUrl}/${trackId}/course/${courseId}/task/add`, {
       method: 'POST',
@@ -136,74 +148,61 @@ async function addTaskApi(trackId,courseId, taskData) {
       },
       body: JSON.stringify(taskData),
     });
-    init()
-    const jsonResponse=await response.json();
-    console.log(jsonResponse);
-    return jsonResponse.data;
+    return await response.json();
   } catch (error) {
-    console.error('Error adding task:', error.message);
+    console.error('Error adding task:', error);
   }
 }
 
-async function editTrackApi(id,trackData) {
+async function editTrackApi(id, trackData) {
   try {
-    console.log("editTrackApi");
-    
     await fetch(`${serverUrl}/update/${id}`, {
       method: 'PUT',
-      headers:{
-        "Content-Type":"application/json"
+      headers: {
+        'Content-Type': 'application/json',
       },
-      body:JSON.stringify(trackData)
+      body: JSON.stringify(trackData),
     });
-    init()
+    init();
   } catch (error) {
-    console.error('Error  editing Track:', error);
+    console.error('Error editing track:', error);
   }
 }
 
-async function editCourseApi(Tid,Cid,courseData) {
+async function editCourseApi(trackId, courseId, courseData) {
   try {
-    console.log("editTrackApi");
-    
-    await fetch(`${serverUrl}/${Tid}/course/update/${Cid}`, {
+    await fetch(`${serverUrl}/${trackId}/course/update/${courseId}`, {
       method: 'PUT',
-      headers:{
-        "Content-Type":"application/json"
+      headers: {
+        'Content-Type': 'application/json',
       },
-      body:JSON.stringify(courseData)
+      body: JSON.stringify(courseData),
     });
-    
   } catch (error) {
-    console.error('Error editing  Course:', error);
+    console.error('Error editing course:', error);
   }
 }
-async function editTaskApi(Tid,Cid,taskId,TaskData) {
+
+async function editTaskApi(trackId, courseId, taskId, taskData) {
   try {
-    console.log("editTaskApi");
-    
-    await fetch(`${serverUrl}/${Tid}/course/${Cid}/task/update/${taskId}`, {
+    await fetch(`${serverUrl}/${trackId}/course/${courseId}/task/update/${taskId}`, {
       method: 'PUT',
-      headers:{
-        "Content-Type":"application/json"
+      headers: {
+        'Content-Type': 'application/json',
       },
-      body:JSON.stringify(TaskData)
+      body: JSON.stringify(taskData),
     });
-    
   } catch (error) {
     console.error('Error editing task:', error);
   }
 }
 
-
 async function deleteTrackApi(id) {
   try {
-    console.log("id is :",id);
-    
     await fetch(`${serverUrl}/delete/${id}`, {
       method: 'DELETE',
     });
-    init()
+    init();
   } catch (error) {
     console.error('Error deleting track:', error);
   }
@@ -211,33 +210,26 @@ async function deleteTrackApi(id) {
 
 async function deleteCourseApi(trackId, courseId) {
   try {
-    const response=await fetch(`${serverUrl}/${trackId}/course/delete/${courseId}`, {
+    await fetch(`${serverUrl}/${trackId}/course/delete/${courseId}`, {
       method: 'DELETE',
     });
-    const jsonResponse=await response.json()
-    console.log(jsonResponse);
-    
   } catch (error) {
-    console.log('Error deleting course:', error.message);
+    console.error('Error deleting course:', error);
   }
 }
 
-async function deleteTaskApi(trackId,courseId, taskId) {
+async function deleteTaskApi(trackId, courseId, taskId) {
   try {
     await fetch(`${serverUrl}/${trackId}/course/${courseId}/task/delete/${taskId}`, {
       method: 'DELETE',
     });
-    console.log("task deleted    :)");
-    
   } catch (error) {
-    console.log('Error deleting task:', error);
+    console.error('Error deleting task:', error);
   }
 }
 
-
 // Render functions
-function renderTracks() {
-
+async function renderTracks() {
   const grid = document.getElementById('tracks-grid');
   grid.innerHTML = tracks.map(track => `
     <div class="admin-card">
@@ -260,19 +252,28 @@ function renderTracks() {
   lucide.createIcons();
 }
 
-function renderCourses(trackId) {
+async function renderCourses(trackId) {
   const grid = document.getElementById('courses-grid');
   const trackCourses = courses[trackId] || [];
 
-  grid.innerHTML = trackCourses.map(course => `
+  const coursesWithMembers = await Promise.all(trackCourses.map(async course => {
+    const members = await getCourseMembers(course._id);
+    return { ...course, membersCount: members.length };
+  }));
+
+  grid.innerHTML = coursesWithMembers.map(course => `
     <div class="admin-card">
       <div class="admin-card-header">
         <h3 class="admin-card-title">${course.name}</h3>
         <div class="admin-card-actions">
+          <button class="action-button view-button" onclick="viewCourseMembers('${course._id}')">
+            <i data-lucide="users"></i>
+            <span>${course.membersCount} members</span>
+          </button>
           <button class="action-button edit-button" onclick="editCourse('${course._id}')">
             <i data-lucide="edit"></i>
           </button>
-          <button class="action-button delete-button" onclick="deleteCourse( '${course._id}')">
+          <button class="action-button delete-button" onclick="deleteCourse('${course._id}')">
             <i data-lucide="trash-2"></i>
           </button>
         </div>
@@ -282,12 +283,11 @@ function renderCourses(trackId) {
   lucide.createIcons();
 }
 
-async function renderTasks(trackId,courseId) {
+async function renderTasks(trackId, courseId) {
   const grid = document.getElementById('tasks-grid');
-  // await getTasks(trackId,courseId)
-  const courseTasks =await getTasks(trackId,courseId);
+  tasks = await getTasks(trackId, courseId);
 
-  grid.innerHTML = courseTasks.map(task => `
+  grid.innerHTML = tasks.map(task => `
     <div class="admin-card">
       <div class="admin-card-header">
         <h3 class="admin-card-title">${task.name}</h3>
@@ -315,153 +315,6 @@ async function renderTasks(trackId,courseId) {
   lucide.createIcons();
 }
 
-// Initialize the page
-init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // State management
-// let tracks = [];
-// let courses = {};
-// let tasks = {};
-
-// // DOM Elements
-// const trackSection = document.getElementById('tracks-section');
-// const courseSection = document.getElementById('courses-section');
-// const taskSection = document.getElementById('tasks-section');
-// const tabButtons = document.querySelectorAll('.tab-button');
-// const trackModal = document.getElementById('track-modal');
-// const courseModal = document.getElementById('course-modal');
-// const taskModal = document.getElementById('task-modal');
-
-// // Initialize Lucide icons
-// lucide.createIcons();
-
-// // Tab switching
-// tabButtons.forEach(button => {
-//   button.addEventListener('click', () => {
-//     const tabName = button.dataset.tab;
-    
-//     // Update active tab button
-//     tabButtons.forEach(btn => btn.classList.remove('active'));
-//     button.classList.add('active');
-    
-//     // Update active section
-//     document.querySelectorAll('.admin-section').forEach(section => {
-//       section.classList.remove('active');
-//     });
-//     document.getElementById(`${tabName}-section`).classList.add('active');
-//   });
-// });
-
-// // Load initial data
-// async function init() {
-//   tracks = await API.getTracks();
-//   renderTracks();
-//   updateTrackSelectors();
-// }
-
-// // Render functions
-// function renderTracks() {
-//   const grid = document.getElementById('tracks-grid');
-//   grid.innerHTML = tracks.map(track => `
-//     <div class="admin-card">
-//       <div class="admin-card-header">
-//         <h3 class="admin-card-title">${track.name}</h3>
-//         <div class="admin-card-actions">
-//           <button class="action-button edit-button" onclick="editTrack('${track.id}')">
-//             <i data-lucide="edit"></i>
-//           </button>
-//           <button class="action-button delete-button" onclick="deleteTrack('${track.id}')">
-//             <i data-lucide="trash-2"></i>
-//           </button>
-//         </div>
-//       </div>
-//       <div class="card-icon">
-//         <i data-lucide="${track.icon === 'web' ? 'globe' : track.icon === 'embedded' ? 'cpu' : 'code-2'}"></i>
-//       </div>
-//     </div>
-//   `).join('');
-//   lucide.createIcons();
-// }
-
-// function renderCourses(trackId) {
-//   const grid = document.getElementById('courses-grid');
-//   const trackCourses = courses[trackId] || [];
-  
-//   grid.innerHTML = trackCourses.map(course => `
-//     <div class="admin-card">
-//       <div class="admin-card-header">
-//         <h3 class="admin-card-title">${course.name}</h3>
-//         <div class="admin-card-actions">
-//           <button class="action-button edit-button" onclick="editCourse('${course.id}')">
-//             <i data-lucide="edit"></i>
-//           </button>
-//           <button class="action-button delete-button" onclick="deleteCourse('${course.id}')">
-//             <i data-lucide="trash-2"></i>
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   `).join('');
-//   lucide.createIcons();
-// }
-
-// function renderTasks(courseId) {
-//   const grid = document.getElementById('tasks-grid');
-//   const courseTasks = tasks[courseId] || [];
-  
-//   grid.innerHTML = courseTasks.map(task => `
-//     <div class="admin-card">
-//       <div class="admin-card-header">
-//         <h3 class="admin-card-title">${task.name}</h3>
-//         <div class="admin-card-actions">
-//           <button class="action-button edit-button" onclick="editTask('${task.id}')">
-//             <i data-lucide="edit"></i>
-//           </button>
-//           <button class="action-button delete-button" onclick="deleteTask('${task.id}')">
-//             <i data-lucide="trash-2"></i>
-//           </button>
-//         </div>
-//       </div>
-//       <div class="task-meta">
-//         <div class="meta-item">
-//           <i data-lucide="clock"></i>
-//           <span>${task.estimatedTime}</span>
-//         </div>
-//         <div class="meta-item">
-//           <i data-lucide="star"></i>
-//           <span>${task.score} points</span>
-//         </div>
-//       </div>
-//     </div>
-//   `).join('');
-//   lucide.createIcons();
-// }
-
 // Update selectors
 function updateTrackSelectors() {
   const courseTrackSelect = document.getElementById('course-track-select');
@@ -475,19 +328,13 @@ function updateTrackSelectors() {
   taskTrackSelect.innerHTML = '<option value="">Select a track...</option>' + trackOptions;
 }
 
-// // Load data based on selections
+// Load data based on selections
 async function loadTrackCourses() {
-  
   const trackId = document.getElementById('course-track-select').value;
-
   if (!trackId) return;
-
-  if (!courses[trackId]) {
-    console.log("trackId:",trackId);
-
-    courses[trackId] = await getCourses(trackId);
-  }
-
+  
+  currentTrackId = trackId;
+  courses[trackId] = await getCourses(trackId);
   renderCourses(trackId);
 }
 
@@ -495,9 +342,8 @@ async function loadTaskTrackCourses() {
   const trackId = document.getElementById('task-track-select').value;
   if (!trackId) return;
   
-  if (!courses[trackId]) {
-    courses[trackId] = await getCourses(trackId);
-  }
+  currentTrackId = trackId;
+  courses[trackId] = await getCourses(trackId);
   
   const courseSelect = document.getElementById('task-course-select');
   courseSelect.innerHTML = '<option value="">Select a course...</option>' +
@@ -508,15 +354,432 @@ async function loadTaskTrackCourses() {
 
 async function loadCourseTasks() {
   const courseId = document.getElementById('task-course-select').value;
-  const trackId = document.getElementById('task-track-select').value;
-
   if (!courseId) return;
   
-  if (!tasks[courseId]) {
-    tasks[courseId] = await getTasks(trackId,courseId);
-  }
-  renderTasks(trackId,courseId);
+  currentCourseId = courseId;
+  await renderTasks(currentTrackId, courseId);
 }
+
+// View course members and progress
+// async function viewCourseMembers(courseId) {
+//   try {
+//     const members = await getCourseMembers(courseId);
+//     const course = courses[currentTrackId].find(c => c._id === courseId);
+//     const tasks = await getTasks(currentTrackId, courseId);
+    
+//     const modalContent = document.createElement('div');
+//     modalContent.className = 'course-members-modal';
+    
+//     modalContent.innerHTML = `
+//       <div class="modal-header">
+//         <h2>${course.name} - Member Progress</h2>
+//         <button class="close-button" onclick="closeMembersModal()">&times;</button>
+//       </div>
+//       <div class="members-dashboard">
+//         <div class="dashboard-stats">
+//           <div class="stat-card">
+//             <h3>Total Members</h3>  
+//             <p>${members.length}</p>
+//           </div>
+//           <div class="stat-card">
+//             <h3>Total Tasks</h3>
+//             <p>${tasks.length}</p>
+//           </div>
+//         </div>
+//         <div class="members-list">
+//           ${members.map(member => {
+//             const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+//             const submittedTasks = memberProgress?.submittedTasks || [];
+//             const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
+            
+//             return `
+//               <div class="member-card">
+//                 <div class="member-info">
+//                   <h4>${member.name}</h4>
+//                   <p>${member.email}</p>
+//                   <div class="progress-bar">
+//                     <div class="progress" style="width: ${completionRate}%"></div>
+//                     <span>${completionRate}% complete</span>
+//                   </div>
+//                 </div>
+//                 <div class="task-submissions">
+//                   <h5>Task Submissions</h5>
+//                   <div class="tasks-grid">
+//                     ${tasks.map(task => {
+//                       const submission = submittedTasks.find(s => s.task === task._id);
+//                       return `
+//                         <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
+//                           <h6>${task.name}</h6>
+//                           ${submission ? `
+//                             <div class="submission-details">
+//                               <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
+//                               <a href="${submission.submissionLink}" target="_blank" class="view-submission">
+//                                 <i data-lucide="external-link"></i>
+//                                 View Submission
+//                               </a>
+//                               ${submission.evaluation ? `
+//                                 <p class="evaluation">Evaluation: ${submission.evaluation}</p>
+//                               ` : `
+//                                 <button onclick="evaluateSubmission('${member._id}', '${task._id}', '${submission._id}')" class="evaluate-button">
+//                                   Add Evaluation
+//                                 </button>
+//                               `}
+//                             </div>
+//                           ` : '<p class="pending-text">Not submitted yet</p>'}
+//                         </div>
+//                       `;
+//                     }).join('')}
+//                   </div>
+//                 </div>
+//               </div>
+//             `;
+//           }).join('')}
+//         </div>
+//       </div>
+//     `;
+
+//     console.log(membersModal);
+    
+//     membersModal.innerHTML = '';
+//     membersModal.appendChild(modalContent);
+//     membersModal.classList.add('active');
+//     lucide.createIcons();
+//   } catch (error) {
+//     console.log('Error loading member progress:', error);
+//   }
+// }
+// async function viewCourseMembers(courseId) {
+//   try {
+//     const members = await getCourseMembers(courseId);
+//     const course = courses[currentTrackId].find(c => c._id === courseId);
+//     const tasks = await getTasks(currentTrackId, courseId);
+    
+//     const modalContent = document.createElement('div');
+//     modalContent.className = 'course-members-modal';
+    
+//     modalContent.innerHTML = `
+//       <div class="modal-header">
+//         <h2>${course.name} - Member Progress</h2>
+//         <button class="close-button" onclick="closeMembersModal()">&times;</button>
+//       </div>
+//       <div class="members-dashboard">
+//         <div class="dashboard-stats">
+//           <div class="stat-card">
+//             <h3>Total Members</h3>  
+//             <p>${members.length}</p>
+//           </div>
+//           <div class="stat-card">
+//             <h3>Total Tasks</h3>
+//             <p>${tasks.length}</p>
+//           </div>
+//         </div>
+//         <div class="members-list">
+//           ${members.map(member => {
+//             const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+//             const submittedTasks = memberProgress?.submittedTasks || [];
+//             const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
+            
+//             return `
+//               <div class="member-card">
+//                 <div class="member-info">
+//                   <h4>${member.name}</h4>
+//                   <p>${member.email}</p>
+//                   <div class="progress-bar">
+//                     <div class="progress" style="width: ${completionRate}%"></div>
+//                     <span>${completionRate}% complete</span>
+//                   </div>
+//                 </div>
+//                 <div class="task-submissions">
+//                   <h5>Task Submissions</h5>
+//                   <div class="tasks-grid">
+//                     ${tasks.map(task => {
+//                       const submission = submittedTasks.find(s => s.task === task._id);
+//                       return `
+//                         <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
+//                           <h6>${task.name}</h6>
+//                           ${submission ? `
+//                             <div class="submission-details">
+//                               <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
+//                               <a href="${submission.submissionLink}" target="_blank" class="view-submission">
+//                                 <i data-lucide="external-link"></i>
+//                                 View Submission
+//                               </a>
+//                               <form onsubmit="submitEvaluation(event, '${member._id}', '${task._id}', '${submission._id}')">
+//                                 <label>Rate:</label>
+//                                 <input type="number" name="rate" min="0" max="100" required value="${submission.rate || ''}" />
+//                                 <label>Notes:</label>
+//                                 <textarea name="notes" required>${submission.notes || ''}</textarea>
+//                                 <button type="submit" class="evaluate-button">Save Evaluation</button>
+//                               </form>
+//                             </div>
+//                           ` : '<p class="pending-text">Not submitted yet</p>'}
+//                         </div>
+//                       `;
+//                     }).join('')}
+//                   </div>
+//                 </div>
+//               </div>
+//             `;
+//           }).join('')}
+//         </div>
+//       </div>
+//     `;
+
+//     console.log(membersModal);
+    
+//     membersModal.innerHTML = '';
+//     membersModal.appendChild(modalContent);
+//     membersModal.classList.add('active');
+//     lucide.createIcons();
+//   } catch (error) {
+//     console.log('Error loading member progress:', error);
+//   }
+// }
+
+
+async function viewCourseMembers(courseId) {
+  try {
+    // Hide current active section and show members section
+    membersSection=document.getElementById('members-section')
+    document.querySelector('.admin-section.active').classList.remove('active');
+    membersSection.classList.add('active');
+    
+    const members = await getCourseMembers(courseId);
+    const course = courses[currentTrackId].find(c => c._id === courseId);
+    const tasks = await getTasks(currentTrackId, courseId);
+
+    // Set section title
+    document.getElementById('members-section-title').textContent = 
+      `${course.name} - Member Progress`;
+
+    // Build members content
+    const membersContent = document.getElementById('members-content');
+    membersContent.innerHTML = `
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>Total Members</h3>  
+          <p>${members.length}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Tasks</h3>
+          <p>${tasks.length}</p>
+        </div>
+      </div>
+      <div class="members-list">
+        ${members.map(member => {
+          const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+          const submittedTasks = memberProgress?.submittedTasks || [];
+          const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
+          
+          return `
+            <div class="member-card">
+              <div class="member-info">
+                <h4>${member.name}</h4>
+                <p>${member.email}</p>
+                <div class="progress-bar">
+                  <div class="progress" style="width: ${completionRate}%"></div>
+                  <span>${completionRate}% complete</span>
+                </div>
+              </div>
+              <div class="task-submissions">
+                <h5>Task Submissions</h5>
+                <div class="tasks-grid">
+                  ${tasks.map(task => {
+                    const submission = submittedTasks.find(s => s.task === task._id);
+                    return `
+                      <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
+                        <h6>${task.name}</h6>
+                        ${submission ? `
+                          <div class="submission-details">
+                            <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
+                            <a href="${submission.submissionLink}" target="_blank" class="view-submission">
+                              <i data-lucide="external-link"></i>
+                              View Submission
+                            </a>
+                            <form onsubmit="submitEvaluation(event, '${member._id}', '${task._id}', '${submission._id}')">
+                              <label>Rate:</label>
+                              <input type="number" name="rate" min="0" max="100" required value="${submission.rate || ''}" />
+                              <label>Notes:</label>
+                              <textarea name="notes" required>${submission.notes || ''}</textarea>
+                              <button type="submit" class="evaluate-button">Save Evaluation</button>
+                            </form>
+                          </div>
+                        ` : '<p class="pending-text">Not submitted yet</p>'}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    lucide.createIcons();
+  } catch (error) {
+    console.log('Error loading member progress:', error);
+  }
+}
+
+function goBackToCourses() {
+  document.getElementById('members-section').classList.remove('active');
+  document.getElementById('courses-section').classList.add('active');
+}
+
+
+
+// Modal functions
+function showTrackModal() {
+  document.getElementById('track-modal-title').textContent = 'Add Track';
+  document.getElementById('track-form').reset();
+  document.getElementById('track-id').value = '';
+  trackModal.classList.add('active');
+}
+
+function closeTrackModal() {
+  trackModal.classList.remove('active');
+}
+
+function showCourseModal() {
+  document.getElementById('course-modal-title').textContent = 'Add Course';
+  document.getElementById('course-form').reset();
+  document.getElementById('course-id').value = '';
+  courseModal.classList.add('active');
+}
+
+function closeCourseModal() {
+  courseModal.classList.remove('active');
+}
+
+function showTaskModal() {
+  document.getElementById('task-modal-title').textContent = 'Add Task';
+  document.getElementById('task-form').reset();
+  document.getElementById('task-id').value = '';
+  taskModal.classList.add('active');
+}
+
+function closeTaskModal() {
+  taskModal.classList.remove('active');
+}
+
+function closeMembersModal() {
+  membersModal.classList.remove('active');
+}
+
+// Form handlers
+async function handleTrackSubmit(event) {
+  event.preventDefault();
+  const formData = {
+    name: document.getElementById('track-name').value,
+    icon: document.getElementById('track-icon').value
+  };
+  
+  const trackId = document.getElementById('track-id').value;
+  
+  if (trackId) {
+    await editTrack(trackId, formData);
+  } else {
+    await addTrack(formData);
+  }
+  
+  await init();
+  closeTrackModal();
+}
+
+async function handleCourseSubmit(event) {
+  event.preventDefault();
+  const formData = {
+    name: document.getElementById('course-name').value
+  };
+  
+  const courseId = document.getElementById('course-id').value;
+  
+  if (courseId) {
+    await editCourse(currentTrackId, courseId, formData);
+  } else {
+    await addCourse(currentTrackId, formData);
+  }
+  
+  courses[currentTrackId] = await getCourses(currentTrackId);
+  renderCourses(currentTrackId);
+  closeCourseModal();
+}
+
+// async function handleTaskSubmit(event) {
+//   event.preventDefault();
+//   const formData = {
+//     name: document.getElementById('task-name').value,
+//     description: document.getElementById('task-description').value,
+//     time: document.getElementById('task-time').value,
+//     score: parseInt(document.getElementById('task-score').value),
+//     materialLink: document.getElementById('task-data-link').value,
+//     submissionLink: document.getElementById('task-submission-link').value
+//   };
+  
+//   const taskId = document.getElementById('task-id').value;
+  
+//   if (taskId) {
+//     await editTaskApi(currentTrackId, currentCourseId, taskId, formData);
+//   } else {
+//     await addTask(currentTrackId, currentCourseId, formData);
+//   }
+  
+//   await renderTasks(currentTrackId, currentCourseId);
+//   closeTaskModal();
+// }
+
+// Evaluation function
+async function evaluateSubmission(memberId, taskId, submissionId,rate,notes) {
+  // const evaluation = prompt('Enter evaluation for this submission:');
+  // if (!evaluation) return;
+  //   console.log(memberId,taskId,submissionId);
+    
+  try {
+    const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/tasks/${taskId}/submissions/${submissionId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        memberId,
+        taskId,
+        submissionId,
+        rate,
+        notes
+      })
+    });
+
+    if (response.ok) {
+      alert('Evaluation submitted successfully');
+      viewCourseMembers(currentCourseId);
+    } else {
+      throw new Error('Failed to submit evaluation');
+    }
+  } catch (error) {
+    console.error('Error submitting evaluation:', error);
+    alert('Failed to submit evaluation');
+  }
+}
+
+function submitEvaluation(event, memberId, taskId, submissionId) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const rate = form.rate.value;
+  const notes = form.notes.value;
+
+  evaluateSubmission(memberId, taskId, submissionId, rate, notes);
+}
+
+// Initialize
+async function init() {
+  tracks = await getTracks();
+  renderTracks();
+  updateTrackSelectors();
+}
+
+
 
 // Modal functions
 function showTrackModal() {
@@ -645,7 +908,7 @@ async function handleTaskSubmit(event) {
   }
   
   if (formData.id) {
-    const index = tasks[courseId].findIndex(t => t._id === formData.id);
+    const index = tasks.findIndex(t => t._id === formData.id);
     console.log(index)
     if (index !== -1) {
       console.log("update task" );
@@ -693,13 +956,13 @@ function editTask(id) {
 
   const courseId = document.getElementById('task-course-select').value;
   console.log("course id",courseId);
-  console.log("task id",tasks[courseId][0]._id);
+  console.log("task id",tasks);
 
-  const task = tasks[courseId]?.find(t => t._id === id);
-  if (!task) return;
+  const task = tasks?.find(t => t._id === id);
+  // if (!task) return;
   // console.log("edit TAsk function");
   console.log("id:",id);
-  console.log("task._id",task._id);
+  // console.log("task._id",task._id);
   
   document.getElementById('task-modal-title').textContent = 'Edit Task';
   document.getElementById('task-id').value = task._id;
@@ -750,13 +1013,14 @@ async function deleteTask(taskId) {
   if (!confirm('Are you sure you want to delete this task?')) return;
   const trackId = document.getElementById('task-track-select').value;
   const courseId = document.getElementById('task-course-select').value;
-  const index = tasks[courseId].findIndex(t => t._id === taskId );
+  const index = tasks.findIndex(t => t._id === taskId );
   if (index !== -1) {
-    tasks[courseId].splice(index, 1);
+    // tasks[courseId].splice(index, 1);
     await deleteTaskApi(trackId,courseId,taskId);
     renderTasks(trackId,courseId);
   }
 }
 
-// // Initialize the page
-// init();
+
+
+init();
