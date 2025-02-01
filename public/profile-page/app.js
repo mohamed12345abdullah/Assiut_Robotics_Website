@@ -59,13 +59,16 @@ async function verifyToken() {
     const data = await response.json();
     console.log(data);
     if (data.data) {
+      console.log("data.data");
     //   localStorage.setItem('token', data.data.token);
       bino.classList.add('disabled');
       body.classList.remove('loading');
       main.classList.remove('disabled');
       header.classList.remove('disabled');
       
+      
       currentMemberData = data.data;
+     
       renderCurrentTasks(data.data.tasks)
       renderMemberData(data.data);
       
@@ -214,6 +217,8 @@ async function submitCurrentTask(submissionLink) {
 
 // Render member profile data
 function renderMemberData(data) {
+
+  
   localStorage.setItem('data' , JSON.stringify(data));
   userAvatar.src = data.avatar;
   userAvatar.alt = `${data.name}'s avatar`;
@@ -359,6 +364,8 @@ function renderTasks(tasks) {
 }
 // Manage btn
 function manage(){
+  console.log("manage");
+  
   const managebtn = document.getElementById('manage');
   const data = JSON.parse(localStorage.getItem('data'));
   if(data.role == "head" || data.role == "leader")
@@ -380,7 +387,6 @@ function manage(){
   else
     managebtn.style.display = "none";
 }
-
 
 
 
@@ -510,7 +516,7 @@ async function initialize() {
 //     await fetchMemberData();
 //   }
   // if(!isValid)
-
+  manage();
 initializeDarkMode();
 }
 
