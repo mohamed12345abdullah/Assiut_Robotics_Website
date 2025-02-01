@@ -376,7 +376,8 @@ function openEditTaskPopup(task, memberId, taskId, member) {
     // Handle form submission
     form.onsubmit = function (event) {
         event.preventDefault();
-
+        console.log('sumbsad');
+        
         // Get updated values from the form
         const updatedTask = {
             newTitle: document.getElementById('editTitle').value,
@@ -387,7 +388,9 @@ function openEditTaskPopup(task, memberId, taskId, member) {
             points: document.getElementById('editPoints').value,
             headPercent: document.getElementById('editHeadPercent').value,
         }; 
-        if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl && updatedTask.points && updatedTask.headPercent && updatedTask.hrPercent) {
+        console.log('bef f');
+        
+        if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl && updatedTask.points && updatedTask.headPercent) {
             task.title = updatedTask.newTitle;
             task.description = updatedTask.newDescription;
             task.StartDate = updatedTask.StartDate;
@@ -395,13 +398,13 @@ function openEditTaskPopup(task, memberId, taskId, member) {
             task.taskUrl = updatedTask.taskUrl;
             task.points = updatedTask.points;
             task.headPercent = updatedTask.headPercent;
-            task.hrPercent = 100-task.headPercent;
+            task.hrPercent = 100 - updatedTask.headPercent;
             console.log(task);
             
-        editrequest(memberId,taskId,member);
-        // Close the popup
-        closePopup();
-    };
+            editrequest(memberId,taskId,member);
+            // Close the popup
+            closePopup();
+        }
 }
 
 
@@ -430,7 +433,7 @@ function editrequest(memberId,taskId,member){
 // Function to close the popup
 function closePopup() {
     const popup = document.getElementById('editTaskPopup');
-    popup.style.display = 'none';
+    popup.style.display = 'none ';
 }
 
 
@@ -462,8 +465,8 @@ function deleteTask(memberId, taskId) {
 }
 function rateTask(memberId, taskId) {
     const rater = prompt('Enter your 1 if your are the head 0 if you are the hr: ');
-    const rating = Number(prompt('Enter a rating for this task (1-10):'));
-    if (rating && rating >= 1 && rating <= 10) {
+    const rating = Number(prompt('Enter a rating for this task (1-100):'));
+    if (rating && rating >= 1 && rating <= 100) {
         const member = membersData.find(m => m._id === memberId);
         let key;
         let body = {
@@ -503,7 +506,7 @@ function rateTask(memberId, taskId) {
                     else
                         alert(data.message); 
                 }).catch(error => {
-                    console.error('Error rating task:', error);
+                    console.error('Error rating task:', error.message);
                     alert('Error rating task');
                 })
                 

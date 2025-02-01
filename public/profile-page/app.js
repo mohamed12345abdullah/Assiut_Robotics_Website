@@ -368,24 +368,11 @@ function manage(){
   
   const managebtn = document.getElementById('manage');
   const data = JSON.parse(localStorage.getItem('data'));
-  if(data.role == "head" || data.role == "leader")
-  {
-    managebtn.style.display = "block";
-    if(data.role == 'head')
-    {
+  
       managebtn.addEventListener('click',()=>{
         window.location.href = "../head/index.html";
       })
-    }
-    else if(data.role == 'leader')
-    {
-      managebtn.addEventListener('click',()=>{
-        window.location.href = "../leader/index.html";
-      })
-    }
-  }
-  else
-    managebtn.style.display = "none";
+ 
 }
 
 
