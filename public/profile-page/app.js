@@ -35,6 +35,7 @@ const bino = document.getElementsByClassName('bino')[0];
 const body = document.getElementsByTagName('body')[0];
 const main = document.getElementsByTagName('main')[0];
 const header = document.getElementsByTagName('header')[0];
+const progressBar = document.getElementsByClassName('progress-bar-fill')[0];
 
 // Verify token
 async function verifyToken() {
@@ -130,6 +131,7 @@ async function changeAvatar(file) {
     }
   } catch (error) {
     console.error('Error changing avatar:', error);
+    alert('Error changing avatar. Please try again later.');
   }
 }
 
@@ -206,14 +208,21 @@ function renderTracks(tracks) {
 function renderCourses(courses) {
   coursesContainer.innerHTML = '';
   tasksContainer.style.display = 'none';
-  
+  const coursesfinished = courses.submittedTasks;
+  let coursesNumber;
   courses.forEach((course, index) => {
+    console.log(course);
+    
+    coursesNumber = course.tasks.length;
+
     const courseElement = document.createElement('div');
     courseElement.className = 'course-item';
     courseElement.textContent = course.name;
     courseElement.dataset.courseIndex = index;
     
     courseElement.addEventListener('click', () => {
+      progressBar.style.width = `${(coursesfinished/coursesNumber)*100}%`;
+      progressText.textContent = `${coursesfinished}/${coursesNumber}`;
       document.querySelectorAll('.course-item').forEach(el => el.classList.remove('active'));
       courseElement.classList.add('active');
       currentCourseId = course._id;

@@ -58,6 +58,10 @@
   
   .avatar-container {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
   
   .avatar {
@@ -68,23 +72,21 @@
   }
   
   .change-avatar-btn {
-    position: absolute;
-    bottom: -0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    /* bottom: -0.5rem; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
     background-color: var(--accent-color);
     color: white;
     border: none;
+    height: 100%;
+    margin-top: auto;
     border-radius: 0.25rem;
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  
-  .avatar-container:hover .change-avatar-btn {
-    opacity: 1;
+    /* opacity: 1; */
+    /* transition: opacity 0.2s; */
   }
   
   .user-name {
@@ -215,6 +217,7 @@
   
   .progress-bar-fill {
     height: 100%;
+    width: 0;
     background-color: var(--accent-color);
     transition: width 0.3s ease;
   }
