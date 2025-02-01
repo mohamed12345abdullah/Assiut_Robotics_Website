@@ -219,6 +219,8 @@ async function approveMember(email, accepted) {
     // location.reload();
 } catch (error) {
        window.alert(error.message) 
+       console.log(error);
+       
 }
 }
 

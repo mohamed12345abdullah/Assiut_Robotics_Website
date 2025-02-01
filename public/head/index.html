@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="flex-div2 fade" id="flex-2">
-            <a>Profile</a>
+            <a href="../profile-page/index.html">Profile</a>
             <a onclick="togglePages(this.id)" id="tasksSection">Tasks</a>
             <a onclick="togglePages(this.id)" id="addNewTaskSection">Add New Task</a>
             <a onclick="togglePages(this.id)" id="memberTasksSection">Members tasks</a>
@@ -68,58 +68,7 @@
             </div>
             <!-- Task List -->
             <div class="task-list" id="taskList">
-                <div class="task-card ">
-                    <h2>Marketing Campaign</h2>
-                    <div class="task-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit? Tempora
-                        cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione architecto
-                        assumenda dolores perspiciatis! Aliquid, ipsa libero.
-                    </div>
-                    <h3>Start Date : Apr 1, 2024</h3>
-                    <h3>End Date: Apr 1, 2024</h3>
-                    <p>Assigned: Mike Johnson</p>
-                    <button>Show More</button>
-
-                </div>
-                <div class="task-card ">
-                    <h2>Marketing Campaign</h2>
-                    <div class="task-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit? Tempora
-                        cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione architecto
-                        assumenda dolores perspiciatis! Aliquid, ipsa libero.
-                    </div>
-                    <h3>Start Date : Apr 1, 2024</h3>
-                    <h3>End Date: Apr 1, 2024</h3>
-                    <p>Assigned: Mike Johnson</p>
-                    <button>Show More</button>
-
-                </div>
-                <div class="task-card ">
-                    <h2>Marketing Campaign</h2>
-                    <div class="task-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit? Tempora
-                        cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione architecto
-                        assumenda dolores perspiciatis! Aliquid, ipsa libero.
-                    </div>
-                    <h3>Start Date : Apr 1, 2024</h3>
-                    <h3>End Date: Apr 1, 2024</h3>
-                    <p>Assigned: Mike Johnson</p>
-                    <button>Show More</button>
-
-                </div>
-                <div class="task-card ">
-                    <h2>Marketing Campaign</h2>
-                    <div class="task-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit? Tempora
-                        cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione architecto
-                        assumenda dolores perspiciatis! Aliquid, ipsa libero.
-                    </div>
-                    <h3>Start Date : Apr 1, 2024</h3>
-                    <h3>End Date: Apr 1, 2024</h3>
-                    <p>Assigned: Mike Johnson</p>
-                    <button>Show More</button>
-
-                </div>
+                
             </div>
         </div>
     </div>
@@ -133,6 +82,8 @@
                     <input type="text" id="taskTitle" placeholder="Task Title" required>
                     <textarea id="taskDescription" placeholder="Task Description" required></textarea>
                     <input type="text" id="additionalURL" placeholder="addition URL">
+                    <input type="number" id="points" placeholder="points" min="1" required>
+                    <input type="number" id="headPercent" placeholder="headPercent (write the number only without %)" min="50" max="100" required>
                     <label>Start Date:</label>
                     <input type="date" id="taskStartDate" required>
                     <label>End Date:</label>
@@ -141,7 +92,7 @@
                         <label for="taskMembers">Assign Team Members:</label>
                         <div class="members-list">
                             <div class="member-item">
-                                <input type="checkbox" id="member1" value="1">
+                                <input type="checkbox" id=" " value="1">
                                 <label for="member1">John Doe</label>
                             </div>
                             <div class="member-item">
@@ -191,67 +142,56 @@
                 <div class="members-list" id="membersList">
                     <h2>Team Members</h2>
                     <!-- Members will be dynamically added here -->
-                     <div class="member-card">
-                        <h3>Mahmoud Sayed</h3>
-                        <p>Developer</p>
-                        <small>email@example.com</small>
-                     </div>
-                     <div class="member-card">
-                        <h3>Mahmoud Sayed</h3>
-                        <p>Developer</p>
-                        <small>email@example.com</small>
-                     </div>
-                     <div class="member-card">
-                        <h3>Mahmoud Sayed</h3>
-                        <p>Developer</p>
-                        <small>email@example.com</small>
-                     </div>
+                     
                 </div>
 
                 <!-- Member Details -->
-                <div class="member-details" id="memberDetails">
+                <div id="memberDetails">
                     <h2 id="selectedMemberName">Select a Member</h2>
-                    <!-- Tasks List -->
-                    <div class="task-list" id="taskList">
+                    <div id="memberInfo">
+                        <!-- Member details will be dynamically added here -->
+                    </div>
+                    <div id="taskList">
                         <!-- Tasks will be dynamically added here -->
-                        <div class="task-card ">
-                            <h2>Marketing Campaign</h2>
-                            <div class="task-description">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit?
-                                Tempora
-                                cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione
-                                architecto
-                                assumenda dolores perspiciatis! Aliquid, ipsa libero.
-                            </div>
-                            <h3>Start Date : Apr 1, 2024</h3>
-                            <h3>End Date: Apr 1, 2024</h3>
-                            <button>Show More</button>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                        </div>
-                        <div class="task-card ">
-                            <h2>Marketing Campaign</h2>
-                            <div class="task-description">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, repudiandae suscipit?
-                                Tempora
-                                cupiditate fugit laudantium unde! Placeat optio id corporis modi velit ratione
-                                architecto
-                                assumenda dolores perspiciatis! Aliquid, ipsa libero.
-                            </div>
-                            <h3>Start Date : Apr 1, 2024</h3>
-                            <h3>End Date: Apr 1, 2024</h3>
-                            <button>Show More</button>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+    <!-- Popup Form -->
+<div id="editTaskPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Edit Task</h2>
+        <form id="editTaskForm">
+            <label for="editTitle">Title:</label>
+            <input type="text" id="editTitle" required>
+
+            <label for="editDescription">Description:</label>
+            <textarea id="editDescription" required></textarea>
+            
+            <label for="editPoints">Points:</label>
+            <input type="number" id="editPoints" required></textarea>
+
+            <label for="editHeadPercent">headPercent:</label>
+            <input type="number" id="editHeadPercent" required></textarea>
+
+            <label for="editStartDate">Start Date:</label>
+            <input type="date" id="editStartDate" required>
+
+            <label for="editDeadline">Deadline:</label>
+            <input type="date" id="editDeadline" required>
+
+            <label for="editTaskUrl">Task URL:</label>
+            <input type="url" id="editTaskUrl">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
     <script src="../head/main.js"></script>
-    <script src="../main/footerAndheader.js"></script>
+    <!-- <script src="../main/footerAndheader.js"></script> -->
 </body>
 
 </html>

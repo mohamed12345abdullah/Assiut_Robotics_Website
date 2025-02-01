@@ -25,7 +25,7 @@ body {
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 100vw;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -122,12 +122,6 @@ header {
   gap: 0.25rem;
 }
 
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-}
 
 .spinner {
   width: 3rem;
@@ -243,3 +237,63 @@ header {
     margin: 0.5rem;
   }
 }
+  /* Binooooo */
+
+  @keyframes loadbody {
+    0%{
+        transform:   translateY(0px);
+    }
+    50%{
+        transform:   translateY(-50%);
+
+    }
+    100%{
+        transform:   translateY(0px);
+    }
+}
+.loading{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  margin: 0 !important;
+  padding: 0 !important;
+  justify-content: center;
+  align-items: center;
+}
+.bino{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background: #2daee2;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.bino_head {
+    margin-top: 2% ;
+    width: 60%;
+    height: 30%;
+    background-color: aliceblue;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    gap: 15%;
+}
+.eye{
+    margin-bottom: 10%;
+    background-color: #2daee2;
+    width: 15%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+}
+.load{
+    animation: loadbody 1.25s infinite ease-in-out ; 
+}
+.load .bino_head div{
+    animation: loadbody 1.25s infinite ease-in-out ; 
+}
+/* ------------------------------- */
