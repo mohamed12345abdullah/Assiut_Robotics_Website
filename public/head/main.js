@@ -3,6 +3,8 @@ var addNewTaskSection = document.getElementById("addNewTask")
 var tasksSection = document.getElementById("tasksPage")
 var membersSection=document.getElementById("membersPage")
 const committee = window.localStorage.getItem('committee');
+const adminData = JSON.parse(localStorage.getItem('data'));
+console.log(adminData);
 
 const form = document.getElementById('taskForm')
 const token = window.localStorage.getItem('token');
@@ -168,7 +170,7 @@ let membersData = []; // Store all members and their tasks here
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchMembers();
-    
+    displayTasks();
 });
 form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -202,6 +204,7 @@ form.addEventListener('submit', function (event) {
     }
     addTask(body);
 })
+
 function addTask(form) {
     
     form.assignedMembers.forEach(memberId => {
@@ -307,8 +310,8 @@ function displayTasks(tasks, memberId) {
                 <p> hr percent is ${100- task.headPercent}%</p>
                 <p>Start Date: ${new Date(task.startDate).toLocaleDateString()}</p>
                 <p>Deadline: ${new Date(task.deadline).toLocaleDateString()}</p>
-                <p>Rate of the head: ${task.headEvaluation}</p>
-                <p>Rate of the hr: ${task.hrEvaluation}</p>
+                <p>Rate of the head: ${task.headEvaluation * task.points * task.headPercent / 10000}%</p>
+                <p>Rate of the hr: ${task.hrEvaluation * task.points *(100 - task.headPercent) /10000 }%</p>
                 <p>Task URL: <a href="${task.taskUrl}" target="_blank">${task.taskUrl}</a></p>
                 <button onclick="editTask('${memberId}', '${task._id}')">Edit</button>
                 <button onclick="deleteTask('${memberId}', '${task._id}')">Delete</button>
@@ -421,8 +424,13 @@ function deleteTask(memberId, taskId) {
                     authorization: `Bearer ${token}`
                 }
             }).then(response => response.json()).then(data => {
-                displayTasks(member.tasks, memberId); // Refresh the task list
-                alert('Task deleted successfully!');    
+                console.log('Success:', data);
+                if(data.status != 'fail')
+                {
+                    displayTasks(member.tasks, memberId); // Refresh the task list
+                    alert('Task deleted successfully!');                 
+                }
+                else alert(data.message);
             }).catch(error => {
                 console.error('Error deleting task:', error);
                 alert('Error deleting task');
@@ -464,14 +472,14 @@ function rateTask(memberId, taskId) {
                 }).then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
-                    if(data.success)
+                    if(data.status != 'fail')
                     {
                         displayTasks(member.tasks, memberId); // Refresh the task list
-                        alert('Task rated successfully!');
+                        alert(data.message);
 
                     }
                     else
-                        alert('data.message'); 
+                        alert(data.message); 
                 }).catch(error => {
                     console.error('Error rating task:', error);
                     alert('Error rating task');

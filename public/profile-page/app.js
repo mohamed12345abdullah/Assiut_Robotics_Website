@@ -214,6 +214,7 @@ async function submitCurrentTask(submissionLink) {
 
 // Render member profile data
 function renderMemberData(data) {
+  localStorage.setItem('data' , JSON.stringify(data));
   userAvatar.src = data.avatar;
   userAvatar.alt = `${data.name}'s avatar`;
   userName.textContent = data.name;
