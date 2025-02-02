@@ -97,8 +97,8 @@ body.dark-mode {
 }
 
 section {
-    margin-bottom: 40px;
-    padding: 25px;
+    margin-bottom: 20px;
+    padding: 10px;
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -176,7 +176,7 @@ h2 {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 20px;
 }
 
 #heads-slider {
