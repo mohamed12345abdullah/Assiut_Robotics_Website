@@ -250,7 +250,7 @@ function displayMemberCheckboxes(members) {
     });
 }
 function fetchMembers() {
-    fetch(`https://assiut-robotics-zeta.vercel.app/members/get/web`)
+    fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${committee}`)
         .then(response => response.json())
         .then(data => {
             membersData = data.date; // Store the fetched data
