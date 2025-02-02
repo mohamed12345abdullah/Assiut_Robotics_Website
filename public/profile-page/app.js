@@ -42,7 +42,10 @@ async function verifyToken() {
  const token = localStorage.getItem('token');
     console.log("verifying");
     
-  if (!token) return false;
+  if (!token) {
+    window.location.href="../login/login.html"
+    return false
+  };
 
   try {
     const response = await fetch(VERIFY_URL, {

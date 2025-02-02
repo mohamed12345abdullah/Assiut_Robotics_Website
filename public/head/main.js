@@ -4,7 +4,7 @@ var tasksSection = document.getElementById("tasksPage")
 var membersSection=document.getElementById("membersPage")
 const adminData = JSON.parse(localStorage.getItem('data'));
 const committee = adminData.committee;
-console.log(adminData);
+console.log("admin data:",adminData);
 
 const form = document.getElementById('taskForm')
 const token = window.localStorage.getItem('token');
