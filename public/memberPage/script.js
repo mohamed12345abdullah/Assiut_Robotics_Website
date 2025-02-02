@@ -1,362 +1,313 @@
-// API Configuration
-const API_URL = 'https://assiut-robotics-zeta.vercel.app/members/getAllMembers';
+// Theme toggle functionality
+const themeToggle = document.querySelector('.theme-toggle');
+const body = document.body;
+const loadingScreen = document.querySelector('.loading-screen');
 
-// DOM Elements
-const leaderSection = document.getElementById('leaderSection');
-const headsSlider = document.getElementById('headsSlider');
-const committeesContainer = document.getElementById('committeesContainer');
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const icon = themeToggle.querySelector('i');
+    icon.classList.toggle('fa-moon');
+    icon.classList.toggle('fa-sun');
+});
 
-// Fetch Data
+// Fetch data from API
 async function fetchMembers() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/getAllMembers');
         const data = await response.json();
-        localStorage.setItem('members', JSON.stringify(data.data.members)); // Save members to localStorage
         return data.data.members;
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching members:', error);
         return [];
     }
 }
 
-// Process Data
-function organizeMembers(members) {
-    const committees = {};
-    let leader = null;
-    const heads = [];
+// Get DOM elements
+const modal = document.getElementById('modal');
+const modalBody = document.getElementById('modal-body');
+const closeBtn = document.getElementsByClassName('close')[0];
 
-    members.forEach(member => {
-        if (member.role === 'leader') {
-            leader = member;
-            return;
-        }
+// Close modal when clicking the X
+closeBtn.onclick = () => modal.style.display = 'none';
 
-        if (member.role === 'head') {
-            heads.push(member);
-            return;
-        }
-
-        if (!member.committee) return;
-        
-        if (!committees[member.committee]) {
-            committees[member.committee] = {
-                members: []
-            };
-        }
-
-        committees[member.committee].members.push(member);
-    });
-
-    return { leader, heads, committees };
-}
-
-// Render Leader
-function renderLeader(leader) {
-    if (!leader) return;
-
-    leaderSection.innerHTML = `
-        <div class="leader-card">
-            <img src="${leader.avatar || 'default-avatar.png'}" 
-                 class="leader-avatar" 
-                 alt="${leader.name}">
-            <div class="leader-name">${leader.name}</div>
-            <div class="leader-role">General Leader</div>
-        </div>
-    `;
-}
-
-// Render Heads Slider
-function renderHeadsSlider(heads) {
-    if (!heads.length) return;
-
-    headsSlider.innerHTML = heads
-        .map(head => `
-            <div class="swiper-slide">
-                <img src="${head.avatar || 'default-avatar.png'}" 
-                     class="head-avatar" 
-                     alt="${head.name}">
-                <div class="head-name">${head.name}</div>
-                <div class="head-committee">${head.committee}</div>
-            </div>
-        `)
-        .join('');
-
-    const swiper = new Swiper('.swiper', {
-        slidesPerView: 'auto',
-        spaceBetween: 20,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        autoplay: {
-            delay: 3000, // Change slide every 3 seconds
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 3,
-            },
-            1024: {
-                slidesPerView: 4,
-            }
-        }
-    });
-
-    // Add click event to heads
-    document.querySelectorAll('.swiper-slide').forEach((slide, index) => {
-        slide.addEventListener('click', () => {
-            renderPopup(heads[index]);
-        });
-    });
-}
-
-// Calculate Best Member
-function calculateBestMember(members) {
-    const lastMonth = new Date();
-    lastMonth.setMonth(lastMonth.getMonth() - 1);
-
-    const scoredMembers = members.map(member => {
-        // Tasks from tracks
-        const trackTasks = member.startedTracks
-            ?.flatMap(t => t.courses)
-            ?.flatMap(c => c.submittedTasks)
-            ?.filter(t => new Date(t.submittedAt) > lastMonth) || [];
-
-        // Standalone tasks
-        const standaloneTasks = member.tasks
-            ?.filter(t => new Date(t.deadline) > lastMonth) || [];
-
-        const totalScore = [...trackTasks, ...standaloneTasks].reduce((sum, task) => 
-            sum + (parseFloat(task.rate) || 0), 0);
-        
-        return {
-            ...member,
-            score: totalScore / (trackTasks.length + standaloneTasks.length) || 0,
-            tasksCount: trackTasks.length + standaloneTasks.length
-        };
-    });
-
-    return scoredMembers.sort((a, b) => 
-        b.score - a.score || b.tasksCount - a.tasksCount
-    )[0];
-}
-
-// Render Committees
-function renderCommittees(committees) {
-    committeesContainer.innerHTML = Object.entries(committees)
-        .map(([name, data]) => {
-            const bestMember = calculateBestMember(data.members);
-            
-            return `
-                <div class="committee-card">
-                    <h2>${name} Committee</h2>
-                    
-                    ${bestMember ? `
-                        <div class="role-section">
-                            <h3 class="section-title">Best Member of the Month</h3>
-                            <div class="member-card best-member">
-                                <img src="${bestMember.avatar || 'default-avatar.png'}" 
-                                     class="member-avatar" 
-                                     alt="${bestMember.name}">
-                                <div class="member-info">
-                                    <div class="member-name">${bestMember.name}</div>
-                                    <div class="best-badge">
-                                        ⭐ ${bestMember.score.to <div class="best-badge">
-                        ⭐ ${bestMember.score.toFixed(1)}/5 (${bestMember.tasksCount} tasks)
-                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        })
-        .join('');
-
-    addMemberClickEvent();
-}
-
-// Render Popup with enhanced task details
-function renderPopup(member) {
-    const totalScorePercentage = calculateTotalScore(member);
-    
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    popup.innerHTML = `
-        <div class="popup-content ${document.body.classList.contains('dark-mode') ? 'dark-mode' : ''}">
-            <button class="popup-close ${document.body.classList.contains('dark-mode') ? 'dark-mode' : ''}">×</button>
-            <img src="${member.avatar || 'default-avatar.png'}" 
-                 class="leader-avatar" 
-                 alt="${member.name}">
-            <div class="leader-name">${member.name}</div>
-            
-            <!-- Track Tasks -->
-            <h3 class="section-title">Tasks from Tracks</h3>
-            <div class="tasks-list">
-                ${renderTrackTasks(member.startedTracks)}
-            </div>
-
-            <!-- Standalone Tasks -->
-            <h3 class="section-title">Standalone Tasks</h3>
-            <div class="tasks-list">
-                ${renderStandaloneTasks(member.tasks)}
-            </div>
-
-            <!-- Total Score -->
-            <div class="total-score">
-                <div class="progress-container">
-                    <div class="progress-bar" style="width: ${totalScorePercentage}%; background: ${getProgressBarColor(totalScorePercentage)}">
-                        <span class="progress-text">${totalScorePercentage}%</span>
-                    </div>
-                </div>
-                <div class="score-summary">
-                    Total Score: ${totalScorePercentage}% (${calculateTotalTasks(member)} tasks)
-                </div>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(popup);
-
-    // Close Popup
-    popup.querySelector('.popup-close').addEventListener('click', () => {
-        popup.remove();
-    });
-
-    // Show Popup
-    setTimeout(() => popup.classList.add('active'), 10);
-}
-
-// Helper functions
-function getProgressBarColor(percentage) {
-    if (percentage < 50) return '#ff4757';
-    if (percentage < 80) return '#ffa502';
-    return '#2ed573';
-}
-
-function calculateTotalScore(member) {
-    let totalScore = 0;
-    let totalTasks = 0;
-
-    if (member.startedTracks) {
-        member.startedTracks.forEach(track => {
-            track.courses.forEach(course => {
-                course.submittedTasks.forEach(task => {
-                    totalScore += (parseFloat(task.rate) || 0) * 20;
-                    totalTasks++;
-                });
-            });
-        });
+// Close modal when clicking outside
+window.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
     }
+}
 
+// Display leader
+function displayLeader(members) {
+    const leaders = members.filter(member => member.role === 'leader' || member.role==='viceLeader');
+    leaders.forEach(leader => {
+        if (leader) {
+            const leaderContainer = document.getElementById('leader-container');
+            const leaderCard = document.createElement('div');
+            leaderCard.classList.add('leader-card')
+            leaderCard.innerHTML=createMemberCard(leader)
+            leaderCard.onclick = () => showMemberDetails(leader);
+            leaderContainer.appendChild( leaderCard);
+            leaderContainer.classList.add('fade-in');
+        } 
+    });
+
+}
+
+// Auto-slide functionality
+function startAutoSlide(slider, interval = 3000) {
+    setInterval(() => {
+        const scrollAmount = 320;
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        
+        if (slider.scrollLeft >= maxScroll) {
+            slider.scrollLeft = 0;
+        } else {
+            slider.scrollLeft += scrollAmount;
+        }
+    }, interval);
+}
+
+// Display heads in slider
+function displayHeads(members) {
+    const heads = members.filter(member => member.role === 'head');
+    const slider = document.getElementById('heads-slider');
+    
+    heads.forEach((head, index) => {
+        const headCard = document.createElement('div');
+        headCard.className = 'member-card';
+        headCard.style.flex = '0 0 300px';
+        headCard.innerHTML = createMemberCard(head);
+        headCard.onclick = () => showMemberDetails(head);
+        headCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s`;
+        slider.appendChild(headCard);
+    });
+
+    // Start auto-sliding
+    startAutoSlide(slider);
+
+    // Slider controls
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    
+    prevBtn.onclick = () => {
+        slider.scrollLeft -= 320;
+    };
+    
+    nextBtn.onclick = () => {
+        slider.scrollLeft += 320;
+    };
+}
+
+// Calculate scores for different task types
+function calculateTaskScores(member) {
+    let regularTasks = {
+        total: 0,
+        scores: []
+    };
+    let trackTasks = {
+        total: 0,
+        scores: []
+    };
+
+    // Regular tasks
     if (member.tasks) {
         member.tasks.forEach(task => {
-            totalScore += (parseFloat(task.rate) || 0) * 20;
-            totalTasks++;
+            if (task.headEvaluation >= 0 && task.hrEvaluation >= 0) {
+                const score = (task.headEvaluation + task.hrEvaluation) / 2 * 100;
+                regularTasks.scores.push({
+                    title: task.title,
+                    score: score
+                });
+                regularTasks.total += score;
+            }
         });
+        if (regularTasks.scores.length > 0) {
+            regularTasks.average = regularTasks.total / regularTasks.scores.length;
+        }
     }
 
-    return totalTasks > 0 ? Math.round(totalScore / totalTasks) : 0;
-}
-
-function calculateTotalTasks(member) {
-    let count = 0;
-    
+    // Track tasks
     if (member.startedTracks) {
         member.startedTracks.forEach(track => {
             track.courses.forEach(course => {
-                count += course.submittedTasks.length;
+                if (course.submittedTasks) {
+                    course.submittedTasks.forEach(task => {
+                        if (task.rate) {
+                            const score = parseFloat(task.rate) * 10; // Convert to percentage
+                            trackTasks.scores.push({
+                                title: `Track Task ${trackTasks.scores.length + 1}`,
+                                score: score
+                            });
+                            trackTasks.total += score;
+                        }
+                    });
+                }
             });
         });
+        if (trackTasks.scores.length > 0) {
+            trackTasks.average = trackTasks.total / trackTasks.scores.length;
+        }
     }
-    
-    if (member.tasks) count += member.tasks.length;
-    
-    return count;
+
+    // Calculate overall average
+    const totalScores = regularTasks.scores.length + trackTasks.scores.length;
+    const overallAverage = totalScores > 0 ? 
+        (regularTasks.total + trackTasks.total) / totalScores : 0;
+
+    return {
+        regularTasks,
+        trackTasks,
+        overallAverage
+    };
 }
 
-function renderTrackTasks(startedTracks) {
-    if (!startedTracks || startedTracks.length === 0) return '<p>No tasks from tracks.</p>';
-
-    let tasksHTML = '';
-    startedTracks.forEach(track => {
-        track.courses.forEach(course => {
-            course.submittedTasks.forEach(task => {
-                tasksHTML += `
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="task-title">${task.task || 'Untitled Task'}</span>
-                            <span class="task-max">Max: 5</span>
-                        </div>
-                        <div class="task-progress">
-                            <div class="task-rate" style="width: ${(parseFloat(task.rate)/5*100) || 0}%">
-                                ${task.rate || '0'}/5
-                            </div>
-                        </div>
-                    </div>
-                `;
+// Display best members
+function displayBestMembers(members) {
+    const bestMembersContainer = document.getElementById('best-members-container');
+    const committees = [...new Set(members.filter(m => m.committee).map(m => m.committee))];
+    
+    committees.forEach((committee, index) => {
+        const committeeMembers = members.filter(m => m.committee === committee);
+        if (committeeMembers.length > 0) {
+            const bestMember = committeeMembers.reduce((prev, current) => {
+                const prevScores = calculateTaskScores(prev);
+                const currentScores = calculateTaskScores(current);
+                return prevScores.overallAverage > currentScores.overallAverage ? prev : current;
             });
-        });
-    });
 
-    return tasksHTML;
-}
-
-function renderStandaloneTasks(tasks) {
-    if (!tasks || tasks.length === 0) return '<p>No standalone tasks.</p>';
-
-    return tasks.map(task => `
-        <div class="task-item">
-            <div class="task-header">
-                <span class="task-title">${task.title || 'Untitled Task'}</span>
-                <span class="task-max">Max: 5</span>
-            </div>
-            <div class="task-progress">
-                <div class="task-rate" style="width: ${(parseFloat(task.rate)/5*100) || 0}%">
-                    ${task.rate || '0'}/5
+            const scores = calculateTaskScores(bestMember);
+            const memberCard = document.createElement('div');
+            memberCard.className = 'member-card';
+            memberCard.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s`;
+            memberCard.innerHTML = `
+                <h3>${committee}</h3>
+                ${createMemberCard(bestMember)}
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${scores.overallAverage}%"></div>
                 </div>
-            </div>
-        </div>
-    `).join('');
+                <p class="score-text">${scores.overallAverage.toFixed(1)}%</p>
+            `;
+            memberCard.onclick = () => showMemberDetails(bestMember, true);
+            bestMembersContainer.appendChild(memberCard);
+        }
+    });
+
+    // Start auto-sliding for best members if there are many
+    const container = document.getElementById('best-members-container');
+    if (container.scrollWidth > container.clientWidth) {
+        startAutoSlide(container);
+    }
 }
 
-// Event Listeners
-function addMemberClickEvent() {
-    document.querySelectorAll('.member-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const memberName = card.querySelector('.member-name').textContent;
-            const members = JSON.parse(localStorage.getItem('members'));
-            const member = members.find(m => m.name === memberName);
-            if (member) renderPopup(member);
-        });
+// Display committee members
+function displayCommitteeMembers(members) {
+    const container = document.getElementById('committee-members-container');
+    const committees = [...new Set(members.filter(m => m.committee).map(m => m.committee))];
+    
+    committees.forEach((committee, index) => {
+        const committeeMembers = members.filter(m => m.committee === committee);
+        if (committeeMembers.length > 0) {
+            const section = document.createElement('div');
+            section.className = 'committee-section';
+            section.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s`;
+            section.innerHTML = `
+                <h3 class="committee-title">${committee}</h3>
+                <div class="committee-grid">
+                    ${committeeMembers.map(member => `
+                        <div class="member-card" onclick="showMemberDetails(${JSON.stringify(member).replace(/"/g, '&quot;')})">
+                            ${createMemberCard(member)}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(section);
+        }
     });
 }
 
-// Dark Mode Toggle
-document.getElementById('darkModeToggle').addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
-    document.getElementById('darkModeToggle').textContent = isDarkMode ? '☀' : '🌙';
-});
-
-// Initialize
-if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-    document.getElementById('darkModeToggle').textContent = '☀';
+// Create member card HTML
+function createMemberCard(member) {
+    return `
+        <img onclick='showMemberDetails(${member,false})' src="${member.avatar}" alt="${member.name}" class="member-avatar">
+        <h3>${member.name}</h3>
+        <p class="role">${member.role}</p>
+        ${member.committee ? `<p class="committee">Committee: ${member.committee}</p>` : ''}
+    `;
 }
 
-async function init() {
-    const members = await fetchMembers();
-    const { leader, heads, committees } = organizeMembers(members);
-    
-    renderLeader(leader);
-    renderHeadsSlider(heads);
-    renderCommittees(committees);
-    
-    lucide.createIcons();
+// Show member details in modal
+function showMemberDetails(member, showScore = false) {
+    let content = `
+        <div class="modal-member-info">
+            <img src="${member.avatar}" alt="${member.name}" class="member-avatar">
+            <h2>${member.name}</h2>
+            <p>Role: ${member.role}</p>
+            ${member.committee ? `<p>Committee: ${member.committee}</p>` : ''}
+        </div>
+    `;
+
+    if (showScore) {
+        const scores = calculateTaskScores(member);
+        content += `
+            <div class="scores-section">
+                <h3>Overall Performance</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${scores.overallAverage}%"></div>
+                </div>
+                <p class="score-text">Overall Score: ${scores.overallAverage.toFixed(1)}%</p>
+
+                ${scores.regularTasks.scores.length > 0 ? `
+                    <h3>Regular Tasks</h3>
+                    <div class="tasks-list">
+                        ${scores.regularTasks.scores.map(task => `
+                            <div class="task-item">
+                                <p>${task.title}</p>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: ${task.score}%"></div>
+                                </div>
+                                <span class="score-text">${task.score.toFixed(1)}%</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+
+                ${scores.trackTasks.scores.length > 0 ? `
+                    <h3>Track Tasks</h3>
+                    <div class="tasks-list">
+                        ${scores.trackTasks.scores.map(task => `
+                            <div class="task-item">
+                                <p>${task.title}</p>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: ${task.score}%"></div>
+                                </div>
+                                <span class="score-text">${task.score.toFixed(1)}%</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    modalBody.innerHTML = content;
+    modal.style.display = 'block';
 }
 
-// Start Application
-init();
+// Initialize the page
+async function initializePage() {
+    loadingScreen.style.display = 'flex';
+    try {
+        const members = await fetchMembers();
+        displayLeader(members);
+        displayHeads(members);
+        displayBestMembers(members);
+        displayCommitteeMembers(members);
+    } catch (error) {
+        console.error('Error initializing page:', error);
+    } finally {
+        loadingScreen.style.display = 'none';
+    }
+}
 
-
+document.addEventListener('DOMContentLoaded', initializePage);

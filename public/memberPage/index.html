@@ -3,35 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Committees Overview</title>
+    <title>Members Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <div class="container">
-        <h1 class="main-title">Committees Overview</h1>
-        
-        <!-- Leader Section -->
-        <div class="leader-section" id="leaderSection"></div>
-        
-        <!-- Heads Slider -->
-        <div class="heads-slider">
-            <div class="swiper">
-                <div class="swiper-wrapper" id="headsSlider"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-        
-        <!-- Committees Grid -->
-        <div class="committees-grid" id="committeesContainer"></div>
+<body class="light-mode">
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
     </div>
 
-    <!-- Dark Mode Toggle Button -->
-    <button id="darkModeToggle">🌙</button>
+    <div class="loading-screen">
+        <div class="spinner"></div>
+    </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <div class="dashboard-container">
+        <!-- Leader Section -->
+        <section id="leader-section" class="glass-effect">
+            <h2><i class="fas fa-crown"></i> Leader</h2>
+            <div id="leader-container">
+                <!-- <div id="leader-card"></div> -->
+            </div>
+        </section>
+
+        <!-- Heads Section -->
+        <section id="heads-section" class="glass-effect">
+            <h2><i class="fas fa-users-gear"></i> Committee Heads</h2>
+            <div class="slider-container">
+                <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <div id="heads-slider"></div>
+                <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Best Members Section -->
+        <section id="best-members-section" class="glass-effect">
+            <h2><i class="fas fa-trophy"></i> Best Members</h2>
+            <div id="best-members-container"></div>
+        </section>
+
+        <!-- Committee Members Section -->
+        <section id="committee-members-section" class="glass-effect">
+            <h2><i class="fas fa-users"></i> Committee Members</h2>
+            <div id="committee-members-container"></div>
+        </section>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content glass-effect">
+            <span class="close"><i class="fas fa-times"></i></span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
