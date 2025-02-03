@@ -144,7 +144,7 @@ function displayMembers() {
     // document.querySelector('#membersSection .container').innerHTML= '<h2>Team Members</h2>';
 
     // membersList.innerHTML = '<h2>Team Members</h2>';
-    
+    membersList.innerHTML='';
     members.forEach(member => {
         const memberCard = document.createElement('div');
         memberCard.className = 'member-card';
@@ -625,7 +625,54 @@ function closePopup() {
 
 
 
+// dark mode ============================\
 
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('theme');
+
+// تطبيق الوضع الحالي
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+} else {
+    // الوضع الافتراضي (حسب تفضيلات النظام)
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+}
+
+// تبديل الوضع
+themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const newTheme = isDark ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // تحديث أيقونة التبديل
+    updateToggleIcon(newTheme);
+});
+
+// تحديث أيقونة التبديل
+function updateToggleIcon(theme) {
+    const lightIcon = document.querySelector('.light-icon');
+    const darkIcon = document.querySelector('.dark-icon');
+    
+    if (theme === 'dark') {
+        lightIcon.style.display = 'none';
+        darkIcon.style.display = 'inline';
+    } else {
+        lightIcon.style.display = 'inline';
+        darkIcon.style.display = 'none';
+    }
+}
+
+
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    const newScheme = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newScheme);
+    localStorage.setItem('theme', newScheme);
+    updateToggleIcon(newScheme);
+});
 
 
 // Initialize
