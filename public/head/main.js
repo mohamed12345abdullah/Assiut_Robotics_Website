@@ -324,6 +324,8 @@ function displayTasks(tasks, memberId) {
                 <p>Rate of the head: ${task.headEvaluation}%</p>
                 <p>Rate of the hr: ${task.hrEvaluation }%</p>
                 <p>Task URL: <a href="${task.taskUrl}" target="_blank">${task.taskUrl}</a></p>
+                <p>Task submissionLink: <a href="${task.submissionLink}" target="_blank">${task.submissionLink}</a></p>
+                <p>Task submissionDate:  ${new Date(task.submissionDate).toLocaleDateString()} </p>
                 
                 <button onclick="editTask('${memberId}', '${task._id}')">Edit</button>
                 <button onclick="deleteTask('${memberId}', '${task._id}')">Delete</button>
