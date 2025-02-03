@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks Management</title>
+    <link rel="stylesheet" href="../head/style.css">
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <div class="backdrop-container fade" id="backdrop"></div>
+    <div class="topnav header" id="myTopnav">
+        <div class="flex-div1">
+            <a href="../index.html" class="active">
+                <img src="../all-images/logo.png" alt="Robotics-logo" class="logo-img">
+            </a>
+            <div class="flex-responsive"></div>
+            <div class="navbar-toggle" id="js-navbar-toggle" aria-label="Toggle navigation" onclick="navButtonClick()">
+                <div class="burger"></div>
+            </div>
+        </div>
+        <div class="flex-div2 fade" id="flex-2">
+            <a href="../profile-page/index.html">Profile</a>
+            <a onclick="togglePages(this.id)" id="tasksSection">Tasks</a>
+            <a onclick="togglePages(this.id)" id="addNewTaskSection">Add New Task</a>
+            <a onclick="togglePages(this.id)" id="memberTasksSection">Members tasks</a>
+        </div>
+    </div>
+    <!-- Tasks Section -->
+    <div id="tasksPage" class="tasksPage">
+        <div class="container">
+            <!-- Task Controls -->
+            <div class="task-controls">
+                <!-- Filtering Section -->
+                <div class="filter-section">
+                    <label>Filter by:</label>
+                    <!-- Filtering by member's Name -->
+                    <select id="membersName">
+                        <option value="">member's Name</option>
+                        <option value="low">member's Name</option>
+                        <option value="medium">member's Name</option>
+                        <option value="high">member's Name</option>
+                    </select>
+
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="todo">To Do</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                    <!-- <input type="text" id="searchInput" placeholder="Search tasks..."> -->
+                </div>
+
+                <!-- Sorting Section -->
+                <div class="sort-section">
+                    <label>Sort by:</label>
+                    <select id="sortSelect">
+                        <option value="">Start Date</option>
+                        <option value="">End Date</option>
+
+                    </select>
+                    <select id="sortOrder">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Task List -->
+            <div class="task-list" id="taskList">
+                
+            </div>
+        </div>
+    </div>
+    <!-- Create Task Section -->
+    <div id="addNewTask" class="addNewTask">
+        <div class="container">
+            <!-- Task Creation Form -->
+            <div class="task-form">
+                <h2>Create New Task</h2>
+                <form id="taskForm">
+                    <input type="text" id="taskTitle" placeholder="Task Title" required>
+                    <textarea id="taskDescription" placeholder="Task Description" required></textarea>
+                    <input type="text" id="additionalURL" placeholder="addition URL">
+                    <input type="number" id="points" placeholder="points" min="1" required>
+                    <input type="number" id="headPercent" placeholder="headPercent (write the number only without %)" min="50" max="100" required>
+                    <label>Start Date:</label>
+                    <input type="date" id="taskStartDate" required>
+                    <label>End Date:</label>
+                    <input type="date" id="taskEndDate" required>
+                    <div class="assign-team-members">
+                        <label for="taskMembers">Assign Team Members:</label>
+                        <div class="members-list">
+                            <div class="member-item">
+                                <input type="checkbox" id=" " value="1">
+                                <label for="member1">John Doe</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member2" value="2">
+                                <label for="member2">Jane Smith</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member3" value="3">
+                                <label for="member3">Mike Johnson</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member4" value="4">
+                                <label for="member4">Sarah Williams</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member5" value="5">
+                                <label for="member5">Emily Davis</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member6" value="6">
+                                <label for="member6">David Brown</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member7" value="7">
+                                <label for="member7">Laura Wilson</label>
+                            </div>
+                            <div class="member-item">
+                                <input type="checkbox" id="member8" value="8">
+                                <label for="member8">Chris Johnson</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button type="submit">Add Task</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Task List -->
+            <!-- <div class="task-list" id="taskList"></div> -->
+        </div>
+    </div>
+    <!-- members Page Section -->
+    <div id="membersPage" class="membersPage">
+        <div class="container">
+            <div class="team-container">
+                <!-- Members List -->
+                <div class="members-list" id="membersList">
+                    <h2>Team Members</h2>
+                    <!-- Members will be dynamically added here -->
+                     
+                </div>
+
+                <!-- Member Details -->
+                <div id="memberDetails">
+                    <h2 id="selectedMemberName">Select a Member</h2>
+                    <div id="memberInfo">
+                        <!-- Member details will be dynamically added here -->
+                    </div>
+                    <div id="taskList">
+                        <!-- Tasks will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Popup Form -->
+<div id="editTaskPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Edit Task</h2>
+        <form id="editTaskForm">
+            <label for="editTitle">Title:</label>
+            <input type="text" id="editTitle" required>
+
+            <label for="editDescription">Description:</label>
+            <textarea id="editDescription" required></textarea>
+            
+            <label for="editPoints">Points:</label>
+            <input type="number" id="editPoints" required></textarea>
+
+            <label for="editHeadPercent">headPercent:</label>
+            <input type="number" id="editHeadPercent" required></textarea>
+
+            <label for="editStartDate">Start Date:</label>
+            <input type="date" id="editStartDate" required>
+
+            <label for="editDeadline">Deadline:</label>
+            <input type="date" id="editDeadline" required>
+
+            <label for="editTaskUrl">Task URL:</label>
+            <input type="url" id="editTaskUrl">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
+    <script src="../head/main.js"></script>
+    <!-- <script src="../main/footerAndheader.js"></script> -->
+</body>
+
+</html>

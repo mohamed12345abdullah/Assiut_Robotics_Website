@@ -1,0 +1,799 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eef0e5;
+    padding: 100px 0 0 0;
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/*Small*/
+@media (min-width:768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+/*meduim*/
+@media (min-width:992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+/*large*/
+@media (min-width:1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
+
+/* Nav Bar */
+.topnav {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0f4ff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.backdrop-container {
+    display: none;
+    position: fixed;
+    z-index: 9000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 8px 8px;
+    text-decoration: none;
+    font-size: 22px;
+    flex: 1 0 100px;
+    margin: 8px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    cursor: pointer;
+}
+
+.topnav a:hover {
+    background-color: #87c4ff;
+    color: white;
+}
+
+.navbar-toggle {
+    display: none;
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.burger,
+.burger::before,
+.burger::after {
+    content: "";
+    display: block;
+    background-color: black;
+    height: 4px;
+    width: 30px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.burger::before {
+    transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    -o-transform: translateY(-10px);
+}
+
+.burger::after {
+    transform: translateY(6px);
+    -webkit-transform: translateY(6px);
+    -moz-transform: translateY(6px);
+    -ms-transform: translateY(6px);
+    -o-transform: translateY(6px);
+}
+
+.change .burger {
+    background-color: transparent !important;
+    transform: translate(0px, 1px);
+}
+
+.change .burger::before {
+    transform: rotate(-45deg) translate(0px, 0px);
+    -webkit-transform: rotate(-45deg) translate(0px, 0px);
+    -moz-transform: rotate(-45deg) translate(0px, 0px);
+    -ms-transform: rotate(-45deg) translate(0px, 0px);
+    -o-transform: rotate(-45deg) translate(0px, 0px);
+}
+
+.change .burger::after {
+    transform: rotate(45deg) translate(-3px, -3px);
+    -webkit-transform: rotate(45deg) translate(-3px, -3px);
+    -moz-transform: rotate(45deg) translate(-3px, -3px);
+    -ms-transform: rotate(45deg) translate(-3px, -3px);
+    -o-transform: rotate(45deg) translate(-3px, -3px);
+}
+
+.topnav a.active {
+    background-color: #e0f4ff;
+    flex-grow: 0;
+    padding: 0;
+    justify-content: flex-start;
+}
+
+.topnav .icon {
+    display: none;
+    border-radius: 10px;
+    flex: 0 0 0;
+    padding: 10px;
+}
+
+.flex-div2 {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.flex-div1 {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    flex: 0 0 200px;
+}
+
+.flex-responsive {
+    display: none;
+}
+
+.logo-img {
+    width: 120px;
+    height: 60px;
+    padding: 0;
+    transition: filter 0.25s ease-in-out;
+}
+
+.logo-img:hover {
+    filter: hue-rotate(45deg);
+    -webkit-filter: hue-rotate(45deg);
+}
+
+.fade {
+    animation-name: fadeAnim;
+    animation-duration: 500ms;
+}
+
+@keyframes fadeAnim {
+    from {
+        opacity: 0.1;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .topnav a.active {
+        float: left;
+        display: flex;
+        flex: 0 0 150px;
+    }
+
+    .navbar-toggle {
+        float: right;
+        display: flex;
+    }
+
+    .flex-div2 {
+        display: none;
+    }
+
+    .flex-div1 {
+        flex-direction: row;
+        flex: 1;
+    }
+
+    .flex-responsive {
+        display: flex;
+        flex-grow: 4;
+    }
+
+    .topnav.responsive {
+        flex-direction: column;
+        transition: all 0.25s ease-in-out;
+    }
+
+    .topnav.responsive .icon {
+        z-index: 100;
+    }
+
+    .topnav.responsive .flex-div2 {
+        display: flex;
+        visibility: visible;
+        width: 100%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-items: stretch;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+    }
+
+    .topnav a {
+        flex: 1 0 45px;
+        width: 75%;
+    }
+}
+
+@media (hover: hover) {
+    .navbar-toggle:hover {
+        background-color: #76bbff;
+        color: white;
+    }
+
+    .navbar-toggle:hover .burger,
+    .navbar-toggle:hover .burger::before,
+    .navbar-toggle:hover .burger::after {
+        background-color: white;
+    }
+}
+
+/* Tasks Section*/
+.tasksPage {
+    /* display: none; */
+}
+
+.task-card {
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    border-left: 5px solid;
+    border-color: #2daee2;
+
+}
+
+.task-card h2 {
+    font-weight: 500;
+    color: rgb(34, 30, 30);
+}
+
+.task-card h3 {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.task-card .task-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.task-card p {
+    margin-bottom: 7px;
+}
+
+button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #e0f4ff;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+button:hover {
+    background-color: #f0f0f0;
+}
+
+
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+.task-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section,
+.sort-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width:991px) {
+    .task-controls {
+
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.task-list {
+    display: grid;
+    gap: 10px;
+}
+
+.task-details {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.74);
+}
+
+.task-header {
+    font-size: 15px;
+}
+
+.task-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.status-todo {
+    color: blue;
+}
+
+.status-in-progress {
+    color: orange;
+}
+
+.status-completed {
+    color: green;
+}
+
+/*Add New Task Section */
+.addNewTask {
+    display: none;
+}
+
+.addNewTask .task-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.task-form h2 {
+    margin-bottom: 16px;
+    font-size: 25px;
+    font-weight: 600;
+    color: #2daee2;
+    text-align: center;
+}
+
+.task-form label {
+    font-size: 18px;
+}
+
+.task-form input,
+.task-form select,
+.task-form textarea {
+    width: 96%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.assign-team-members {
+    margin-bottom: 20px;
+}
+
+.assign-team-members label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.assign-team-members .member-item label {
+    font-size: 15px;
+}
+
+.addNewTask .members-list {
+    max-height: 125px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.addNewTask .member-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.addNewTask .member-item input {
+    margin-right: 10px;
+    width: min-content;
+}
+
+.addNewTask .task-form button {
+    font-size: 20px;
+    width: 165px;
+}
+
+.addNewTask .task-form .button {
+    text-align: center;
+}
+
+/*Members Page*/
+.membersPage {
+    display: none;
+}
+
+.membersPage .team-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.membersPage .members-list {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.membersPage .member-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.membersPage .member-card:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-3px);
+}
+
+.membersPage .member-details {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.membersPage .task-form {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.membersPage.task-form input,
+.membersPage .task-form select,
+.membersPage .task-form textarea {
+
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.membersPage .task-list {
+    margin-top: 20px;
+}
+
+.membersPage .task-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Member Details Section */
+#memberDetails {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#memberDetails h2 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #2daee2;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#memberInfo {
+    margin-bottom: 20px;
+}
+
+#memberInfo p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Task Cards in Member Details */
+#taskList {
+    display: grid;
+    gap: 15px;
+}
+
+.task-card {
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-left: 5px solid #2daee2;
+    transition: all 0.3s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-card h3 {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.task-card p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.task-card a {
+    color: #2daee2;
+    text-decoration: none;
+}
+
+.task-card a:hover {
+    text-decoration: underline;
+}
+
+.task-card button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #e0f4ff;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: all 0.3s ease;
+}
+
+.task-card button:hover {
+    background-color: #87c4ff;
+    color: white;
+}
+
+/* Edit, Delete, and Rate Buttons */
+.task-card .edit-btn {
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+}
+
+.task-card .edit-btn:hover {
+    background-color: #e6b800;
+}
+
+.task-card .delete-btn {
+    background-color: #ff4d4d;
+    border-color: #ff4d4d;
+    color: white;
+}
+
+.task-card .delete-btn:hover {
+    background-color: #cc0000;
+}
+
+.task-card .rate-btn {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: white;
+}
+
+.task-card .rate-btn:hover {
+    background-color: #388e3c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #memberDetails {
+        padding: 15px;
+    }
+
+    .task-card {
+        padding: 10px;
+    }
+
+    .task-card button {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+/* /////////////////////////////////////////////////// */
+/* Popup Styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    overflow: scroll;
+    height: 60%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90% !important;
+}
+
+.popup-content h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #2daee2;
+    text-align: center;
+}
+
+.popup-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+.popup-content input,
+.popup-content textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.popup-content textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.popup-content button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2daee2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background-color: #1e8bb8;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-btn:hover {
+    color: #000;
+}

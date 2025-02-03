@@ -1,353 +1,384 @@
+// DOM Elements
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+const sections = document.querySelectorAll('.section');
+const memberFilter = document.getElementById('memberFilter');
+const statusFilter = document.getElementById('statusFilter');
+const startDateFilter = document.getElementById('startDate');
+const endDateFilter = document.getElementById('endDate');
+const submittedTasksList = document.getElementById('submittedTasks');
+const pendingTasksList = document.getElementById('pendingTasks');
+const membersGrid = document.getElementById('membersGrid');
+const membersList = document.getElementById('membersList');
 
-var addNewTaskSection = document.getElementById("addNewTask")
-var tasksSection = document.getElementById("tasksPage")
-var membersSection=document.getElementById("membersPage")
-const adminData = JSON.parse(localStorage.getItem('data'));
-const committee = adminData.committee;
-console.log("admin data:",adminData);
+// State
+let members = [];
+let tasks = [];
+const token = localStorage.getItem('token');
 
-const form = document.getElementById('taskForm')
-const token = window.localStorage.getItem('token');
-function togglePages(id) {
-    if (id == "tasksSection") {
-        tasksSection.style.display = "block"
-        addNewTaskSection.style.display = "none"
-        membersSection.style.display = "none"
-    }
-    else if (id == "addNewTaskSection") {
-        tasksSection.style.display = "none"
-        addNewTaskSection.style.display = "block"
-        membersSection.style.display = "none"
-    }
-    else if (id == "memberTasksSection") {
-        tasksSection.style.display = "none"
-        addNewTaskSection.style.display = "none"
-        membersSection.style.display = "block"
-    }
-}
-document.getElementById('taskForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const taskTitle = document.getElementById('taskTitle').value;
-    const taskDescription = document.getElementById('taskDescription').value;
-    const additionalURL = document.getElementById('additionalURL').value;
-    const taskStartDate = document.getElementById('taskStartDate').value;
-    const taskEndDate = document.getElementById('taskEndDate').value;
-    const assignedMembers = [];
-    const checkboxes = document.querySelectorAll('.members-list input[type="checkbox"]:checked');
-    checkboxes.forEach(checkbox => {
-        assignedMembers.push(checkbox.value);
-    });
-
-    const taskData = {
-        title: taskTitle,
-        description: taskDescription,
-        additionalURL: additionalURL,
-        startDate: taskStartDate,
-        endDate: taskEndDate,
-        assignedMembers: assignedMembers
-    };
-
-    const jsonData = JSON.stringify(taskData);
-    console.log(jsonData);
+// Navigation
+navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
 });
 
-//////////////////////////
-//                  document.getElementById('taskForm').addEventListener('submit', function (event) {
-//     event.preventDefault();
-
-//     const taskTitle = document.getElementById('taskTitle').value;
-//     const taskDescription = document.getElementById('taskDescription').value;
-//     const additionalURL = document.getElementById('additionalURL').value;
-//     const taskStartDate = document.getElementById('taskStartDate').value;
-//     const taskEndDate = document.getElementById('taskEndDate').value;
-//     const assignedMembers = [];
-//     const checkboxes = document.querySelectorAll('.members-list input[type="checkbox"]:checked');
-//     checkboxes.forEach(checkbox => {
-//         assignedMembers.push(checkbox.value);
-//     });
-
-//     const taskData = {
-//         title: taskTitle,
-//         description: taskDescription,
-//         startDate: taskStartDate,
-//         deadline: taskEndDate,
-//         taskUrl: additionalURL
-//     };
-//     assignedMembers.forEach(memberId => {
-//     fetch(`https://assiut-robotics-zeta.vercel.app/members/${taskEndDate}/addTask`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}` // Replace with your actual token
-//             },
-//             body: JSON.stringify(taskData)
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log('Success:', data);
-//             alert('Task added successfully!');
-//         })
-//         .catch((error) => {
-//             console.error('Error:', error);
-//             alert('Error adding task');
-//         });
-//     })
-    
-//                  });
-//////////////////////////
-// function editTask(taskId, updatedTaskData) {
-//     fetch(`http://localhost:3000/members/6796d854abce3e78f602e9b5/editTask/${taskId}`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Replace with your actual token
-//         },
-//         body: JSON.stringify(updatedTaskData)
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Success:', data);
-//         alert('Task updated successfully!');
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error);
-//         alert('Error updating task');
-//     });
-// }
-
-// // Example usage:
-// // editTask('679b3afbce8cb1af75e779ba', {
-// //     title: "task1 edited",
-// //     description: "description task",
-// //     startDate: "2025-01-30T07:44:46.344Z",
-// //     deadline: "2025-02-30T07:44:46.344Z",
-// //     taskUrl: "task url"
-// // });
-// ///////////////////////////////////////////////////////
-// function deleteTask(taskId) {
-//     fetch(`http://localhost:3000/members/6796d854abce3e78f602e9b5/deleteTask/${taskId}`, {
-//         method: 'DELETE',
-//         headers: {
-//             'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Replace with your actual token
-//         }
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Success:', data);
-//         alert('Task deleted successfully!');
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error);
-//         alert('Error deleting task');
-//     });
-// }
-
-// // Example usage:
-// // deleteTask('679b3d8c0fc5244d8b5b19bb');
-// ///////////////////////////////////////////
-// function fetchTasks() {
-//     fetch('http://localhost:3000/members/6796d854abce3e78f602e9b5/tasks', {
-//         method: 'GET',
-//         headers: {
-//             'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Replace with your actual token
-//         }
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Tasks:', data);
-//         // Update the DOM to display the tasks
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error);
-//     });
-// }
-
-// // Example usage:
-// // fetchTasks();
-// //////////////////////////////////
-let membersData = []; // Store all members and their tasks here
-
-document.addEventListener('DOMContentLoaded', function () {
-    fetchMembers();
-    displayTasks(adminData.tasks, adminData._id);
-});
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const taskTitle = document.getElementById('taskTitle').value;
-    const taskDescription = document.getElementById('taskDescription').value;
-    const url = document.getElementById('additionalURL').value;
-    const points = document.getElementById('points').value;
-    const headPercent = document.getElementById('headPercent').value;
-    const additionalURL = document.getElementById('additionalURL').value;
-    const taskStartDate = document.getElementById('taskStartDate').value;
-    const taskEndDate = document.getElementById('taskEndDate').value;
-    const assignedMembers = [];
-    console.log(headPercent);
-    
-    const checkboxes = document.querySelectorAll('.members-list input[type="checkbox"]:checked');
-    checkboxes.forEach(checkbox => {
-        assignedMembers.push(checkbox.value);
-    });
-    console.log(assignedMembers);
-    
-    let body = {
-        title: taskTitle,
-        description: taskDescription,
-        taskUrl: url,
-        points: points,
-        additionalURL: additionalURL,
-        headPercent: headPercent,
-        startDate: taskStartDate,
-        deadline: taskEndDate,
-        assignedMembers: assignedMembers
-    }
-    addTask(body);
-})
-
-function addTask(form) {
-    
-    form.assignedMembers.forEach(memberId => {
-        fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/addTask`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Replace with your actual token
-            },
-            body: JSON.stringify(form)        
-        }).then(response => response.json()).then(data => {
-            alert(data.message);
-            console.log(data);
-        })
-    })
-    
-}
-function displayMemberCheckboxes(members) {
-    const membersList = document.querySelectorAll('.members-list')[0];
-    console.log(membersList);
-    
-    membersList.innerHTML = ''; // Clear existing content
-    console.log(members);
-    members.forEach(member => {
-        console.log(member);
+navMenu.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+        e.preventDefault();
+        const sectionId = e.target.dataset.section + 'Section';
         
-        const checkboxContainer = document.createElement('div');
-        checkboxContainer.className = 'member-checkbox';
+        // Update active state
+        navMenu.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+        e.target.classList.add('active');
+        
+        // Show selected section
+        sections.forEach(section => {
+            section.classList.add('hidden');
+            if (section.id === sectionId) {
+                section.classList.remove('hidden');
+            }
+        });
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `member-${member._id}`;
-        checkbox.name = 'members';
-        checkbox.value = member._id; // Set the member's ID as the value
+        // If members section is selected, refresh members list
+        if (sectionId === 'membersSection') {
+            displayMembers();
+        }
+    }
+});
 
-        const label = document.createElement('label');
-        label.htmlFor = `member-${member._id}`;
-        label.textContent = member.name; // Display the member's name
-
-        checkboxContainer.appendChild(checkbox);
-        checkboxContainer.appendChild(label);
-        membersList.appendChild(checkboxContainer);
-    });
+// Fetch and display members
+async function fetchMembers() {
+    try {
+        const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/get/web');
+        const data = await response.json();
+        members = data.date;
+        console.log(members);
+        
+        // Populate member filter
+        memberFilter.innerHTML = '<option value="">All Members</option>';
+        members.forEach(member => {
+            memberFilter.innerHTML += `
+                <option value="${member._id}">${member.name}</option>
+            `;
+        });
+        
+        // Populate members grid for task assignment
+        membersGrid.innerHTML = members.map(member => `
+            <div class="member-checkbox">
+                <input type="checkbox" id="member-${member._id}" value="${member._id}">
+                <label for="member-${member._id}">${member.name}</label>
+            </div>
+        `).join('');
+        
+        // Initial task display
+        displayAllTasks();
+        // Display members list
+        displayMembers();
+    } catch (error) {
+        console.error('Error fetching members:', error);
+    }
 }
-function fetchMembers() {
-    fetch(`https://assiut-robotics-zeta.vercel.app/members/get/web`)
-        .then(response => response.json())
-        .then(data => {
-            membersData = data.date; // Store the fetched data
-            displayMembers(membersData); // Display the list of members
-            displayMemberCheckboxes(membersData);
-        })
-        .catch(error => console.error('Error fetching members:', error));
-}
-function displayMembers(members) {
-    const membersList = document.getElementById('membersList');
-    membersList.innerHTML = ''; // Clear existing members
 
+// Display members
+function displayMembers() {
+    membersList.innerHTML = '<h2>Team Members</h2>';
     members.forEach(member => {
         const memberCard = document.createElement('div');
         memberCard.className = 'member-card';
         memberCard.innerHTML = `
-            <h3>${member.name}</h3>
-            <p>${member.committee}</p>
-            <small>${member.email}</small>
-            <button onclick="viewMemberDetails('${member._id}')">View Details</button>
+            <div class="member-info">
+                <img src="${member.avatar}" alt="${member.name}" class="member-avatar">
+                <div class="member-details">
+                    <h3>${member.name}</h3>
+                    <p class="member-role">${member.role}</p>
+                    <p class="member-email">${member.email}</p>
+                    <p class="member-committee">${member.committee}</p>
+                </div>
+            </div>
+            <div class="member-tasks">
+                <h4>Tasks (${member.tasks.length})</h4>
+                <div class="task-summary">
+                    <span>Submitted: ${member.tasks.filter(t => t.submissionLink && t.submissionLink !== '*').length}</span>
+                    <span>Pending: ${member.tasks.filter(t => !t.submissionLink || t.submissionLink === '*').length}</span>
+                </div>
+            </div>
         `;
         membersList.appendChild(memberCard);
     });
 }
-function viewMemberDetails(memberId) {
-    const member = membersData.find(m => m._id === memberId); // Find the member in the stored data
-    if (member) {
-        displayMemberDetails(member); // Display member details
-        displayTasks(member.tasks, memberId); // Display tasks for the member
+
+// Display tasks
+function displayAllTasks() {
+    submittedTasksList.innerHTML = '';
+    pendingTasksList.innerHTML = '';
+    
+    members.forEach(member => {
+        member.tasks.forEach(task => {
+            const taskElement = createTaskElement(task, member);
+            if (task.submissionLink && task.submissionLink !== '*') {
+                submittedTasksList.appendChild(taskElement);
+            } else {
+                pendingTasksList.appendChild(taskElement);
+            }
+        });
+    });
+}
+
+// Create task element
+function createTaskElement(task, member) {
+    const div = document.createElement('div');
+    div.className = `task-card ${task.submissionLink && task.submissionLink !== '*' ? 'submitted' : 'pending'}`;
+    
+    div.innerHTML = `
+        <div class="task-header" onclick="toggleTaskDetails(this)">
+            <h3>${task.title}</h3>
+            <span>${member.name}</span>
+        </div>
+        <div class="task-content">
+            <div class="task-meta">
+                <span>Points: ${task.points}</span>
+                <span>Due: ${new Date(task.deadline).toLocaleDateString()}</span>
+            </div>
+            <p>${task.description}</p>
+            <p>Head Percent: ${task.headPercent}%</p>
+            <p>HR Percent: ${100 - task.headPercent}%</p>
+            ${task.submissionLink && task.submissionLink !== '*' ? `
+                <p>Submitted: ${new Date(task.submissionDate).toLocaleDateString()}</p>
+                <p><a href="${task.submissionLink}" target="_blank">View Submission</a></p>
+            ` : ''}
+            <div class="task-actions">
+                <button onclick="editTask('${member._id}', '${task._id}')" 
+                    style="background-color: var(--primary-color); color: white;">Edit</button>
+                <button onclick="deleteTask('${member._id}', '${task._id}')"
+                    style="background-color: var(--danger-color); color: white;">Delete</button>
+                <button onclick="rateTask('${member._id}', '${task._id}')"
+                    style="background-color: var(--success-color); color: white;">Rate</button>
+            </div>
+        </div>
+    `;
+    
+    return div;
+}
+
+// Toggle task details
+function toggleTaskDetails(header) {
+    const content = header.nextElementSibling;
+    content.classList.toggle('active');
+}
+
+// Filter tasks
+function filterTasks() {
+    const memberId = memberFilter.value;
+    const status = statusFilter.value;
+    const startDate = startDateFilter.value;
+    const endDate = endDateFilter.value;
+    
+    submittedTasksList.innerHTML = '';
+    pendingTasksList.innerHTML = '';
+    
+    members.forEach(member => {
+        if (!memberId || member._id === memberId) {
+            member.tasks.forEach(task => {
+                const taskDate = new Date(task.deadline);
+                const isInDateRange = (!startDate || taskDate >= new Date(startDate)) &&
+                                    (!endDate || taskDate <= new Date(endDate));
+                const isSubmitted = task.submissionLink && task.submissionLink !== '*';
+                
+                if (isInDateRange && 
+                    (!status || 
+                    (status === 'submitted' && isSubmitted) || 
+                    (status === 'pending' && !isSubmitted))) {
+                    const taskElement = createTaskElement(task, member);
+                    if (isSubmitted) {
+                        submittedTasksList.appendChild(taskElement);
+                    } else {
+                        pendingTasksList.appendChild(taskElement);
+                    }
+                }
+            });
+        }
+    });
+}
+
+// Event listeners for filters
+memberFilter.addEventListener('change', filterTasks);
+statusFilter.addEventListener('change', filterTasks);
+startDateFilter.addEventListener('change', filterTasks);
+endDateFilter.addEventListener('change', filterTasks);
+
+// Add Task
+document.getElementById('taskForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+        title: document.getElementById('taskTitle').value,
+        description: document.getElementById('taskDescription').value,
+        taskUrl: document.getElementById('taskUrl').value,
+        points: parseInt(document.getElementById('points').value),
+        headPercent: parseInt(document.getElementById('headPercent').value),
+        startDate: document.getElementById('taskStartDate').value,
+        deadline: document.getElementById('taskEndDate').value
+    };
+    
+    const assignedMembers = Array.from(document.querySelectorAll('.member-checkbox input:checked'))
+        .map(checkbox => checkbox.value);
+
+    if (assignedMembers.length === 0) {
+        alert('Please select at least one member');
+        return;
+    }
+
+    try {
+        const promises = assignedMembers.map(memberId => 
+            fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/addTask`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(formData)
+            }).then(res => res.json())
+        );
+
+        const results = await Promise.all(promises);
+        const failures = results.filter(result => result.status === 'fail');
+
+        if (failures.length > 0) {
+            alert(`Failed to add task to ${failures.length} members. ${failures[0].message}`);
+        } else {
+            alert('Task(s) added successfully!');
+            e.target.reset();
+            await fetchMembers();
+        }
+    } catch (error) {
+        alert('Error adding task: ' + error.message);
+    }
+});
+
+// Edit Task
+// async function editTask(memberId, taskId) {
+//     const member = members.find(m => m._id === memberId);
+//     const task = member?.tasks.find(t => t._id === taskId);
+    
+//     if (!task) return;
+
+//     const newTitle = prompt('Enter new title:', task.title);
+//     const newDescription = prompt('Enter new description:', task.description);
+//     const newPoints = prompt('Enter new points:', task.points);
+//     const newHeadPercent = prompt('Enter new head percent (50-100):', task.headPercent);
+//     const newStartDate = prompt('Enter new start date (YYYY-MM-DD):', task.startDate.split('T')[0]);
+//     const newDeadline = prompt('Enter new deadline (YYYY-MM-DD):', task.deadline.split('T')[0]);
+//     const newTaskUrl = prompt('Enter new task URL:', task.taskUrl);
+
+//     if (!newTitle || !newDescription || !newPoints || !newHeadPercent || !newStartDate || !newDeadline || !newTaskUrl) {
+//         alert('All fields are required');
+//         return;
+//     }
+
+//     const updatedTask = {
+//         title: newTitle,
+//         description: newDescription,
+//         points: parseInt(newPoints),
+//         headPercent: parseInt(newHeadPercent),
+//         startDate: `${newStartDate}T00:00:00.000Z`,
+//         deadline: `${newDeadline}T00:00:00.000Z`,
+//         taskUrl: newTaskUrl
+//     };
+
+//     try {
+//         const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/editTask/${taskId}`, {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`
+//             },
+//             body: JSON.stringify(updatedTask)
+//         });
+
+//         const data = await response.json();
+        
+//         if (data.status === 'fail') {
+//             throw new Error(data.message);
+//         }
+
+//         alert('Task updated successfully!');
+//         await fetchMembers();
+//     } catch (error) {
+//         alert('Error updating task: ' + error.message);
+//     }
+// }
+
+// Delete Task
+async function deleteTask(memberId, taskId) {
+    if (!confirm('Are you sure you want to delete this task?')) return;
+
+    try {
+        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/deleteTask/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        
+        if (data.status === 'fail') {
+            throw new Error(data.message);
+        }
+
+        alert('Task deleted successfully!');
+        await fetchMembers();
+    } catch (error) {
+        alert('Error deleting task: ' + error.message);
     }
 }
 
-function displayMemberDetails(member) {
-    const memberInfo = document.getElementById('memberInfo');
-    memberInfo.innerHTML = `
-        <p>Name: ${member.name}</p>
-        <p>Email: ${member.email}</p>
-        <p>Committee: ${member.committee}</p>
-        <p>Role: ${member.role}</p>
-    `;
-    document.getElementById('selectedMemberName').textContent = member.name;
-}
+// Rate Task
+async function rateTask(memberId, taskId) {
+    const isHead = prompt('Are you the head? Click OK for head, Cancel for HR');
+    const rating = prompt('Enter rating (1-100):');
 
-function displayTasks(tasks, memberId) {
-    const taskList = document.querySelectorAll('#taskList');
-    console.log(taskList);
-    taskList.forEach(list => {
-        list.innerHTML = ''; // Clear existing tasks
+    if (!rating || isNaN(rating) || rating < 1 || rating > 100) {
+        alert('Please enter a valid rating between 1 and 100');
+        return;
+    }
 
-        tasks.forEach(task => {
-           
-            const taskCard = document.createElement('div');
-            taskCard.className = 'task-card';
-            taskCard.innerHTML = `
-             <h2 id="submitted" style = "display : none"><a href ="${task.submissionLink}">Submmitted at ${new Date (task.submissionDate).toLocaleString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            })} </a> </h2>
-                <h3>${task.title}</h3>
-               
-                <p>${task.description}</p>
-                <p>Points : ${task.points}</p>
-                <p> head percent is ${task.headPercent}%</p>
-                <p> hr percent is ${100- task.headPercent}%</p>
-                <p>Start Date: ${new Date(task.startDate).toLocaleDateString()}</p>
-                <p>Deadline: ${new Date(task.deadline).toLocaleDateString()}</p>
-                <p>Rate of the head: ${task.headEvaluation}%</p>
-                <p>Rate of the hr: ${task.hrEvaluation }%</p>
-                <p>Task URL: <a href="${task.taskUrl}" target="_blank">${task.taskUrl}</a></p>
-                <p>Task submissionLink: <a href="${task.submissionLink}" target="_blank">${task.submissionLink}</a></p>
-                <p>Task submissionDate:  ${new Date(task.submissionDate).toLocaleDateString()} </p>
-                
-                <button onclick="editTask('${memberId}', '${task._id}')">Edit</button>
-                <button onclick="deleteTask('${memberId}', '${task._id}')">Delete</button>
-                <button onclick="rateTask('${memberId}', '${task._id}')">Rate</button>
-            `;
-            if(task.submissionLink != '*'){
-                const submitted = taskCard.querySelector('#submitted');
-                submitted.style.display = 'block';
-            }
-            console.log(list);
-            
-            list.appendChild(taskCard);
+    const ratingData = {
+        headEvaluation: isHead ? parseInt(rating) : -1,
+        hrEvaluation: !isHead ? parseInt(rating) : -1
+    };
 
+    try {
+        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/members/${memberId}/rateTask/${taskId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(ratingData)
         });
-    })
-    
+
+        const data = await response.json();
+        
+        if (data.status === 'fail') {
+            throw new Error(data.message);
+        }
+
+        alert('Task rated successfully!');
+        await fetchMembers();
+    } catch (error) {
+        alert('Error rating task: ' + error.message);
+    }
 }
 
-// Function to update the task (you can implement this)
+
+
+
+////////////////////////////////////////start here /////////////////////////
 
 function editTask(memberId, taskId) {
-    const member = membersData.find(m => m._id === memberId);
+    console.log(members);
+    
+    const member = members.find(m => m._id === memberId);
     if (member) {
         const task = member.tasks.find(t => t._id === taskId);
         console.log(task);
@@ -358,7 +389,7 @@ function editTask(memberId, taskId) {
             }
         }
 }
-// Function to open the popup with task details
+
 function openEditTaskPopup(task, memberId, taskId, member) {
     const popup = document.getElementById('editTaskPopup');
     const form = document.getElementById('editTaskForm');
@@ -413,6 +444,7 @@ function openEditTaskPopup(task, memberId, taskId, member) {
 
     
 }
+
 // Function to update the task
 function editrequest(memberId,taskId,member){
     fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/editTask/${taskId}`, {
@@ -425,8 +457,9 @@ function editrequest(memberId,taskId,member){
     }).then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        displayTasks(member.tasks, memberId); // Refresh the task list
+        // displayTasks(member.tasks, memberId); // Refresh the task list
         alert('Task updated successfully!');
+        fetchMembers()
     }).catch(error => {
         console.error('Error updating task:', error);
         alert('Error updating task');
@@ -439,83 +472,18 @@ function closePopup() {
 }
 
 
-function deleteTask(memberId, taskId) {
-    if (confirm('Are you sure you want to delete this task?')) {
-        const member = membersData.find(m => m._id === memberId);
-        if (member) {
-            member.tasks = member.tasks.filter(t => t._id !== taskId); // Remove the task
-            
-            fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/deleteTask/${taskId}`, {
-                method: 'DELETE',
-                headers: {
-                    authorization: `Bearer ${token}`
-                }
-            }).then(response => response.json()).then(data => {
-                console.log('Success:', data);
-                if(data.status != 'fail')
-                {
-                    displayTasks(member.tasks, memberId); // Refresh the task list
-                    alert('Task deleted successfully!');                 
-                }
-                else alert(data.message);
-            }).catch(error => {
-                console.error('Error deleting task:', error);
-                alert('Error deleting task');
-            })
-        }
-    }
-}
-function rateTask(memberId, taskId) {
-    const rater = prompt('Enter your 1 if your are the head 0 if you are the hr: ');
-    const rating = Number(prompt('Enter a rating for this task (1-100):'));
-    if (rating && rating >= 1 && rating <= 100) {
-        const member = membersData.find(m => m._id === memberId);
-        let key;
-        let body = {
-            hrEvaluation: -1,
-            headEvaluation: -1
-        }
-        if (member) {
-            const task = member.tasks.find(t => t._id === taskId);
-            if (task) {
-                if(rater == 1)
-                {
-                    task.headEvaluation = rating; // Update the task's rating
-                    body.headEvaluation = rating;
-                }
-                else if(rater == 0){
-                    task.hrEvaluation = rating;
-                    body.hrEvaluation = rating;
-                } 
-                console.log(body);
-                
-                fetch(`https://assiut-robotics-zeta.vercel.app/members/members/${memberId}/rateTask/${taskId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(body)
-                }).then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    if(data.status != 'fail')
-                    {
-                        displayTasks(member.tasks, memberId); // Refresh the task list
-                        alert(data.message);
 
-                    }
-                    else
-                        alert(data.message); 
-                }).catch(error => {
-                    console.error('Error rating task:', error.message);
-                    alert('Error rating task');
-                })
-                
-            }
-        }
-    } else {
-        alert('Please enter a valid rating between 1 and 10.');
-    }
-    
-}
+
+
+
+
+
+
+
+
+
+
+
+
+// Initialize
+fetchMembers();
