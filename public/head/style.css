@@ -463,6 +463,8 @@ ul, ol {
     flex-direction: column;
     gap: 1.2rem;
     margin-top: 1.5rem;
+    height: 500px;
+    overflow-y:scroll;
 }
 
 #editTaskForm label {
@@ -495,6 +497,9 @@ ul, ol {
     width: 120px;
 }
 
+#editDescription{
+    min-height: 50px;
+}
 #editTaskForm button[type="submit"] {
     background-color: var(--primary-color);
     color: white;
