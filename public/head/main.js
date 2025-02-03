@@ -11,10 +11,38 @@ const pendingTasksList = document.getElementById('pendingTasks');
 const membersGrid = document.getElementById('membersGrid');
 const membersList = document.getElementById('membersList');
 
+
+
+const adminData = JSON.parse(localStorage.getItem('data'));
+const committee = adminData.committee;
+console.log("admin data:",adminData);
+
+const form = document.getElementById('taskForm')
+const token = window.localStorage.getItem('token');
+function togglePages(id) {
+    if (id == "tasksSection") {
+        tasksSection.style.display = "block"
+        addNewTaskSection.style.display = "none"
+        membersSection.style.display = "none"
+    }
+    else if (id == "addNewTaskSection") {
+        tasksSection.style.display = "none"
+        addNewTaskSection.style.display = "block"
+        membersSection.style.display = "none"
+    }
+    else if (id == "memberTasksSection") {
+        tasksSection.style.display = "none"
+        addNewTaskSection.style.display = "none"
+        membersSection.style.display = "block"
+    }
+}
+
+
+
 // State
 let members = [];
 let tasks = [];
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
 
 // Navigation
 navToggle.addEventListener('click', () => {
