@@ -27,6 +27,31 @@ const modal = document.getElementById('modal');
 const modalBody = document.getElementById('modal-body');
 const closeBtn = document.getElementsByClassName('close')[0];
 
+function isPreviousMonth(dateString) {
+    // تحويل الـ string إلى كائن Date
+    const inputDate = new Date(dateString);
+    const today = new Date();
+
+    // الحصول على الشهر والسنة الحالية
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+
+    // حساب الشهر والسنة السابقة
+    let previousMonth = currentMonth - 1;
+    let previousYear = currentYear;
+
+    if (previousMonth < 0) { // لو الشهر الحالي هو يناير
+        previousMonth = 11; // ديسمبر
+        previousYear--; // السنة السابقة
+    }
+
+    // مقارنة سنة وشهر التاريخ المُدخل مع الشهر السابق
+    return (inputDate.getFullYear() === previousYear && inputDate.getMonth() === previousMonth);
+}
+
+
+
+
 // Close modal when clicking the X
 closeBtn.onclick = () => modal.style.display = 'none';
 
@@ -102,28 +127,31 @@ function displayHeads(members) {
 // Calculate scores for different task types
 function calculateTaskScores(member) {
     let regularTasks = {
-        total: 0,
+        totalScore: 0,
+        totalPoints:0,
         scores: []
     };
     let trackTasks = {
-        total: 0,
+        totalScore: 0,
+        totalPoints:0,
         scores: []
     };
 
     // Regular tasks
     if (member.tasks) {
         member.tasks.forEach(task => {
-            if (task.headEvaluation >= 0 && task.hrEvaluation >= 0) {
-                const score = (task.headEvaluation + task.hrEvaluation) / 2 * 100;
+            if (task.headEvaluation >= 0 && task.hrEvaluation >= 0 && isPreviousMonth(task.submittedAt)) {
+                const score = (task.headEvaluation + task.hrEvaluation) / task.points * 100;
                 regularTasks.scores.push({
                     title: task.title,
                     score: score
                 });
-                regularTasks.total += score;
+                regularTasks.totalScore += task.headEvaluation+task.hrEvaluation;
+                regularTasks.totalPoints += task.points;
             }
         });
         if (regularTasks.scores.length > 0) {
-            regularTasks.average = regularTasks.total / regularTasks.scores.length;
+            regularTasks.percent = regularTasks.totalScore / regularTasks.totalPoints;
         }
     }
 
@@ -133,32 +161,43 @@ function calculateTaskScores(member) {
             track.courses.forEach(course => {
                 if (course.submittedTasks) {
                     course.submittedTasks.forEach(task => {
-                        if (task.rate) {
-                            const score = parseFloat(task.rate) * 10; // Convert to percentage
+                        console.log("previous month ",isPreviousMonth(task.submittedAt));
+                        
+                        if (task.rate&& isPreviousMonth(task.submittedAt)) {
+                            const score = parseFloat(task.rate) ; // Convert to percentage
+                            console.log(course);
+                            
                             trackTasks.scores.push({
-                                title: `Track Task ${trackTasks.scores.length + 1}`,
+                                title: `Course :  ${course.course.name}  /  task ${task.task.name}`,
                                 score: score
                             });
-                            trackTasks.total += score;
+                            trackTasks.totalScore += score;
+                            trackTasks.totalPoints += 10;
                         }
                     });
                 }
             });
         });
         if (trackTasks.scores.length > 0) {
-            trackTasks.average = trackTasks.total / trackTasks.scores.length;
+            trackTasks.percent = trackTasks.totalScore / (trackTasks.totalPoints);
         }
     }
 
     // Calculate overall average
-    const totalScores = regularTasks.scores.length + trackTasks.scores.length;
-    const overallAverage = totalScores > 0 ? 
-        (regularTasks.total + trackTasks.total) / totalScores : 0;
+    // console.log(regularTasks.totalScore);
+    
+    const totalScores = regularTasks.totalScore + trackTasks.totalScore;
+    const totalPoints = regularTasks.totalPoints + trackTasks.totalPoints;
+    // console.log("total scores:",totalScores);
+    // console.log("total points:",totalPoints);
+    
+    const overallPercent = totalScores > 0 ? 
+        (totalScores) / totalPoints *100 : 0;
 
     return {
         regularTasks,
         trackTasks,
-        overallAverage
+        overallPercent
     };
 }
 
@@ -173,7 +212,7 @@ function displayBestMembers(members) {
             const bestMember = committeeMembers.reduce((prev, current) => {
                 const prevScores = calculateTaskScores(prev);
                 const currentScores = calculateTaskScores(current);
-                return prevScores.overallAverage > currentScores.overallAverage ? prev : current;
+                return prevScores.overallPercent > currentScores.overallPercent ? prev : current;
             });
 
             const scores = calculateTaskScores(bestMember);
@@ -184,9 +223,9 @@ function displayBestMembers(members) {
                 <h3>${committee}</h3>
                 ${createMemberCard(bestMember)}
                 <div class="progress-bar">
-                    <div class="progress" style="width: ${scores.overallAverage}%"></div>
+                    <div class="progress" style="width: ${scores.overallPercent}%"></div>
                 </div>
-                <p class="score-text">${scores.overallAverage.toFixed(1)}%</p>
+                <p class="score-text">${scores.overallPercent.toFixed(1)}%</p>
             `;
             memberCard.onclick = () => showMemberDetails(bestMember, true);
             bestMembersContainer.appendChild(memberCard);
@@ -237,7 +276,7 @@ function createMemberCard(member) {
 }
 
 // Show member details in modal
-function showMemberDetails(member, showScore = false) {
+function showMemberDetails(member, showScore = true) {
     let content = `
         <div class="modal-member-info">
             <img src="${member.avatar}" alt="${member.name}" class="member-avatar">
@@ -249,13 +288,15 @@ function showMemberDetails(member, showScore = false) {
 
     if (showScore) {
         const scores = calculateTaskScores(member);
+        // console.log("scores",scores);
+        
         content += `
             <div class="scores-section">
                 <h3>Overall Performance</h3>
                 <div class="progress-bar">
-                    <div class="progress" style="width: ${scores.overallAverage}%"></div>
+                    <div class="progress" style="width: ${scores.overallPercent}%"></div>
                 </div>
-                <p class="score-text">Overall Score: ${scores.overallAverage.toFixed(1)}%</p>
+                <p class="score-text">Overall Score: ${scores.overallPercent}%</p>
 
                 ${scores.regularTasks.scores.length > 0 ? `
                     <h3>Regular Tasks</h3>
@@ -279,9 +320,9 @@ function showMemberDetails(member, showScore = false) {
                             <div class="task-item">
                                 <p>${task.title}</p>
                                 <div class="progress-bar">
-                                    <div class="progress" style="width: ${task.score}%"></div>
+                                    <div class="progress" style="width: ${task.score*10}%"></div>
                                 </div>
-                                <span class="score-text">${task.score.toFixed(1)}%</span>
+                                <span class="score-text">${task.score.toFixed(1)*10}%</span>
                             </div>
                         `).join('')}
                     </div>
