@@ -718,6 +718,7 @@ button:hover {
 }
 /* /////////////////////////////////////////////////// */
 /* Popup Styles */
+
 .popup {
     display: none; /* Hidden by default */
     position: fixed;

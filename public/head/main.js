@@ -102,16 +102,53 @@ async function fetchMembers() {
         // Display members list
         displayMembers();
     } catch (error) {
+        console.log(error.message);
+        
         console.error('Error fetching members:', error);
     }
 }
 
-// Display members
+// Display members  
+// function displayMembers() {
+//     membersList.innerHTML = '<h2>Team Members</h2> ';
+//     members.forEach(member => {
+//         const memberCard = document.createElement('div');
+//         memberCard.className = 'member-card';
+//         memberCard.innerHTML = `
+//             <div class="member-info">
+//                 <img src="${member.avatar}" alt="${member.name}" class="member-avatar">
+//                 <div class="member-details">
+//                     <h3>${member.name}</h3>
+//                     <p class="member-role">${member.role}</p>
+//                     <p class="member-email">${member.email}</p>
+//                     <p class="member-committee">${member.committee}</p>
+//                 </div>
+//             </div>
+//             <div class="member-tasks">
+//                 <h4>Tasks (${member.tasks.length})</h4>
+//                 <div class="task-summary">
+//                     <span>Submitted: ${member.tasks.filter(t => t.submissionLink && t.submissionLink !== '*').length}</span>
+//                     <span>Pending: ${member.tasks.filter(t => !t.submissionLink || t.submissionLink === '*').length}</span>
+//                 </div>
+//             </div>
+//         `;
+//         membersList.appendChild(memberCard);
+//     });
+// }
+
+
+// =================================================================================
+
+
 function displayMembers() {
-    membersList.innerHTML = '<h2>Team Members</h2>';
+    // document.querySelector('#membersSection .container').innerHTML= '<h2>Team Members</h2>';
+
+    // membersList.innerHTML = '<h2>Team Members</h2>';
+    
     members.forEach(member => {
         const memberCard = document.createElement('div');
         memberCard.className = 'member-card';
+        
         memberCard.innerHTML = `
             <div class="member-info">
                 <img src="${member.avatar}" alt="${member.name}" class="member-avatar">
@@ -129,10 +166,65 @@ function displayMembers() {
                     <span>Pending: ${member.tasks.filter(t => !t.submissionLink || t.submissionLink === '*').length}</span>
                 </div>
             </div>
+            <div class="member-status-indicator"></div>
         `;
+
+        // إضافة كلاس حسب حالة المهام
+        const submittedTasks = member.tasks.filter(t => t.submissionLink && t.submissionLink !== '*').length;
+        if (submittedTasks === member.tasks.length) {
+            memberCard.classList.add('all-submitted');
+        } else if (submittedTasks === 0) {
+            memberCard.classList.add('all-pending');
+        }
+
+        // حدث النقر لعرض التاسكات
+        memberCard.addEventListener('click', (e) => {
+            if (!e.target.closest('.task-actions')) { // تجنب التنفيذ عند النقر على الأزرار
+                showMemberTasks(member);
+            }
+        });
+
         membersList.appendChild(memberCard);
     });
+
+    // إضافة رسومية للتحميل إذا لم يكن هناك أعضاء
+    if (members.length === 0) {
+        membersList.innerHTML = `
+            <div class="empty-state">
+                <img src="empty-members.svg" alt="No members">
+                <p>No team members found</p>
+            </div>
+        `;
+    }
 }
+// =================================================================================================================
+
+
+//  =======================================
+function showMemberTasks(member) {
+    const tasksContainer = document.createElement('div');
+    tasksContainer.className = 'member-tasks-container';
+    
+    member.tasks.forEach(task => {
+        tasksContainer.appendChild(createTaskElement(task, member));
+    });
+    
+    // إضافة زر الإغلاق
+    tasksContainer.innerHTML += `
+        <button class="close-tasks-btn" onclick="this.parentElement.remove()">
+            &times;
+        </button>
+    `;
+    
+    document.body.appendChild(tasksContainer);
+}
+
+
+
+
+
+// =============================
+
 
 // Display tasks
 function displayAllTasks() {
@@ -160,18 +252,41 @@ function createTaskElement(task, member) {
         <div class="task-header" onclick="toggleTaskDetails(this)">
             <h3>${task.title}</h3>
             <span>${member.name}</span>
+            <span> <img src="${member.avatar}" alt="${member.name}" class="member-avatar"> </span>
         </div>
         <div class="task-content">
             <div class="task-meta">
-                <span>Points: ${task.points}</span>
-                <span>Due: ${new Date(task.deadline).toLocaleDateString()}</span>
+                <div>Points: ${task.points}</div>
+                <div>start at :: ${new Date(task.startDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) }</div>
+                <div>deadline :: ${new Date(task.deadline).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) }</div>
             </div>
             <p>${task.description}</p>
             <p>Head Percent: ${task.headPercent}%</p>
             <p>HR Percent: ${100 - task.headPercent}%</p>
             ${task.submissionLink && task.submissionLink !== '*' ? `
-                <p>Submitted: ${new Date(task.submissionDate).toLocaleDateString()}</p>
+                <p>Submitted: ${new Date(task.submissionDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })}</p>
                 <p><a href="${task.submissionLink}" target="_blank">View Submission</a></p>
+                <p>head eval: ${task.headEvaluation } </p>
+                <p>hr eval : ${task.hrEvaluation }</p>
+                <p>task rate : ${task.rate }</p>
             ` : ''}
             <div class="task-actions">
                 <button onclick="editTask('${member._id}', '${task._id}')" 

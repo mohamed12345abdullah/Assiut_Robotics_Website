@@ -288,82 +288,425 @@ body {
 
 
 
+/* Popup Overlay */
 .popup {
-    display: none; /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
+/* Popup Content */
 .popup-content {
-    overflow: scroll;
-    height: 60%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 90% !important;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: popupSlide 0.3s ease-out;
 }
 
-.popup-content h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #2daee2;
-    text-align: center;
+@keyframes popupSlide {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-.popup-content label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
-    color: #333;
-}
-
-.popup-content input,
-.popup-content textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.popup-content textarea {
-    resize: vertical;
-    height: 100px;
-}
-
-.popup-content button {
-    width: 100%;
-    padding: 10px;
-    background-color: #2daee2;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.popup-content button:hover {
-    background-color: #1e8bb8;
-}
-
+/* Close Button */
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
     cursor: pointer;
-    color: #333;
+    color: #666;
+    transition: color 0.2s;
 }
 
 .close-btn:hover {
+    color: #333;
+}
+
+/* Form Styling */
+#editTaskForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+    height: 500px;
+    z-index: 200000;
+    overflow: scroll;
+}
+
+#editTaskForm label {
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 0.9rem;
+    margin-bottom: -0.5rem;
+}
+
+#editTaskForm input,
+#editTaskForm textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+#editTaskForm input:focus,
+#editTaskForm textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+#editTaskForm input[type="number"] {
+    width: 120px;
+}
+#editDescription{
+    min-height: 100px;
+}
+#editTaskForm button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+#editTaskForm button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Date Inputs */
+#editTaskForm input[type="date"] {
+    padding: 0.7rem;
+    font-family: inherit;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .popup-content {
+        padding: 1.5rem;
+        width: 95%;
+    }
+    
+    #editTaskForm {
+        gap: 1rem;
+    }
+    
+    #editTaskForm input[type="number"] {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Members Section Styling */
+.members-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .member-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .member-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .member-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .member-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0f0f0;
+  }
+  
+  .member-details h3 {
+    margin: 0;
+    color: #2d3436;
+    font-size: 1.2rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .member-role {
+    color: #636e72;
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+    font-weight: 500;
+  }
+  
+  .member-email {
+    color: #0984e3;
+    font-size: 0.85rem;
+    margin: 0.3rem 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .member-committee {
+    background: #dfe6e9;
+    color: #2d3436;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    display: inline-block;
+  }
+  
+  .member-tasks h4 {
+    color: #2d3436;
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    border-bottom: 2px solid #74b9ff;
+    padding-bottom: 0.5rem;
+  }
+  
+  .task-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .task-summary span {
+    background: #f8f9fa;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  .task-summary span:first-child {
+    color: #00b894;
+    border: 1px solid #00b89433;
+  }
+  
+  .task-summary span:last-child {
+    color: #d63031;
+    border: 1px solid #d6303133;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .members-list {
+      grid-template-columns: 1fr;
+      padding: 0.5rem;
+    }
+    
+    .member-card {
+      padding: 1rem;
+    }
+    
+    .member-avatar {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .member-details h3 {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* Optional: Add loading animation */
+  @keyframes cardLoading {
+    0% { opacity: 0.5; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  
+  .member-card {
+    animation: cardLoading 0.3s ease-out;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ///////////////////////////////////////// */
+
+
+
+
+  /* ستايل حاوية التاسكات */
+.member-tasks-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 100;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* ستايل كروت التاسكات */
+.task-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid;
+}
+
+.task-card.submitted { border-color: #00b894; }
+.task-card.pending { border-color: #d63031; }
+
+.task-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.task-header h3 {
+    margin: 0;
+    flex-grow: 1;
+    color: #2d3436;
+}
+
+.task-header .member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.task-content {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    margin-top: 1rem;
+}
+
+.task-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.task-meta div {
+    background: #888fac77;
     color: #000;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.task-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.task-actions button:hover {
+    opacity: 0.8;
+}
+
+.close-tasks-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #636e72;
+}
+
+/* ستايل للتفاصيل المخفية */
+.task-content {
+    display: none;
+}
+
+.task-content.expanded {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; max-height: 0; }
+    to { opacity: 1; max-height: 1000px; }
 }
