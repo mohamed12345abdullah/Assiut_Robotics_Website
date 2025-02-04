@@ -286,7 +286,7 @@ function createTaskElement(task, member) {
                 })}</p>
                 <p><a href="${task.submissionLink}" target="_blank">View Submission</a></p>
                 <p>head eval: ${task.headEvaluation } </p>
-                <p>dead line eval : ${task.deadlineEval }</p>
+                <p>dead line eval : ${task.deadlineEvaluation }</p>
                 <p>task rate : ${task.rate }</p>
             ` : ''}
             <div class="task-actions">
