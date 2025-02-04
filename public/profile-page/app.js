@@ -391,7 +391,7 @@ function renderCurrentTasks(tasks) {
   tasksContainer.style.display = 'block';
 
   // حساب نسبة التقدم بناءً على المهام التي لها تقييم
-  const completedTasks = tasks.filter(task => task.headEvaluation !== -1 && task.hrEvaluation !== -1).length;
+  const completedTasks = tasks.filter(task => task.headEvaluation > 0).length;
   const progressPercentage = (tasks.length > 0) ? (completedTasks / tasks.length) * 100 : 0;
 
   progressBarFill.style.width = `${progressPercentage}%`;
@@ -444,9 +444,11 @@ function renderCurrentTasks(tasks) {
     taskMeta.appendChild(rate);
 
     // عرض تقييم headEvaluation و hrEvaluation
-    if (task.headEvaluation !== -1 && task.hrEvaluation !== -1) {
+    if (task.headEvaluation >0 ) {
       const taskEvaluation = document.createElement('span');
       taskEvaluation.className = 'task-evaluation';
+      console.log(task);
+      
       taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, HR Eval: ${task.hrEvaluation}`;
       taskMeta.appendChild(taskEvaluation);
     } else {

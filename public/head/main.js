@@ -247,6 +247,7 @@ function displayAllTasks() {
 function createTaskElement(task, member) {
     const div = document.createElement('div');
     div.className = `task-card ${task.submissionLink && task.submissionLink !== '*' ? 'submitted' : 'pending'}`;
+    console.log("task:",task);
     
     div.innerHTML = `
         <div class="task-header" onclick="toggleTaskDetails(this)">
@@ -274,7 +275,7 @@ function createTaskElement(task, member) {
             </div>
             <p>${task.description}</p>
             <p>Head Percent: ${task.headPercent}%</p>
-            <p>HR Percent: ${100 - task.headPercent}%</p>
+            <p>DeadLinePercent: ${task.deadlinePercent}%</p>
             ${task.submissionLink && task.submissionLink !== '*' ? `
                 <p>Submitted: ${new Date(task.submissionDate).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -285,7 +286,7 @@ function createTaskElement(task, member) {
                 })}</p>
                 <p><a href="${task.submissionLink}" target="_blank">View Submission</a></p>
                 <p>head eval: ${task.headEvaluation } </p>
-                <p>hr eval : ${task.hrEvaluation }</p>
+                <p>dead line eval : ${task.deadlineEval }</p>
                 <p>task rate : ${task.rate }</p>
             ` : ''}
             <div class="task-actions">
@@ -357,7 +358,7 @@ document.getElementById('taskForm').addEventListener('submit', async (e) => {
         description: document.getElementById('taskDescription').value,
         taskUrl: document.getElementById('taskUrl').value,
         points: parseInt(document.getElementById('points').value),
-        headPercent: parseInt(document.getElementById('headPercent').value),
+        // headPercent: parseInt(document.getElementById('headPercent').value),
         startDate: document.getElementById('taskStartDate').value,
         deadline: document.getElementById('taskEndDate').value
     };
@@ -464,7 +465,7 @@ async function deleteTask(memberId, taskId) {
 
         const data = await response.json();
         
-        if (data.status === 'fail') {
+        if (!response.ok) {
             throw new Error(data.message);
         }
 
@@ -477,7 +478,7 @@ async function deleteTask(memberId, taskId) {
 
 // Rate Task
 async function rateTask(memberId, taskId) {
-    const isHead = prompt('Are you the head? Click OK for head, Cancel for HR');
+    const isHead = prompt('Are you the head enter 1  for head, enter 0  for HR');
     const rating = prompt('Enter rating (1-100):');
 
     if (!rating || isNaN(rating) || rating < 1 || rating > 100) {
@@ -486,10 +487,13 @@ async function rateTask(memberId, taskId) {
     }
 
     const ratingData = {
-        headEvaluation: isHead ? parseInt(rating) : -1,
-        hrEvaluation: !isHead ? parseInt(rating) : -1
+        headEvaluation: isHead==1 ? parseInt(rating) : -1,
+        hrEvaluation: isHead!=1 ? parseInt(rating) : -1
     };
 
+    console.log(ratingData);
+    
+    
     try {
         const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/members/${memberId}/rateTask/${taskId}`, {
             method: 'POST',
@@ -502,11 +506,13 @@ async function rateTask(memberId, taskId) {
 
         const data = await response.json();
         
-        if (data.status === 'fail') {
+        if (!response.ok) {
+            // alert('Error rating task: ' + error.message);
+
             throw new Error(data.message);
         }
 
-        alert('Task rated successfully!');
+        alert('Task rated successfully!',data.message);
         await fetchMembers();
     } catch (error) {
         alert('Error rating task: ' + error.message);
@@ -541,7 +547,7 @@ function openEditTaskPopup(task, memberId, taskId, member) {
     document.getElementById('editTitle').value = task.title;
     document.getElementById('editDescription').value = task.description;
     document.getElementById('editPoints').value = task.points;
-    document.getElementById('editHeadPercent').value = task.headPercent;
+    // document.getElementById('editHeadPercent').value = task.headPercent;
     document.getElementById('editStartDate').value = task.startDate.split('T')[0]; // Convert to YYYY-MM-DD format
     document.getElementById('editDeadline').value = task.deadline.split('T')[0]; // Convert to YYYY-MM-DD format
     document.getElementById('editTaskUrl').value = task.taskUrl;
@@ -562,19 +568,19 @@ function openEditTaskPopup(task, memberId, taskId, member) {
             deadline: document.getElementById('editDeadline').value + 'T00:00:00.000Z', // Convert to ISO format
             taskUrl: document.getElementById('editTaskUrl').value,
             points: document.getElementById('editPoints').value,
-            headPercent: document.getElementById('editHeadPercent').value,
+            // headPercent: document.getElementById('editHeadPercent').value,
         }; 
         console.log('bef f');
         
-        if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl && updatedTask.points && updatedTask.headPercent) {
+        if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl && updatedTask.points ) {
             task.title = updatedTask.newTitle;
             task.description = updatedTask.newDescription;
             task.StartDate = updatedTask.StartDate;
             task.deadline = updatedTask.deadline;
             task.taskUrl = updatedTask.taskUrl;
             task.points = updatedTask.points;
-            task.headPercent = updatedTask.headPercent;
-            task.hrPercent = 100 - updatedTask.headPercent;
+            // task.headPercent = updatedTask.headPercent;
+            // task.hrPercent = 100 - updatedTask.headPercent;
             console.log(task);
             
             editrequest(memberId,taskId,member);
@@ -604,7 +610,7 @@ function editrequest(memberId,taskId,member){
         alert('Task updated successfully!');
         fetchMembers()
     }).catch(error => {
-        console.error('Error updating task:', error);
+        console.error('Error updating task:', error.message);
         alert('Error updating task');
     })
 }
