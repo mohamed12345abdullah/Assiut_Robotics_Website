@@ -258,20 +258,9 @@ function createTaskElement(task, member) {
         <div class="task-content">
             <div class="task-meta">
                 <div>Points: ${task.points}</div>
-                <div>start at :: ${new Date(task.startDate).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }) }</div>
-                <div>deadline :: ${new Date(task.deadline).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }) }</div>
+                <div>start at :: ${new Date(task.startDate).toISOString().replace("T", " ").substring(0, 16) }</div>
+                <div>deadline :: ${new Date(task.deadline).toISOString().replace("T", " ").substring(0, 16)
+                   }</div>
             </div>
             <p>${task.description}</p>
             <p>Head Percent: ${task.headPercent}%</p>
