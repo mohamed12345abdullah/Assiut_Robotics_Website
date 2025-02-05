@@ -537,8 +537,9 @@ function openEditTaskPopup(task, memberId, taskId, member) {
     document.getElementById('editDescription').value = task.description;
     document.getElementById('editPoints').value = task.points;
     // document.getElementById('editHeadPercent').value = task.headPercent;
-    document.getElementById('editStartDate').value = task.startDate.split('T')[0]; // Convert to YYYY-MM-DD format
-    document.getElementById('editDeadline').value = task.deadline.split('T')[0]; // Convert to YYYY-MM-DD format
+    document.getElementById('editStartDate').value = new Date(task.startDate).toISOString().replace("T", " ").substring(0, 16);
+
+    document.getElementById('editDeadline').value = new Date(task.deadline).toISOString().replace("T", " ").substring(0, 16); // Convert to YYYY-MM-DD format
     document.getElementById('editTaskUrl').value = task.taskUrl;
 
     // Show the popup
@@ -553,8 +554,8 @@ function openEditTaskPopup(task, memberId, taskId, member) {
         const updatedTask = {
             newTitle: document.getElementById('editTitle').value,
             newDescription: document.getElementById('editDescription').value,
-            StartDate: document.getElementById('editStartDate').value + 'T00:00:00.000Z', // Convert to ISO format
-            deadline: document.getElementById('editDeadline').value + 'T00:00:00.000Z', // Convert to ISO format
+            StartDate: document.getElementById('editStartDate').value , // Convert to ISO format
+            deadline: document.getElementById('editDeadline').value , // Convert to ISO format
             taskUrl: document.getElementById('editTaskUrl').value,
             points: document.getElementById('editPoints').value,
             // headPercent: document.getElementById('editHeadPercent').value,
@@ -564,7 +565,7 @@ function openEditTaskPopup(task, memberId, taskId, member) {
         if (updatedTask.newTitle && updatedTask.newDescription && updatedTask.StartDate && updatedTask.deadline && updatedTask.taskUrl && updatedTask.points ) {
             task.title = updatedTask.newTitle;
             task.description = updatedTask.newDescription;
-            task.StartDate = updatedTask.StartDate;
+            task.startDate = updatedTask.StartDate;
             task.deadline = updatedTask.deadline;
             task.taskUrl = updatedTask.taskUrl;
             task.points = updatedTask.points;
@@ -584,21 +585,28 @@ function openEditTaskPopup(task, memberId, taskId, member) {
 }
 
 // Function to update the task
-function editrequest(memberId,taskId,member){
-    fetch(`https://assiut-robotics-zeta.vercel.app/members/${memberId}/editTask/${taskId}`, {
+async function editrequest(memberId,taskId,member){
+    fetch(` https://assiut-robotics-zeta.vercel.app/members/${memberId}/editTask/${taskId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
         body: JSON.stringify(member.tasks.find(t => t._id === taskId))
-    }).then(response => response.json())
+    }).then(response =>response.json()
+        
+    )
     .then(data => {
         console.log('Success:', data);
         // displayTasks(member.tasks, memberId); // Refresh the task list
-        alert('Task updated successfully!');
+        if(data.message=='jwt expired'){
+            alert('you have to log in again your session ended')
+            window.location.href='../login/login.html'
+        }
+        alert(data.message);
         fetchMembers()
-    }).catch(error => {
+    }
+).catch(error => {
         console.error('Error updating task:', error.message);
         alert('Error updating task');
     })
