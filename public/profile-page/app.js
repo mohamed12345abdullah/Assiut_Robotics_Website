@@ -440,7 +440,7 @@ function renderCurrentTasks(tasks) {
     // show rate 
     const rate = document.createElement('span');
     rate.className = 'task-points';
-    rate.textContent = `rate: ${task.rate}`;
+    rate.textContent = `score: ${task.rate}`;
     taskMeta.appendChild(rate);
 
     // عرض تقييم headEvaluation و hrEvaluation
@@ -449,7 +449,7 @@ function renderCurrentTasks(tasks) {
       taskEvaluation.className = 'task-evaluation';
       console.log(task);
       
-      taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, HR Eval: ${task.hrEvaluation}`;
+      taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, deadline : ${task.deadlineEvaluation}`;
       taskMeta.appendChild(taskEvaluation);
     } else {
       const submitButton = document.createElement('button');
