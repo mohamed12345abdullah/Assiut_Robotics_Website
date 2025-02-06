@@ -30,6 +30,8 @@ const membersModal = document.getElementById('members-modal');
 // Initialize Lucide icons
 lucide.createIcons();
 
+
+const token=window.localStorage.getItem('token')
 // Tab switching
 tabButtons.forEach(button => {
   button.addEventListener('click', () => {
@@ -115,12 +117,18 @@ async function addTrack(trackData) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'authorization':`Bearer ${token}`,
       },
       body: JSON.stringify(trackData),
     });
-    return await response.json();
+
+    const jsonResponse=await response.json()
+    alert(jsonResponse.message)
+    console.log(jsonResponse.message);
+    
+    return await jsonResponse;
   } catch (error) {
-    console.error('Error adding track:', error);
+    console.log('Error adding track:', error.message);
   }
 }
 
