@@ -76,7 +76,7 @@ Router.route("/changeProfileImage").post(
         async (req, res,next) => {
             try {
                 if (!req.file) {
-
+                    next()
                     return res.status(400).send('No file uploaded.');
                 }else{
                     console.log("  file is recived")
