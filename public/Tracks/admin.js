@@ -266,7 +266,7 @@ async function renderCourses(trackId) {
       <div class="admin-card-header">
         <h3 class="admin-card-title">${course.name}</h3>
         <div class="admin-card-actions">
-          <button class="action-button view-button" onclick="viewCourseMembers('${course._id}')">
+          <button class="action-button view-button" onclick="viewCourseMembers('${course._id}','${trackId}')">
             <i data-lucide="users"></i>
             <span>${course.membersCount} members</span>
           </button>
@@ -537,8 +537,9 @@ async function loadCourseTasks() {
 // }
 
 
-async function viewCourseMembers(courseId) {
+async function viewCourseMembers(courseId,trackId) {
   try {
+    
     // Hide current active section and show members section
     membersSection=document.getElementById('members-section')
     document.querySelector('.admin-section.active').classList.remove('active');
@@ -547,7 +548,10 @@ async function viewCourseMembers(courseId) {
     const members = await getCourseMembers(courseId);
     const course = courses[currentTrackId].find(c => c._id === courseId);
     const tasks = await getTasks(currentTrackId, courseId);
-
+    // console.log('members',members);
+    // console.log('course',course);
+    // console.log('tasks',tasks);
+    
     // Set section title
     document.getElementById('members-section-title').textContent = 
       `${course.name} - Member Progress`;
@@ -567,8 +571,22 @@ async function viewCourseMembers(courseId) {
       </div>
       <div class="members-list">
         ${members.map(member => {
-          const memberProgress = member.startedTracks?.[0]?.courses?.find(c => c.course === courseId);
+          const TTrack=member.startedTracks?.find(t=> t.track._id==trackId)
+          console.log('memberTrack.track:',TTrack,'trackId',trackId);
+          console.log(TTrack.courses);
+          
+          const memberCourse=TTrack.courses?.find(c=>c.course==courseId)
+          console.log('memberCourse:',memberCourse);
+          // console.log('track.courses[0].course : ',track.courses[0].course);
+          // console.log( 'track.courses[0].submittedTasks',track.courses[0].submittedTasks);
+          console.log('courseId:',courseId);
+          
+          const memberProgress = TTrack.courses?.find(c => c.course === courseId);
+          console.log("progress",memberProgress);
+          
           const submittedTasks = memberProgress?.submittedTasks || [];
+          console.log('submitted',submittedTasks);
+          
           const completionRate = tasks.length ? Math.round((submittedTasks.length / tasks.length) * 100) : 0;
           
           return `
@@ -586,10 +604,14 @@ async function viewCourseMembers(courseId) {
                 <div class="tasks-grid">
                   ${tasks.map(task => {
                     const submission = submittedTasks.find(s => s.task === task._id);
+                    console.log('submission',submission)
                     return `
                       <div class="task-submission-card ${submission ? 'submitted' : 'pending'}">
                         <h6>${task.name}</h6>
-                        ${submission ? `
+                        ${submission ?
+                        
+                        
+                        `
                           <div class="submission-details">
                             <p>Submitted: ${new Date(submission.submittedAt).toLocaleDateString()}</p>
                             <a href="${submission.submissionLink}" target="_blank" class="view-submission">
