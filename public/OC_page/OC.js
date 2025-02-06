@@ -283,14 +283,18 @@ const pushToDB = async (formData) => {
       method: "post",
       body: formData
     })
+    let response = await res.json()
     if (res.ok) {
-      let response = await res.json();
+      ;
       console.log(response);
-      getComponents();
+ 
 
     }
-
+    alert(response.message)
+    getComponents();
   } catch (error) {
+
+    alert(error.message)
     console.log(error);
   }
 
