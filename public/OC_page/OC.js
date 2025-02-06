@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 let title = document.getElementById('title');
 let price = document.getElementById('price');
 let count = document.getElementById('count');
@@ -289,7 +291,7 @@ const pushToDB = async (formData) => {
       getComponents();
 
     }
-
+    alert(response.message)
   } catch (error) {
     console.log(error);
   }
