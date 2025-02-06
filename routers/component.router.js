@@ -39,7 +39,7 @@ Router.route("/add").post(
     async (req, res,next) => {
         try {
             if (!req.file) {
-                next()
+               return  next()
                 // return res.status(400).send('No file uploaded.');
             }
 
