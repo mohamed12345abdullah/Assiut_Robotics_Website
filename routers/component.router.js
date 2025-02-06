@@ -39,7 +39,8 @@ Router.route("/add").post(
     async (req, res,next) => {
         try {
             if (!req.file) {
-                return res.status(400).send('No file uploaded.');
+                next()
+                // return res.status(400).send('No file uploaded.');
             }
 
             // Upload image to Cloudinary using the utility function
