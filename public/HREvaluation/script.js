@@ -1,7 +1,10 @@
 async function fetchMembers() {
 
-  //let committee = localStorage.getItem("committee");
-  let committee = 'web'
+  let userData = localStorage.getItem("data");
+  let parsedData = JSON.parse(userData);
+  let committee = parsedData.committee;
+  
+  // let committee = 'web'
   try {
     const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${committee}`);
     const data = await response.json();
