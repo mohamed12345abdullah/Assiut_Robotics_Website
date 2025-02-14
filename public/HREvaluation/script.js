@@ -7,7 +7,7 @@ async function fetchMembers() {
     const data = await response.json();
     let members = data.date;
 
-    console.log(members);
+    // console.log(members);
     let memberSelect = document.getElementById("memberId");
     memberSelect.innerHTML = '<option value=""> Select Member</option>';
     members.forEach(member => {
@@ -24,18 +24,19 @@ fetchMembers();
 document.getElementById('evaluationForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
+
   const formData = {
     month: document.getElementById('month').value,
     memberId: document.getElementById('memberId').value,
-    socialScore: parseInt(document.getElementById('socialScore').value),
-    behaviorScore: parseInt(document.getElementById('behaviorScore').value),
-    interactionScore: parseInt(document.getElementById('interactionScore').value)
+    socialScore: Number(document.getElementById('socialScore').value),
+    behaviorScore: Number(document.getElementById('behaviorScore').value),
+    interactionScore: Number(document.getElementById('interactionScore').value)
   };
-
   const messageDiv = document.getElementById('message');
+  console.log(JSON.stringify(formData));
 
   try {
-    const response = await fetch('/api/evaluations', {
+    const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/update-tasks-evaluation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
