@@ -33,7 +33,7 @@ document.getElementById('evaluationForm').addEventListener('submit', async funct
     interactionScore: Number(document.getElementById('interactionScore').value)
   };
   const messageDiv = document.getElementById('message');
-  console.log(JSON.stringify(formData));
+  // console.log(JSON.stringify(formData));
 
   try {
     const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/update-tasks-evaluation', {
@@ -51,7 +51,7 @@ document.getElementById('evaluationForm').addEventListener('submit', async funct
 
       setTimeout(() => {
         messageDiv.style.display = 'none';
-      }, 3000);
+      }, 5000);
     } else {
       throw new Error('Error submitting evaluation');
     }
