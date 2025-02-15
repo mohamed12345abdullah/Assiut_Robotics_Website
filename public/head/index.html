@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasks Management</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Nav Bar -->
     <div class="topnav">
@@ -21,6 +23,8 @@
             <a href="#" class="active" data-section="tasks">Tasks</a>
             <a href="#" data-section="addTask">Add New Task</a>
             <a href="#" data-section="members">Members</a>
+            <a href="#" data-section="HrEvaluation">HR Evaluation</a>
+
         </div>
 
     </div>
@@ -96,45 +100,89 @@
             <div class="members-list" id="membersList"></div>
         </div>
     </div>
+    <!--HR Evaluation -->
+    <div id="HrEvaluationSection" class="section hidden">
+        <div class="container">
+            <div class="task-form">
+                <h2>HR Evaluation Form</h2>
 
-        <!-- Popup Form -->
-<div id="editTaskPopup" class="popup">
-    <div class="popup-content">
-        <div class="close-btn" onclick="closePopup()">&times;</div>
-        <h2>Edit Task</h2>
-        <form id="editTaskForm">
-            <label for="editTitle">Title:</label>
-            <input type="text" id="editTitle" required>
+                <form id="evaluationForm">
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                        <input type="month" id="month">
+                    </div>
 
-            <label for="editDescription">Description:</label>
-            <textarea id="editDescription" required></textarea>
-            
-            <label for="editPoints">Points:</label>
-            <input type="number" id="editPoints" required></textarea>
+                    <div class="form-group">
+                        <label for="memberId">Member Name</label>
+                        <select id="memberId" name="memberId" required>
+                            <option value="">Select Member</option>
+                        </select>
+                    </div>
 
-            <!-- <label for="editHeadPercent">headPercent:</label> -->
-            <!-- <input type="number" id="editHeadPercent" required></textarea> -->
+                    <div class="form-group">
+                        <label for="socialScore">Social Media Score</label>
+                        <input type="number" id="socialScore" name="socialScore" min="0" max="100" required
+                            placeholder="0-100">
+                    </div>
 
-            <label for="editStartDate">Start Date:</label>
-            <input type="datetime-local" id="editStartDate" required>
+                    <div class="form-group">
+                        <label for="behaviorScore">Behavior Score</label>
+                        <input type="number" id="behaviorScore" name="behaviorScore" min="0" max="100" required
+                            placeholder="0-100">
+                    </div>
 
-            <label for="editDeadline">Deadline:</label>
-            <input type="datetime-local" id="editDeadline" required>
+                    <div class="form-group">
+                        <label for="interactionScore">Interaction Score</label>
+                        <input type="number" id="interactionScore" name="interactionScore" min="0" max="100" required
+                            placeholder="0-100">
+                    </div>
 
-            <label for="editTaskUrl">Task URL:</label>
-            <input type="url" id="editTaskUrl">
+                    <button type="submit">Submit Evaluation</button>
+                </form>
 
-            <button type="submit">Save Changes</button>
-        </form>
+                <div id="message" class="message"></div>
+            </div>
+        </div>
     </div>
-</div>
+    <!-- Popup Form -->
+    <div id="editTaskPopup" class="popup">
+        <div class="popup-content">
+            <div class="close-btn" onclick="closePopup()">&times;</div>
+            <h2>Edit Task</h2>
+            <form id="editTaskForm">
+                <label for="editTitle">Title:</label>
+                <input type="text" id="editTitle" required>
 
-<button id="themeToggle" class="theme-toggle">
-    <!-- <span class="light-icon">🌞</span> -->
-    <!-- <span class="dark-icon" style="display: none;">🌜</span> -->
-</button>
+                <label for="editDescription">Description:</label>
+                <textarea id="editDescription" required></textarea>
+
+                <label for="editPoints">Points:</label>
+                <input type="number" id="editPoints" required></textarea>
+
+                <!-- <label for="editHeadPercent">headPercent:</label> -->
+                <!-- <input type="number" id="editHeadPercent" required></textarea> -->
+
+                <label for="editStartDate">Start Date:</label>
+                <input type="datetime-local" id="editStartDate" required>
+
+                <label for="editDeadline">Deadline:</label>
+                <input type="datetime-local" id="editDeadline" required>
+
+                <label for="editTaskUrl">Task URL:</label>
+                <input type="url" id="editTaskUrl">
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="themeToggle" class="theme-toggle">
+        <!-- <span class="light-icon">🌞</span> -->
+        <!-- <span class="dark-icon" style="display: none;">🌜</span> -->
+    </button>
 
 
     <script src="main.js"></script>
 </body>
+
 </html>
