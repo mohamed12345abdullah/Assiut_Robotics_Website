@@ -185,7 +185,7 @@ async function submitTask(submissionLink) {
 }
 
 
-async function submitCurrentTask(submissionLink) {
+async function submitCurrentTask(data) {
   const token = localStorage.getItem('token');
  
   if (!token) return;
@@ -197,12 +197,10 @@ async function submitCurrentTask(submissionLink) {
     const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/submitMemberTask/${currentTaskId}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        // 'contentType': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({
-        submissionUrl:submissionLink
-      })
+      body: data
     });
 
     if (response.ok) {
@@ -211,9 +209,13 @@ async function submitCurrentTask(submissionLink) {
     }  
       const res=await response.json()
       console.log(res);
-      alert(res.message)
+      alert("from out of catch " + res.message)
   } catch (error) {
-    alert(error.message);
+    if(error.message.includes("jwt expired")){
+      window.location.href = '../login/login.html';
+    }
+    console.log(error);
+    
   }
 }
 
@@ -489,7 +491,7 @@ avatarInput.addEventListener('change', (e) => {
 submitTaskForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const submissionLink = document.getElementById('submissionLink').value;
-  await submitCurrentTask(submissionLink);
+  await submitCurrentTask(new FormData(submitTaskForm));
   submitTaskModal.style.display = 'none';
   submitTaskForm.reset();
 });

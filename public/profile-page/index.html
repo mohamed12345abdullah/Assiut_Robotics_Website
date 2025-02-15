@@ -91,10 +91,11 @@
   <div id="submitTaskModal" class="modal">
     <div class="modal-content">
       <h2>Submit Task</h2>
-      <form id="submitTaskForm">
+      <form id="submitTaskForm" enctype="multipart/form-data">
         <div class="form-group">
           <label for="submissionLink">Submission Link:</label>
-          <input type="url" id="submissionLink" required>
+          <input type="url" id="submissionLink" name="submissionUrl" required>
+          <input type ="file" name="file" id="file" required>
         </div>
         <div class="form-actions">
           <button type="submit">Submit</button>
