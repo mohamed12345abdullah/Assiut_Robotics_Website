@@ -81,7 +81,7 @@ navMenu.addEventListener('click', (e) => {
 // Fetch and display members
 async function fetchMembers() {
     try {
-        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${(committee != 'hr')?committee:role.replace('HR ', '')}`);
+        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${(committee != 'HR')?committee:role.replace('HR ', '')}`);
         const data = await response.json();
         members = data.date;
         console.log(members);
