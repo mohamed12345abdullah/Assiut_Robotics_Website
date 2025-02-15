@@ -15,9 +15,11 @@ const membersList = document.getElementById('membersList');
 
 const adminData = JSON.parse(localStorage.getItem('data'));
 const committee = adminData.committee;
-if(committee.includes(' hr')){
-    committee.replace(' hr','')
-}
+var role = adminData.role;
+// if(role.includes('HR ')) 
+// {
+//     role = role.replace('HR ', '');
+// }
 console.log("admin data:",adminData);
 
 const form = document.getElementById('taskForm')
@@ -79,7 +81,7 @@ navMenu.addEventListener('click', (e) => {
 // Fetch and display members
 async function fetchMembers() {
     try {
-        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${committee}`);
+        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${(committee != 'hr')?committee:role.replace('HR ', '')}`);
         const data = await response.json();
         members = data.date;
         console.log(members);
@@ -313,7 +315,7 @@ function createTaskElement(task, member) {
 function toggleTaskDetails(header) {
     const content = header.nextElementSibling;
     const parent = header.parentElement;
-    if(parent.style.zIndex == 100) 
+    if(parent.style.zIndex == 10) 
     {
         parent.style.zIndex = 0;
     }
