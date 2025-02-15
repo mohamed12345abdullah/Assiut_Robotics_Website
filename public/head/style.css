@@ -725,6 +725,7 @@ ul, ol {
     padding: 1rem;
     margin: 1rem 0;
     border-left: 4px solid;
+    min-width: fit-content !important;
 }
 
 .task-card.submitted { border-color: #00b894; }

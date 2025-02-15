@@ -15,6 +15,9 @@ const membersList = document.getElementById('membersList');
 
 const adminData = JSON.parse(localStorage.getItem('data'));
 const committee = adminData.committee;
+if(committee.includes(' hr')){
+    committee.replace(' hr','')
+}
 console.log("admin data:",adminData);
 
 const form = document.getElementById('taskForm')
@@ -76,7 +79,7 @@ navMenu.addEventListener('click', (e) => {
 // Fetch and display members
 async function fetchMembers() {
     try {
-        const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/get/web');
+        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${committee}`);
         const data = await response.json();
         members = data.date;
         console.log(members);
@@ -236,13 +239,23 @@ function displayAllTasks() {
             const taskElement = createTaskElement(task, member);
             if (task.submissionLink && task.submissionLink !== '*') {
                 submittedTasksList.appendChild(taskElement);
+                addEvent(task.submissionFileId,task.downloadSubmissionUrl) /* adding event to the download btn*/
+    
             } else {
                 pendingTasksList.appendChild(taskElement);
             }
         });
     });
 }
-
+//task.downloadSubmissionUrl
+function addEvent(id,URL){
+    console.log('id:',id);
+    
+    let element = document.getElementById(id);
+    element.addEventListener('click',()=>{
+        window.location.href = URL;
+    })
+}
 // Create task element
 function createTaskElement(task, member) {
     const div = document.createElement('div');
@@ -274,6 +287,10 @@ function createTaskElement(task, member) {
                     minute: '2-digit'
                 })}</p>
                 <p><a href="${task.submissionLink}" target="_blank">View Submission</a></p>
+                <button id="${task.submissionFileId}">download Task</button> 
+               
+                <h5>Preview </h5>
+                <iframe src="https://drive.google.com/file/d/${task.submissionFileId}/preview" width="600" height="400"></iframe>
                 <p>head eval: ${task.headEvaluation } </p>
                 <p>dead line eval : ${task.deadlineEvaluation }</p>
                 <p>task rate : ${task.rate }</p>
@@ -288,13 +305,21 @@ function createTaskElement(task, member) {
             </div>
         </div>
     `;
-    
+                
     return div;
 }
 
 // Toggle task details
 function toggleTaskDetails(header) {
     const content = header.nextElementSibling;
+    const parent = header.parentElement;
+    if(parent.style.zIndex == 100) 
+    {
+        parent.style.zIndex = 0;
+    }
+    else {
+        parent.style.zIndex = 10;
+    }
     content.classList.toggle('active');
 }
 
