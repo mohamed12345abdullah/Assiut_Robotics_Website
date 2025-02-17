@@ -289,10 +289,10 @@ function createTaskElement(task, member) {
                     minute: '2-digit'
                 })}</p>
                 <p><a href="${task.submissionLink}" target="_blank">View Submission</a></p>
-                <button id="${task.submissionFileId}">download Task</button> 
+                <button id="${task.submissionFileId}">download Task solution </button> 
                
                 <h5>Preview </h5>
-                <iframe src="https://drive.google.com/file/d/${task.submissionFileId}/preview" width="600" height="400"></iframe>
+                <iframe src="https://drive.google.com/file/d/${task.submissionFileId}/preview" width="300" height="200"></iframe>
                 <p>head eval: ${task.headEvaluation } </p>
                 <p>dead line eval : ${task.deadlineEvaluation }</p>
                 <p>task rate : ${task.rate }</p>
@@ -494,7 +494,7 @@ async function deleteTask(memberId, taskId) {
 
 // Rate Task
 async function rateTask(memberId, taskId) {
-    const isHead = prompt('Are you the head enter 1  for head, enter 0  for HR');
+    // const isHead = prompt('Are you the head enter 1  for head, enter 0  for HR');
     const rating = prompt('Enter rating (1-100):');
 
     if (!rating || isNaN(rating) || rating < 1 || rating > 100) {
@@ -503,8 +503,8 @@ async function rateTask(memberId, taskId) {
     }
 
     const ratingData = {
-        headEvaluation: isHead==1 ? parseInt(rating) : -1,
-        hrEvaluation: isHead!=1 ? parseInt(rating) : -1
+        headEvaluation:  parseInt(rating) ,
+        // hrEvaluation: isHead!=1 ? parseInt(rating) : -1
     };
 
     console.log(ratingData);
