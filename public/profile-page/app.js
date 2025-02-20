@@ -46,7 +46,7 @@ const Links = {
   "PR" : [],
   "AC Electric" : [],
   "AC Mechanical" : [],
-  "head" : [[{name: "Head page", link: "../head/index.html"}]],
+  "head" : [[{name: "Head page", link: "../head/index.html"}],[{name: "Tracks manager", link: "../Tracks/admin.html"}]],
   "leader" : [[{name: "Leader page", link: "../leader/index.html"}]],
 }
 
