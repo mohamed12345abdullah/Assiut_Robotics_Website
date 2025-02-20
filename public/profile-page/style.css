@@ -497,16 +497,21 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 20%;
+  width: fit-content;
   height: fit-content;
   transform: translateX(-50%) translateY(-50%);
   background-color: var(--accent-color);
   border-radius: 0.25rem;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1rem;
   font-size: 0.75rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+#related-links ul li{
+  margin-bottom: 0.5rem;
+  background-color: var(--card-bg);
+  padding: 1rem;
 }
 .appearence{
   animation: appearence 0.5s ease-in-out forwards;
@@ -542,19 +547,18 @@
   width: 100%;
   list-style: none;
   text-align: center;
-  background-color: var(--card-bg);
 }
 #related-links a{
   color: var(--text-primary);
-  border: 2px solid var(--text-primary);
-
+ 
+  border: 0 !important;
   text-decoration: none;
   display: block;
   width: 100% !important;
   font-weight: bold;
   font-size: x-large;
 }
-#related-links ul li a:hover{
+#related-links ul li:hover{
   /* color: var(--accent-color); */
   background-color: var(--accent-color);
   border: 0;

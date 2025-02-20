@@ -39,15 +39,15 @@ const progressBar = document.getElementsByClassName('progress-bar-fill')[0];
 
 // Related links
 const Links = {
-  "HR" : [],
+  "HR" : [[{name: "HR page", link: "../control-panal/addHrTocommittee.html"}],[]],
   "web" : [],
   "media" : [],
-  "OC" : [{name: "Components management page", link: "../OC_page/OC.html"}],
+  "OC" : [[{name: "Components management page", link: "../OC_page/OC.html"}],[]],
   "PR" : [],
   "AC Electric" : [],
   "AC Mechanical" : [],
-  "head" : [{name: "Head page", link: "../head/index.html"}],
-  "leader" : [{name: "Leader page", link: "../leader/index.html"}],
+  "head" : [[{name: "Head page", link: "../head/index.html"}]],
+  "leader" : [[{name: "Leader page", link: "../leader/index.html"}]],
 }
 
 // Verify token
@@ -252,17 +252,23 @@ function renderMemberData(data) {
   let relatedLinks = {};
   for(const key in Links){
     if(data.committee === key){
-      relatedLinks.key = Links[key];
+      if(data.role === "head" || data.role === "vice"){
+        relatedLinks[key] = Links[key];
+
+      }
+      else{
+        relatedLinks[key] = Links[key][1];
+      }
     }
   }
-  if(data.role === "head" || data.role === "vice"){
-    relatedLinks.key = Links.head;
+  if(data.role === "head" || data.role === "vice" || data.role.includes("HR ")){
+    
+    relatedLinks.head = Links.head;
   }
-  if(data.role === "leader"){
+  if(data.role === "leader" || data.role === "viceLeader"){
     relatedLinks.key = Links.leader;
   }
   console.log(relatedLinks);
-  console.log(data);
   renderRelatedLinks(relatedLinks);
   renderTracks(data.startedTracks);
 }
@@ -397,16 +403,19 @@ function renderTasks(tasks) {
   });
 }
 // render relatedLinks list
-function renderRelatedLinks(relatedLinks) { // obj of arr of objs
+function renderRelatedLinks(relatedLinks) { // obj of arr of arr of objs
   const relatedLinksList = document.getElementById('related-links').firstElementChild;
   relatedLinksList.innerHTML = '';
   for(const key in relatedLinks)
   {
     relatedLinks[key].forEach((link, index) => {
-      const component = `
-        <li name = "${link.name}"><a href="${link.link}">${link.name}</a></li>
-      `
-      relatedLinksList.innerHTML += component;
+      relatedLinks[key][index].forEach((link, index) => {
+        const component = `
+          <li name = "${link.name}"><a href="${link.link}">${link.name}</a></li>
+        `
+        relatedLinksList.innerHTML += component;
+      })
+      
     })
   }
 }
