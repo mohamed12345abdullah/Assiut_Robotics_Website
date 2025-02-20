@@ -15,10 +15,13 @@ const membersList = document.getElementById('membersList');
 
 const adminData = JSON.parse(localStorage.getItem('data'));
 const committee = adminData.committee;
+console.log("committee",committee);
+
 var role = adminData.role;
-if(role.includes('HR')) 
+if(role.includes('HR ')) 
 {
     committee = role.split(' ')[1];
+    console.log("committee",committee);
     
 }
 console.log("admin data:",adminData);
@@ -82,7 +85,7 @@ navMenu.addEventListener('click', (e) => {
 // Fetch and display members
 async function fetchMembers() {
     try {
-        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${(committee != 'HR')?committee:role.replace('HR ', '')}`);
+        const response = await fetch(`https://assiut-robotics-zeta.vercel.app/members/get/${committee }`);
         const data = await response.json();
         members = data.date;
         console.log(members);
