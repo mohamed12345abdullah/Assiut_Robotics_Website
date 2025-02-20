@@ -42,12 +42,12 @@ const Links = {
   "HR" : [],
   "web" : [],
   "media" : [],
-  "OC" : [{name: "Components management page", link: "https://assiut-robotics-website.vercel.app/OC_page/OC.html"}],
+  "OC" : [{name: "Components management page", link: "../OC_page/OC.html"}],
   "PR" : [],
   "AC Electric" : [],
   "AC Mechanical" : [],
-  "head" : [{name: "Head page", link: "https://assiut-robotics-website.vercel.app/head/index.html"}],
-  "leader" : [{name: "Leader page", link: "https://assiut-robotics-website.vercel.app/leader/index.html"}],
+  "head" : [{name: "Head page", link: "../head/index.html"}],
+  "leader" : [{name: "Leader page", link: "../leader/index.html"}],
 }
 
 // Verify token
