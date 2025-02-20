@@ -16,10 +16,11 @@ const membersList = document.getElementById('membersList');
 const adminData = JSON.parse(localStorage.getItem('data'));
 const committee = adminData.committee;
 var role = adminData.role;
-// if(role.includes('HR ')) 
-// {
-//     role = role.replace('HR ', '');
-// }
+if(role.includes('HR')) 
+{
+    committee = role.split(' ')[1];
+    
+}
 console.log("admin data:",adminData);
 
 const form = document.getElementById('taskForm')
