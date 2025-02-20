@@ -39,14 +39,14 @@ const progressBar = document.getElementsByClassName('progress-bar-fill')[0];
 
 // Related links
 const Links = {
-  "HR" : [[{name: "HR page", link: "../control-panel/addHrTocommittee.html"}],],
+  "HR" : [[{name: "HR page", link: "../control-panel/addHrTocommittee.html"}],[]],
   "web" : [],
   "media" : [],
   "OC" : [[{name: "Components management page", link: "../OC_page/OC.html"}],[]],
   "PR" : [],
   "AC Electric" : [],
   "AC Mechanical" : [],
-  "head" : [[{name: "Task manager", link: "../head/index.html"}],[{name: "Tracks manager", link: "../Tracks/admin.html"}]],
+  "head" : [[{name: "Task manager", link: "../head/index.html"},{name: "Tracks manager", link: "../Tracks/admin.html"}],[]],
   "leader" : [[{name: "Leader page", link: "../leader/index.html"}]],
 }
 
