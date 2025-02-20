@@ -37,6 +37,19 @@ const main = document.getElementsByTagName('main')[0];
 const header = document.getElementsByTagName('header')[0];
 const progressBar = document.getElementsByClassName('progress-bar-fill')[0];
 
+// Related links
+const Links = {
+  "HR" : [],
+  "web" : [],
+  "media" : [],
+  "OC" : [{name: "Components management page", link: "https://assiut-robotics-website.vercel.app/OC_page/OC.html"}],
+  "PR" : [],
+  "AC Electric" : [],
+  "AC Mechanical" : [],
+  "head" : [{name: "Head page", link: "https://assiut-robotics-website.vercel.app/head/index.html"}],
+  "leader" : [{name: "Leader page", link: "https://assiut-robotics-website.vercel.app/leader/index.html"}],
+}
+
 // Verify token
 async function verifyToken() {
  const token = localStorage.getItem('token');
@@ -236,7 +249,21 @@ function renderMemberData(data) {
   userPhone.textContent = data.phoneNumber;
   userStatus.textContent = data.verified ? 'Verified' : 'Pending';
   userStatus.className = `status-badge ${data.verified ? 'verified' : 'pending'}`;
-  
+  let relatedLinks = {};
+  for(const key in Links){
+    if(data.committee === key){
+      relatedLinks.key = Links[key];
+    }
+  }
+  if(data.role === "head" || data.role === "vice"){
+    relatedLinks.key = Links.head;
+  }
+  if(data.role === "leader"){
+    relatedLinks.key = Links.leader;
+  }
+  console.log(relatedLinks);
+  console.log(data);
+  renderRelatedLinks(relatedLinks);
   renderTracks(data.startedTracks);
 }
 
@@ -369,16 +396,36 @@ function renderTasks(tasks) {
     tasksList.appendChild(taskElement);
   });
 }
-// Manage btn
-function manage(){
-  console.log("manage");
-  
-  const managebtn = document.getElementById('manage');
-  const data = JSON.parse(localStorage.getItem('data'));
-  
-      managebtn.addEventListener('click',()=>{
-        window.location.href = "../head/index.html";
-      })
+// render relatedLinks list
+function renderRelatedLinks(relatedLinks) { // obj of arr of objs
+  const relatedLinksList = document.getElementById('related-links').firstElementChild;
+  relatedLinksList.innerHTML = '';
+  for(const key in relatedLinks)
+  {
+    relatedLinks[key].forEach((link, index) => {
+      const component = `
+        <li name = "${link.name}"><a href="${link.link}">${link.name}</a></li>
+      `
+      relatedLinksList.innerHTML += component;
+    })
+  }
+}
+// RelatedLinks btn
+function RelatedLinks(){
+  const RelatedLinksbtn = document.getElementById('RelatedLinks');
+  const related_links = document.getElementById('related-links');
+  RelatedLinksbtn.addEventListener('click',()=>{
+      if(related_links.classList.contains('disabled'))
+      {
+        related_links.classList.remove('disabled'); 
+        related_links.classList.toggle('appearence');
+
+      }
+      else{
+        related_links.classList.toggle('appearence');
+        related_links.classList.toggle('disapear');
+      }
+  })
  
 }
 
@@ -520,7 +567,7 @@ async function initialize() {
 //     await fetchMemberData();
 //   }
   // if(!isValid)
-  manage();
+  RelatedLinks();
 initializeDarkMode();
 }
 
