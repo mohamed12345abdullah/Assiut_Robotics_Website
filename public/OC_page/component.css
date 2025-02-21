@@ -1,6 +1,6 @@
 /* متغيرات الألوان */
 :root {
-    --bg-color: #b4bfd8;
+    --bg-color: #9ec6f3;
     --card-bg: #ffffff;
     --text-color: #333;
     --shadow-color: rgba(0,0,0,0.1);
@@ -54,7 +54,7 @@ body {
     font-size: 16px;
     background: var(--card-bg);
     color: var(--text-color);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .search-input:focus {
@@ -71,7 +71,7 @@ body {
     padding: 20px;
 }
 
-/* تنسيق البطاقات مع تأثيرات السكرول */
+/* تنسيق البطاقات مع تأثيرات السكرول السريعة */
 .component.box {
     background: var(--card-bg);
     border-radius: var(--border-radius);
@@ -81,40 +81,42 @@ body {
     display: flex;
     flex-direction: column;
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px);
+    transition: all 0.3s ease;
 }
 
-/* تأثيرات السكرول */
+/* تأثيرات السكرول السريعة */
 .component.box.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 .component.box.in-focus {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px var(--shadow-color);
+    transform: scale(1.03);
+    box-shadow: 0 8px 15px var(--shadow-color);
     z-index: 2;
+    transition: all 0.2s ease;
 }
 
 .component.box.out-of-focus {
-    transform: scale(0.95);
-    opacity: 0.7;
+    transform: scale(0.97);
+    opacity: 0.8;
+    transition: all 0.2s ease;
 }
 
-/* تأخير ظهور العناصر */
-.component.box:nth-child(2) { transition-delay: 0.1s; }
-.component.box:nth-child(3) { transition-delay: 0.2s; }
-.component.box:nth-child(4) { transition-delay: 0.3s; }
-.component.box:nth-child(5) { transition-delay: 0.4s; }
-.component.box:nth-child(6) { transition-delay: 0.5s; }
+/* تأخير سريع لظهور العناصر */
+.component.box:nth-child(2) { transition-delay: 0.05s; }
+.component.box:nth-child(3) { transition-delay: 0.1s; }
+.component.box:nth-child(4) { transition-delay: 0.15s; }
+.component.box:nth-child(5) { transition-delay: 0.2s; }
+.component.box:nth-child(6) { transition-delay: 0.25s; }
 
 /* تنسيق الصور */
 .component.box img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .component.box:hover img {
@@ -149,7 +151,7 @@ body {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     backdrop-filter: blur(5px);
 }
 
@@ -165,8 +167,8 @@ body {
     max-width: 600px;
     width: 90%;
     position: relative;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
 }
 
 .popup-overlay.active .popup-content {
@@ -218,7 +220,7 @@ body {
     color: var(--text-color);
     border-radius: var(--border-radius);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,7 +260,7 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 100;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .theme-toggle:hover {
