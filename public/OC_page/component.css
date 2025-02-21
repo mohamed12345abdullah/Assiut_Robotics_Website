@@ -1,125 +1,298 @@
-body{
-    background-color: #eef0e5;
+/* متغيرات الألوان */
+:root {
+    --bg-color: #b4bfd8;
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --shadow-color: rgba(0,0,0,0.1);
+    --accent-color: #007bff;
+    --border-radius: 12px;
+    --container-width: 1200px;
+    --card-padding: 15px;
 }
 
-.topnav {
-    position: absolute !important;
-}
-.components {
-    margin-top: 30px;
-    width: 90%;
-    margin: 2rem auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: 20px;
-    row-gap: 30px;
-    justify-content: center;
-    /* justify-items: center; */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --card-bg: #2d2d2d;
+    --text-color: #ffffff;
+    --shadow-color: rgba(255,255,255,0.05);
+    --accent-color: #4d94ff;
 }
 
-.component {
-    text-align: center;
-    width: 300px;
-    /* background-color: aqua; */
-
+/* تأكد من تطبيق لون الخلفية على body */
+body {
+    background-color: var(--bg-color) !important; /* إضافة !important للتأكد من تطبيق اللون */
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+    min-height: 100vh; /* تأكد من أن الخلفية تغطي كامل الشاشة */
 }
 
-.component>img {
-    margin-bottom: 10px;
+/* باقي الكود كما هو ... */
+
+/* الحاوية الرئيسية */
+.page-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* حقل البحث */
+.search-container {
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 0 20px;
+}
+
+.search-input {
     width: 100%;
-    max-width: 100%;
-    height: 250px;
-    object-fit: contain;
-    background-size: contain;
+    padding: 12px 20px;
+    border: 2px solid var(--shadow-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
 }
 
-.input {
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+
+/* شبكة المكونات */
+#mainComponents {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+/* تنسيق البطاقات مع تأثيرات السكرول */
+.component.box {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    height: 100%;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* تأثيرات السكرول */
+.component.box.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.component.box.in-focus {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px var(--shadow-color);
+    z-index: 2;
+}
+
+.component.box.out-of-focus {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* تأخير ظهور العناصر */
+.component.box:nth-child(2) { transition-delay: 0.1s; }
+.component.box:nth-child(3) { transition-delay: 0.2s; }
+.component.box:nth-child(4) { transition-delay: 0.3s; }
+.component.box:nth-child(5) { transition-delay: 0.4s; }
+.component.box:nth-child(6) { transition-delay: 0.5s; }
+
+/* تنسيق الصور */
+.component.box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.component.box:hover img {
+    transform: scale(1.05);
+}
+
+/* تنسيق العنوان */
+.component.box .name {
+    padding: var(--card-padding);
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-color);
+    background: var(--card-bg);
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* تنسيق البوب أب */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
-.input input {
-    width: 80%;
-    background-color: rgb(53, 49, 49);
-    color: white;
-    height: 35px;
-    margin: 4px 0px;
-    border: none;
-    outline: none;
-    padding: 5px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
+.popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-/* Styling for placeholder text */
-.input input::placeholder {
-    color: #bfbfbf; /* Light gray color for better visibility */
-    opacity: 1; /* Ensure the placeholder is fully opaque */
-}
-
-/* Ensure compatibility with different browsers */
-.input input::-webkit-input-placeholder {
-    color: #bfbfbf; /* Light gray color for better visibility */
-}
-
-.input input:-ms-input-placeholder {
-    color: #bfbfbf; /* Light gray color for better visibility */
-}
-
-.input input::-ms-input-placeholder {
-    color: #bfbfbf; /* Light gray color for better visibility */
-}
-
-.input input::placeholder {
-    color: #bfbfbf; /* Light gray color for better visibility */
-}
-
-.box {
-    border-radius: 20px;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    margin: 20px;
+.popup-content {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--border-radius);
     max-width: 600px;
-    cursor: pointer;
-    background-color: #fff;
-    border: 2px solid black;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    width: 90%;
     position: relative;
-}
-.box:hover {
-    transform: scale(1.1); 
-    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.8); 
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
 }
 
-.name {
-    font-family: monospace;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.5;
+.popup-overlay.active .popup-content {
+    transform: scale(1);
 }
-.info-box {
+
+.popup-close {
     position: absolute;
-    top: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 296px;
-    height: 332px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    background-color: #fff;
-    border: 2px solid black;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    z-index: 10;
-    display: none;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.popup-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: calc(var(--border-radius) - 4px);
+    margin-bottom: 20px;
+}
+
+.popup-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+/* تنسيق التنقل بين الصفحات */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 15px;
+    border: none;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.pagination button:hover:not(:disabled) {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.pagination button.active {
+    background: var(--accent-color);
+    color: white;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* زر تبديل الثيم */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.theme-toggle svg {
+    color: var(--text-color);
+}
+
+/* تحسينات للموبايل */
+@media screen and (max-width: 768px) {
+    .page-container {
+        padding: 10px;
+    }
+
+    #mainComponents {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .component.box img {
+        height: 180px;
+    }
+
+    .popup-content {
+        padding: 20px;
+    }
+
+    .pagination button {
+        min-width: 35px;
+        height: 35px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
 }
