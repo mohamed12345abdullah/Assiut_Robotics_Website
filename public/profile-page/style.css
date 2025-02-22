@@ -495,6 +495,7 @@
 
 #related-links{
   position: absolute;
+  z-index: 200;
   left: 50%;
   top: 50%;
   width: fit-content;
