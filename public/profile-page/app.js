@@ -1,5 +1,3 @@
-
-        
 // API URLs
 const API_URL = 'https://assiut-robotics-zeta.vercel.app/members/login';
 const VERIFY_URL = 'https://assiut-robotics-zeta.vercel.app/members/verify';
@@ -104,7 +102,7 @@ async function verifyToken() {
 //   try {
 //     const loginData = {
 //       email: "mohamed12345abdullah@gmail.com",
-//       password: "Abdullah123$"
+//      
 //     };
 
 //     const response = await fetch(API_URL, {
@@ -250,6 +248,35 @@ function renderMemberData(data) {
   userStatus.textContent = data.verified ? 'Verified' : 'Pending';
   userStatus.className = `status-badge ${data.verified ? 'verified' : 'pending'}`;
   let relatedLinks = {};
+
+  // إنشاء وإظهار Lab Dates للجميع
+  const headerButtons = document.querySelector('.header-buttons');
+  
+  // إنشاء زر Lab Dates
+  const labDatesBtn = document.createElement('a');
+  labDatesBtn.id = 'lapDates';
+  labDatesBtn.href = '../lapDates/getDates.html';
+  labDatesBtn.className = 'header-btn';
+  labDatesBtn.innerHTML = `
+      <i class="fas fa-calendar-alt"></i>
+      Lab Dates
+  `;
+  headerButtons.appendChild(labDatesBtn);
+  
+  // إنشاء زر Add Date لأعضاء OC فقط
+  if (data.committee === "OC" || data.committee === "OC ") {
+      console.log("Creating Add Date button for OC member");
+      const addDateBtn = document.createElement('a');
+      addDateBtn.id = 'addDate';
+      addDateBtn.href = '../lapDates/addDate.html';
+      addDateBtn.className = 'header-btn';
+      addDateBtn.innerHTML = `
+          <i class="fas fa-calendar-plus"></i>
+          Add Date
+      `;
+      headerButtons.appendChild(addDateBtn);
+  }
+
   for(const key in Links){
     if(data.committee === key){
       if(data.role === "head" || data.role === "vice"){

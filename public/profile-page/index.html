@@ -5,12 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Member Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="light-mode loading">
   <header class="disabled ">
     <div class="header-content">
       <h1>Member Dashboard</h1>
-      <button id="RelatedLinks" class="change-avatar-btn">Related Links</button>
+      <div class="header-buttons">
+        <button id="RelatedLinks" class="header-btn">
+          <i class="fas fa-link"></i>
+          Related Links
+        </button>
+        <a id="lapDates" href="../lapDates/getDates.html" class="header-btn" style="display: none;">
+          <i class="fas fa-calendar-alt"></i>
+          Lab Dates
+        </a>
+      </div>
       <div class="disabled" id="related-links">
         <ul>
           <li name = "x"><a href="#">Components</a></li>
@@ -22,7 +32,10 @@
       <div class="user-info">
         <div class="avatar-container">
           <img id="userAvatar" alt="User avatar" class="avatar">
-          <button id="changeAvatarBtn" class="change-avatar-btn">Change Photo</button>
+          <button id="changeAvatarBtn" class="change-avatar-btn">
+            <i class="fas fa-camera"></i>
+            Change Photo
+          </button>
           <input type="file" id="avatarInput" accept="image/*" style="display: none">
         </div>
         <div>
