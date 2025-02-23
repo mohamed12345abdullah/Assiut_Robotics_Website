@@ -147,13 +147,14 @@ function calculateTaskScores(member) {
                 if (course.submittedTasks) {
                     course.submittedTasks.forEach(task => {
                         if (task.rate) {
+                            // console.log(task,"tassssk")
                             const score = parseFloat(task.rate);
                             trackTasks.scores.push({
                                 title: `Track Task`,
                                 score: score
                             });
                             trackTasks.totalScore += score;
-                            trackTasks.totalPoints += 10; // افتراض أن كل مهمة في المسار = 10 نقاط
+                            trackTasks.totalPoints += task.task.score-0; // افتراض أن كل مهمة في المسار = 10 نقاط
                         }
                     });
                 }
@@ -261,7 +262,7 @@ function showMemberDetails(member, showScore = true) {
 
     if (showScore) {
         const scores = calculateTaskScores(member);
-        
+        // console.log(scores)
         content += `
             <div class="scores-section">
                 <h3>Overall Performance</h3>
@@ -299,9 +300,9 @@ function showMemberDetails(member, showScore = true) {
                                         <div class="task-item">
                                             <p>Track Task: ${task.task.name}</p>
                                             <div class="progress-bar">
-                                                <div class="progress" style="width: ${(task.rate/10)*100}%"></div>
+                                                <div class="progress" style="width: ${(task.rate/task.task.score)*100}%"></div>
                                             </div>
-                                            <span class="score-text">${task.rate}/10 (${((task.rate/10)*100).toFixed(1)}%)</span>
+                                            <span class="score-text">${task.rate}/${task.task.score} (${((task.rate/task.task.score)*100).toFixed(1)}%)</span>
                                         </div>
                                     ` : ''
                                 ).join('')
