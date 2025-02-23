@@ -24,6 +24,8 @@ const getComponents = async () => {
         if (response.ok) {
             const res = await response.json();
             components = res.data;
+            console.log("Components:", res);
+            getCat(components)
             displayComponents(components);
             setupPagination(components);
         } else {
@@ -33,6 +35,16 @@ const getComponents = async () => {
         console.error("Error:", error);
     }
 };
+
+function getCat(data){
+    let cat = [];
+    data.forEach(element => {
+        if(!cat.includes(element.category)){
+            cat.push(element.category)
+        }
+    });
+    console.log(cat);
+}   
 
 // عرض المكونات
 function displayComponents(items) {
