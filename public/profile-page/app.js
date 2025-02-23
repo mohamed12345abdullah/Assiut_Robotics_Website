@@ -39,8 +39,8 @@ const progressBar = document.getElementsByClassName('progress-bar-fill')[0];
 const Links = {
   "HR" : [[{name: "HR page", link: "../control-panel/addHrTocommittee.html"}],[]],
   "web" : [],
-  "media" : [],
-  "OC" : [[{name: "Components management page", link: "../OC_page/OC.html"}],[]],
+  "media" : [[{name : "Make blog", link : "../blog/add-blog.html"}],[]],
+  "OC" : [[],[{name: "Components management page", link: "../OC_page/OC.html"}]],
   "PR" : [],
   "AC Electric" : [],
   "AC Mechanical" : [],
