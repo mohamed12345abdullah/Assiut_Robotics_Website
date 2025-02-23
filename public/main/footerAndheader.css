@@ -165,7 +165,7 @@ body {
 }
 
 .topnav a.active {
-    background-color: #e0f4ff;
+    /* background-color: #e0f4ff; */
     flex-grow: 0;
     padding: 0;
     justify-content: flex-start;
@@ -488,7 +488,7 @@ body {
 }
 
 .topnav a.active {
-    background-color: #87c4ff; /* Active link color */
+    /* background-color: #87c4ff; /* Active link color */
     color: #1a1a1a;
 }
 

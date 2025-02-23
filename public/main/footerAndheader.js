@@ -89,6 +89,7 @@ function implement_views() {
         .done(function () {
             console.log("All HTML content loaded successfully. #Header");
             setupScrollNav();
+            setupLogin();
         })
         .fail(function () {
             console.error("Error loading HTML content. #Header");
@@ -136,4 +137,3 @@ function setupLogin() {
 
 implement_views();
 setupColumns();
-setupLogin();
