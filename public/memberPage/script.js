@@ -27,30 +27,27 @@ const modal = document.getElementById('modal');
 const modalBody = document.getElementById('modal-body');
 const closeBtn = document.getElementsByClassName('close')[0];
 
-function isPreviousMonth(dateString) {
-    // تحويل الـ string إلى كائن Date
+function isPreviousWeek(dateString) {
     const inputDate = new Date(dateString);
     const today = new Date();
 
-    // الحصول على الشهر والسنة الحالية
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
+    // الحصول على بداية الأسبوع الحالي (الأحد)
+    const currentWeekStart = new Date(today);
+    currentWeekStart.setDate(today.getDate() - today.getDay());
+    currentWeekStart.setHours(0, 0, 0, 0);
 
-    // حساب الشهر والسنة السابقة
-    let previousMonth = currentMonth - 1;
-    let previousYear = currentYear;
+    // الحصول على بداية الأسبوع السابق
+    const previousWeekStart = new Date(currentWeekStart);
+    previousWeekStart.setDate(currentWeekStart.getDate() - 7);
 
-    if (previousMonth < 0) { // لو الشهر الحالي هو يناير
-        previousMonth = 11; // ديسمبر
-        previousYear--; // السنة السابقة
-    }
+    // الحصول على نهاية الأسبوع السابق
+    const previousWeekEnd = new Date(previousWeekStart);
+    previousWeekEnd.setDate(previousWeekStart.getDate() + 6);
+    previousWeekEnd.setHours(23, 59, 59, 999);
 
-    // مقارنة سنة وشهر التاريخ المُدخل مع الشهر السابق
-    return (inputDate.getFullYear() === previousYear && inputDate.getMonth() === previousMonth);
+    // التحقق ما إذا كان التاريخ في الأسبوع السابق
+    return inputDate >= previousWeekStart && inputDate <= previousWeekEnd;
 }
-
-
-
 
 // Close modal when clicking the X
 closeBtn.onclick = () => modal.style.display = 'none';
@@ -64,19 +61,18 @@ window.onclick = (event) => {
 
 // Display leader
 function displayLeader(members) {
-    const leaders = members.filter(member => member.role === 'leader' || member.role==='viceLeader');
+    const leaders = members.filter(member => member.role === 'leader' || member.role === 'viceLeader');
     leaders.forEach(leader => {
         if (leader) {
             const leaderContainer = document.getElementById('leader-container');
             const leaderCard = document.createElement('div');
-            leaderCard.classList.add('leader-card')
-            leaderCard.innerHTML=createMemberCard(leader)
+            leaderCard.classList.add('leader-card');
+            leaderCard.innerHTML = createMemberCard(leader);
             leaderCard.onclick = () => showMemberDetails(leader);
-            leaderContainer.appendChild( leaderCard);
+            leaderContainer.appendChild(leaderCard);
             leaderContainer.classList.add('fade-in');
-        } 
+        }
     });
-
 }
 
 // Auto-slide functionality
@@ -108,51 +104,40 @@ function displayHeads(members) {
         slider.appendChild(headCard);
     });
 
-    // Start auto-sliding
     startAutoSlide(slider);
 
-    // Slider controls
     const prevBtn = document.querySelector('.prev');
     const nextBtn = document.querySelector('.next');
     
-    prevBtn.onclick = () => {
-        slider.scrollLeft -= 320;
-    };
-    
-    nextBtn.onclick = () => {
-        slider.scrollLeft += 320;
-    };
+    prevBtn.onclick = () => slider.scrollLeft -= 320;
+    nextBtn.onclick = () => slider.scrollLeft += 320;
 }
 
 // Calculate scores for different task types
 function calculateTaskScores(member) {
     let regularTasks = {
         totalScore: 0,
-        totalPoints:0,
+        totalPoints: 0,
         scores: []
     };
     let trackTasks = {
         totalScore: 0,
-        totalPoints:0,
+        totalPoints: 0,
         scores: []
     };
 
     // Regular tasks
-    if (member.tasks) {
+    if (member.tasks && member.tasks.length > 0) {
         member.tasks.forEach(task => {
-            if (task.headEvaluation >= 0 && task.hrEvaluation >= 0 && isPreviousMonth(task.submittedAt)) {
-                const score = (task.headEvaluation + task.hrEvaluation) / task.points * 100;
+            if (task.rate !== undefined) {
                 regularTasks.scores.push({
                     title: task.title,
-                    score: score
+                    score: parseFloat(task.rate)
                 });
-                regularTasks.totalScore += task.headEvaluation+task.hrEvaluation;
-                regularTasks.totalPoints += task.points;
+                regularTasks.totalScore += parseFloat(task.rate);
+                regularTasks.totalPoints += parseFloat(task.points);
             }
         });
-        if (regularTasks.scores.length > 0) {
-            regularTasks.percent = regularTasks.totalScore / regularTasks.totalPoints;
-        }
     }
 
     // Track tasks
@@ -161,43 +146,32 @@ function calculateTaskScores(member) {
             track.courses.forEach(course => {
                 if (course.submittedTasks) {
                     course.submittedTasks.forEach(task => {
-                        console.log("previous month ",isPreviousMonth(task.submittedAt));
-                        
-                        if (task.rate&& isPreviousMonth(task.submittedAt)) {
-                            const score = parseFloat(task.rate) ; // Convert to percentage
-                            console.log(course);
-                            
+                        if (task.rate) {
+                            const score = parseFloat(task.rate);
                             trackTasks.scores.push({
-                                title: `Course :  ${course.course.name}  /  task ${task.task.name}`,
+                                title: `Track Task`,
                                 score: score
                             });
                             trackTasks.totalScore += score;
-                            trackTasks.totalPoints += 10;
+                            trackTasks.totalPoints += 10; // افتراض أن كل مهمة في المسار = 10 نقاط
                         }
                     });
                 }
             });
         });
-        if (trackTasks.scores.length > 0) {
-            trackTasks.percent = trackTasks.totalScore / (trackTasks.totalPoints);
-        }
     }
 
-    // Calculate overall average
-    // console.log(regularTasks.totalScore);
-    
-    const totalScores = regularTasks.totalScore + trackTasks.totalScore;
+    // حساب النسبة المئوية الكلية
+    const totalScore = regularTasks.totalScore + trackTasks.totalScore;
     const totalPoints = regularTasks.totalPoints + trackTasks.totalPoints;
-    // console.log("total scores:",totalScores);
-    // console.log("total points:",totalPoints);
-    
-    const overallPercent = totalScores > 0 ? 
-        (totalScores) / totalPoints *100 : 0;
+    const overallPercent = totalPoints > 0 ? (totalScore / totalPoints) * 100 : 0;
 
     return {
         regularTasks,
         trackTasks,
-        overallPercent
+        totalScore,
+        totalPoints,
+        overallPercent: Math.min(overallPercent, 100)
     };
 }
 
@@ -212,7 +186,7 @@ function displayBestMembers(members) {
             const bestMember = committeeMembers.reduce((prev, current) => {
                 const prevScores = calculateTaskScores(prev);
                 const currentScores = calculateTaskScores(current);
-                return prevScores.overallPercent > currentScores.overallPercent ? prev : current;
+                return prevScores.totalScore > currentScores.totalScore ? prev : current;
             });
 
             const scores = calculateTaskScores(bestMember);
@@ -226,16 +200,15 @@ function displayBestMembers(members) {
                     <div class="progress" style="width: ${scores.overallPercent}%"></div>
                 </div>
                 <p class="score-text">${scores.overallPercent.toFixed(1)}%</p>
+                <p class="total-score">Total Score: ${scores.totalScore}/${scores.totalPoints}</p>
             `;
             memberCard.onclick = () => showMemberDetails(bestMember, true);
             bestMembersContainer.appendChild(memberCard);
         }
     });
 
-    // Start auto-sliding for best members if there are many
-    const container = document.getElementById('best-members-container');
-    if (container.scrollWidth > container.clientWidth) {
-        startAutoSlide(container);
+    if (bestMembersContainer.scrollWidth > bestMembersContainer.clientWidth) {
+        startAutoSlide(bestMembersContainer);
     }
 }
 
@@ -268,7 +241,7 @@ function displayCommitteeMembers(members) {
 // Create member card HTML
 function createMemberCard(member) {
     return `
-        <img onclick='showMemberDetails(${member,false})' src="${member.avatar}" alt="${member.name}" class="member-avatar">
+        <img src="${member.avatar}" alt="${member.name}" class="member-avatar">
         <h3>${member.name}</h3>
         <p class="role">${member.role}</p>
         ${member.committee ? `<p class="committee">Committee: ${member.committee}</p>` : ''}
@@ -288,7 +261,6 @@ function showMemberDetails(member, showScore = true) {
 
     if (showScore) {
         const scores = calculateTaskScores(member);
-        // console.log("scores",scores);
         
         content += `
             <div class="scores-section">
@@ -296,37 +268,54 @@ function showMemberDetails(member, showScore = true) {
                 <div class="progress-bar">
                     <div class="progress" style="width: ${scores.overallPercent}%"></div>
                 </div>
-                <p class="score-text">Overall Score: ${scores.overallPercent}%</p>
+                <p class="score-text">Overall Score: ${scores.totalScore}/${scores.totalPoints} (${scores.overallPercent.toFixed(1)}%)</p>
 
                 ${scores.regularTasks.scores.length > 0 ? `
                     <h3>Regular Tasks</h3>
                     <div class="tasks-list">
-                        ${scores.regularTasks.scores.map(task => `
+                        ${member.tasks.map(task => `
                             <div class="task-item">
                                 <p>${task.title}</p>
                                 <div class="progress-bar">
-                                    <div class="progress" style="width: ${task.score}%"></div>
+                                    <div class="progress" style="width: ${(task.rate/task.points)*100}%"></div>
                                 </div>
-                                <span class="score-text">${task.score.toFixed(1)}%</span>
+                                <span class="score-text">${task.rate}/${task.points} (${((task.rate/task.points)*100).toFixed(1)}%)</span>
                             </div>
                         `).join('')}
+                        <div class="total-task-score">
+                            <p>Total Regular Tasks Score: ${scores.regularTasks.totalScore}/${scores.regularTasks.totalPoints}</p>
+                        </div>
                     </div>
                 ` : ''}
-
+                
                 ${scores.trackTasks.scores.length > 0 ? `
                     <h3>Track Tasks</h3>
                     <div class="tasks-list">
-                        ${scores.trackTasks.scores.map(task => `
-                            <div class="task-item">
-                                <p>${task.title}</p>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: ${task.score*10}%"></div>
-                                </div>
-                                <span class="score-text">${task.score.toFixed(1)*10}%</span>
-                            </div>
-                        `).join('')}
+                        ${member.startedTracks.map(track => 
+                            track.courses.map(course => 
+                                course.submittedTasks.map(task => 
+                                    
+                                    task.rate ? `
+                                        <div class="task-item">
+                                            <p>Track Task: ${task.task.name}</p>
+                                            <div class="progress-bar">
+                                                <div class="progress" style="width: ${(task.rate/10)*100}%"></div>
+                                            </div>
+                                            <span class="score-text">${task.rate}/10 (${((task.rate/10)*100).toFixed(1)}%)</span>
+                                        </div>
+                                    ` : ''
+                                ).join('')
+                            ).join('')
+                        ).join('')}
+                        <div class="total-task-score">
+                            <p>Total Track Tasks Score: ${scores.trackTasks.totalScore}/${scores.trackTasks.totalPoints}</p>
+                        </div>
                     </div>
                 ` : ''}
+                
+                <div class="total-all-score">
+                    <h3>Total Overall Score: ${scores.totalScore}/${scores.totalPoints}</h3>
+                </div>
             </div>
         `;
     }
