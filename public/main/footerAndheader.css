@@ -461,6 +461,255 @@ body {
     -o-transform: scale(1.1) rotate(30deg);
 }
 
+/* ===== Header Enhancements ===== */
+
+.topnav {
+    background-color: #1a1a1a; /* Dark background for modern look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.topnav a {
+    color: #ffffff; /* White text for contrast */
+    font-size: 16px;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase; /* Uppercase for modern look */
+    font-weight: 500;
+}
+
+.topnav a:hover {
+    background-color: #87c4ff; /* Light blue hover effect */
+    color: #1a1a1a; /* Dark text on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.topnav a.active {
+    background-color: #87c4ff; /* Active link color */
+    color: #1a1a1a;
+}
+
+.logo-img {
+    width: 120px;
+    height: 60px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+    filter: brightness(1.2); /* Brighten on hover */
+}
+
+.navbar-toggle {
+    background-color: #87c4ff; /* Light blue for toggle button */
+    border-radius: 8px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-toggle:hover {
+    background-color: #65a8e6; /* Darker blue on hover */
+}
+
+.burger,
+.burger::before,
+.burger::after {
+    background-color: #ffffff; /* White burger icon */
+}
+
+/* Responsive Header */
+@media screen and (max-width: 980px) {
+    .topnav a {
+        width: 100%;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    .navbar-toggle {
+        display: flex;
+    }
+
+    .flex-div2 {
+        display: none;
+        flex-direction: column;
+    }
+
+    .topnav.responsive .flex-div2 {
+        display: flex;
+    }
+}
+
+/* ===== Footer Enhancements ===== */
+
+.myUniqueFooterClass {
+    background-color: #1a1a1a; /* Dark background for modern look */
+    padding: 50px 20px;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.myUniqueFooterClass .myUniqueFooterClass-left,
+.myUniqueFooterClass .myUniqueFooterClass-center,
+.myUniqueFooterClass .myUniqueFooterClass-right {
+    padding: 20px;
+}
+
+.myUniqueFooterClass .about {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #cccccc; /* Light gray for readability */
+}
+
+.myUniqueFooterClass .about span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #87c4ff; /* Light blue for emphasis */
+}
+
+.myUniqueFooterClass .icons {
+    display: flex;
+    gap: 15px; /* Space between icons */
+    margin-top: 20px;
+}
+
+.myUniqueFooterClass .icons a {
+    color: #87c4ff; /* Light blue icons */
+    font-size: 24px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.myUniqueFooterClass .icons a:hover {
+    color: #65a8e6; /* Darker blue on hover */
+    transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.myUniqueFooterClass .myUniqueFooterClass-center i {
+    background-color: #87c4ff; /* Light blue for icons */
+    color: #1a1a1a; /* Dark text for contrast */
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.myUniqueFooterClass .myUniqueFooterClass-center p {
+    color: #cccccc; /* Light gray for readability */
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.myUniqueFooterClass .myUniqueFooterClass-center p a {
+    color: #87c4ff; /* Light blue for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.myUniqueFooterClass .myUniqueFooterClass-center p a:hover {
+    color: #65a8e6; /* Darker blue on hover */
+}
+
+.myUniqueFooterClass h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #87c4ff; /* Light blue for emphasis */
+}
+
+.myUniqueFooterClass h2 span {
+    color: #ffffff; /* White for contrast */
+}
+
+.myUniqueFooterClass .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between links */
+    margin: 20px 0;
+}
+
+.myUniqueFooterClass .menu a {
+    color: #cccccc; /* Light gray for readability */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.myUniqueFooterClass .menu a:hover {
+    color: #87c4ff; /* Light blue on hover */
+}
+
+.myUniqueFooterClass .name {
+    font-size: 14px;
+    color: #87c4ff; /* Light blue for emphasis */
+    margin-top: 20px;
+}
+
+/* Responsive Footer */
+@media (max-width: 767px) {
+    .myUniqueFooterClass .myUniqueFooterClass-left,
+    .myUniqueFooterClass .myUniqueFooterClass-center,
+    .myUniqueFooterClass .myUniqueFooterClass-right {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .myUniqueFooterClass .icons {
+        justify-content: center;
+    }
+
+    .myUniqueFooterClass .menu {
+        justify-content: center;
+    }
+}
+
+/* Navbar styling */
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+.topnav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.topnav a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+/* Button styling */
+#auth-buttons a {
+    margin-left: 10px;
+}
+
+/* Responsive navbar */
+@media (max-width: 768px) {
+    .topnav {
+        flex-direction: column;
+    }
+
+    .flex-div2 {
+        display: none;
+        flex-direction: column;
+    }
+
+    .flex-div2.active {
+        display: flex;
+    }
+}
+
 @media (max-width: 767px) {
     .myUniqueFooterClass {
         font-size: 14px;

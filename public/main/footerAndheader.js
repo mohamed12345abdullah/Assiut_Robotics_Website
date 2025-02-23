@@ -111,5 +111,29 @@ function implement_views() {
         });
 }
 
+function setupLogin() {
+    // Check if the user is logged in (you can replace this with your actual authentication logic)
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"; // Example: Check localStorage
+
+    // Get the buttons
+    const loginButton = document.getElementById("login");
+    const registerButton = document.getElementById("register");
+    const profileButton = document.getElementById("profile");
+
+    // Update button visibility based on login status
+    if (isLoggedIn) {
+        // User is logged in → Show Profile, hide Log In and Register
+        loginButton.style.display = "none";
+        registerButton.style.display = "none";
+        profileButton.style.display = "inline-block";
+    } else {
+        // User is NOT logged in → Show Log In and Register, hide Profile
+        loginButton.style.display = "inline-block";
+        registerButton.style.display = "inline-block";
+        profileButton.style.display = "none";
+    }
+}
+
 implement_views();
 setupColumns();
+setupLogin();
