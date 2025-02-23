@@ -1,3 +1,6 @@
+
+const token = window.localStorage.getItem("token");
+
 function navButtonClick() {
     const topNav = document.getElementById("myTopnav");
 
@@ -114,7 +117,7 @@ function implement_views() {
 
 function setupLogin() {
     // Check if the user is logged in (you can replace this with your actual authentication logic)
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"; // Example: Check localStorage
+    //const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"; // Example: Check localStorage
 
     // Get the buttons
     const loginButton = document.getElementById("login");
@@ -122,7 +125,7 @@ function setupLogin() {
     const profileButton = document.getElementById("profile");
 
     // Update button visibility based on login status
-    if (isLoggedIn) {
+    if (token) {
         // User is logged in → Show Profile, hide Log In and Register
         loginButton.style.display = "none";
         // registerButton.style.display = "none";
