@@ -69,11 +69,16 @@
 
       <!-- Tasks Card -->
       <div class="card tasks-card">
-        <div class="card-header">
+        <div id="currentTasks" class="card-header taskToggle" style="cursor: pointer;" onclick="toggleList(this.id)">
           <i class="icon book-icon"></i>
           <h2>Current Tasks</h2>
         </div>
+        <div id="previousTasks" class="card-header " style="cursor: pointer;" onclick="toggleList(this.id)">
+          <i class="icon book-icon"></i>
+          <h2>Previous tasks</h2>
+        </div>
         <div id="CurrentTasksList" class="tasks-list"></div>
+        <div id="PreviousTasksList" class="tasks-list tasksActive"></div>
       </div>
       <!-- Tracks Card -->
       <div class="card tracks-card">

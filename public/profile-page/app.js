@@ -483,82 +483,213 @@ function renderCurrentTasks(tasks) {
   progressText.textContent = `${Math.round(progressPercentage)}% Complete`;
 
   tasks.forEach(task => {
-    const taskElement = document.createElement('div');
-    taskElement.className = 'task-item';
+    if (task.submissionLink == "*") {
+      const taskElement = document.createElement('div');
+      taskElement.className = 'task-item';
+      taskElement.classList.add('hidden-details')
 
-    const taskHeader = document.createElement('div');
-    taskHeader.className = 'task-header';
 
-    const taskTitle = document.createElement('h3');
-    taskTitle.className = 'task-title';
-    taskTitle.textContent = task.title;
+      const taskHeader = document.createElement('div');
+      taskHeader.className = 'task-header';
 
-    const taskStartDate = document.createElement('div');
-    taskStartDate.className = 'task-deadline';
-    taskStartDate.innerHTML = `<i class="icon clock-icon"></i> start ${new Date(task.startDate).toLocaleDateString()}`;
-    const taskDeadline = document.createElement('div');
-    taskDeadline.className = 'task-deadline';
-    taskDeadline.innerHTML = `<i class="icon clock-icon"></i> Deadline ${new Date(task.deadline).toLocaleDateString()}`;
+      const taskTitle = document.createElement('h3');
+      taskTitle.className = 'task-title';
+      taskTitle.textContent = task.title;
 
-    taskHeader.appendChild(taskTitle);
-    taskHeader.appendChild(taskStartDate);
-    taskHeader.appendChild(taskDeadline);
+      const taskStartDate = document.createElement('div');
+      taskStartDate.className = 'task-deadline task-hidden';
+      taskStartDate.innerHTML = `<i class="icon clock-icon"></i> start ${new Date(task.startDate).toLocaleDateString()}`;
 
-    const taskDescription = document.createElement('p');
-    taskDescription.className = 'task-description';
-    taskDescription.textContent = task.description;
+      const taskDeadline = document.createElement('div');
+      taskDeadline.className = 'task-deadline';
+      taskDeadline.innerHTML = `<i class="icon clock-icon"></i> Deadline ${new Date(task.deadline).toLocaleDateString()}`;
 
-    const taskURL = document.createElement('a');
-    taskURL.className = 'task-link';
-    taskURL.href = task.taskUrl;
-    taskURL.textContent = "Material Link";
-    taskURL.target = "_blank";
+      taskHeader.appendChild(taskTitle);
+      taskHeader.appendChild(taskStartDate);
+      taskHeader.appendChild(taskDeadline);
 
-    const taskMeta = document.createElement('div');
-    taskMeta.className = 'task-meta';
+      const taskDescription = document.createElement('p');
+      taskDescription.className = 'task-description task-hidden';
+      taskDescription.textContent = task.description;
 
-    // عرض النقاط
-    const taskPoints = document.createElement('span');
-    taskPoints.className = 'task-points';
-    taskPoints.textContent = `Points: ${task.points}`;
-    taskMeta.appendChild(taskPoints);
-    // show rate 
-    const rate = document.createElement('span');
-    rate.className = 'task-points';
-    rate.textContent = `score: ${task.rate}`;
-    taskMeta.appendChild(rate);
+      const taskURL = document.createElement('a');
+      taskURL.className = 'task-link task-hidden';
+      taskURL.href = task.taskUrl;
+      taskURL.textContent = "Material Link";
+      taskURL.target = "_blank";
 
-    // عرض تقييم headEvaluation و hrEvaluation
-    if (task.headEvaluation >0 ) {
-      const taskEvaluation = document.createElement('span');
-      taskEvaluation.className = 'task-evaluation';
-      console.log(task);
-      
-      taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, deadline : ${task.deadlineEvaluation}`;
-      taskMeta.appendChild(taskEvaluation);
-    } else {
-      const submitButton = document.createElement('button');
-      submitButton.className = 'submit-task-btn';
-      submitButton.textContent = 'Submit Task';
-      submitButton.addEventListener('click', () => {
-        
-        currentTaskId = task._id;
-        console.log(currentTaskId);
+      const taskMeta = document.createElement('div');
+      taskMeta.className = 'task-meta';
 
-        submitTaskModal.style.display = 'block';
+      const taskPoints = document.createElement('span');
+      taskPoints.className = 'task-points task-hidden';
+      taskPoints.textContent = `Points: ${task.points}`;
+
+      const rate = document.createElement('span');
+      rate.className = 'task-points task-hidden';
+      rate.textContent = `Score: ${task.rate}`;
+
+      taskMeta.appendChild(taskPoints);
+      taskMeta.appendChild(rate);
+
+      if (task.headEvaluation > 0) {
+        const taskEvaluation = document.createElement('span');
+        taskEvaluation.className = 'task-evaluation';
+        taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, deadline: ${task.deadlineEvaluation}`;
+        taskMeta.appendChild(taskEvaluation);
+      } else {
+        const submitButton = document.createElement('button');
+        submitButton.className = 'submit-task-btn';
+        submitButton.textContent = 'Submit Task';
+        submitButton.addEventListener('click', () => {
+          currentTaskId = task._id;
+          console.log(currentTaskId);
+          submitTaskModal.style.display = 'block';
+        });
+        taskMeta.appendChild(submitButton);
+      }
+      // عنصر "...More"
+      const moreText = document.createElement('span');
+      moreText.className = 'more-text';
+      moreText.textContent = "...More";
+
+      taskMeta.appendChild(moreText);
+      taskElement.appendChild(taskHeader);
+      taskElement.appendChild(taskDescription);
+      taskElement.appendChild(taskURL);
+      taskElement.appendChild(taskMeta);
+
+      // عند الضغط على العنصر، يتم إضافة/إزالة كلاس لإخفاء العناصر المطلوبة
+      taskElement.addEventListener('click', () => {
+        taskElement.classList.toggle('hidden-details');
+        moreText.style.display = taskElement.classList.contains('hidden-details') ? 'block' : 'none';
+        taskMeta.style.justifyContent = taskElement.classList.contains('hidden-details') ? 'start' : 'space-between';
       });
-      taskMeta.appendChild(submitButton);
+
+      tasksList.appendChild(taskElement);
     }
-
-    taskElement.appendChild(taskHeader);
-    taskElement.appendChild(taskDescription);
-    taskElement.appendChild(taskURL);
-    taskElement.appendChild(taskMeta);
-
-    tasksList.appendChild(taskElement);
   });
+
+
 }
 
+//render Previous tasks that not for Tracks
+function renderPreviousTasks(tasks) {
+  const tasksList = document.getElementById('PreviousTasksList');
+  tasksList.innerHTML = '';
+  tasksContainer.style.display = 'block';
+
+  // حساب نسبة التقدم بناءً على المهام التي لها تقييم
+  const completedTasks = tasks.filter(task => task.headEvaluation > 0).length;
+  const progressPercentage = (tasks.length > 0) ? (completedTasks / tasks.length) * 100 : 0;
+
+  progressBarFill.style.width = `${progressPercentage}%`;
+  progressText.textContent = `${Math.round(progressPercentage)}% Complete`;
+
+  tasks.forEach(task => {
+    if (task.submissionLink !== "*") {
+      const taskElement = document.createElement('div');
+      taskElement.className = 'task-item';
+      taskElement.classList.add('hidden-details')
+
+
+      const taskHeader = document.createElement('div');
+      taskHeader.className = 'task-header';
+
+      const taskTitle = document.createElement('h3');
+      taskTitle.className = 'task-title';
+      taskTitle.textContent = task.title;
+
+      const taskStartDate = document.createElement('div');
+      taskStartDate.className = 'task-deadline task-hidden';
+      taskStartDate.innerHTML = `<i class="icon clock-icon"></i> start ${new Date(task.startDate).toLocaleDateString()}`;
+
+      const taskDeadline = document.createElement('div');
+      taskDeadline.className = 'task-deadline';
+      taskDeadline.innerHTML = `<i class="icon clock-icon"></i> Deadline ${new Date(task.deadline).toLocaleDateString()}`;
+
+      taskHeader.appendChild(taskTitle);
+      taskHeader.appendChild(taskStartDate);
+      taskHeader.appendChild(taskDeadline);
+
+      const taskDescription = document.createElement('p');
+      taskDescription.className = 'task-description task-hidden';
+      taskDescription.textContent = task.description;
+
+      const taskURL = document.createElement('a');
+      taskURL.className = 'task-link task-hidden';
+      taskURL.href = task.taskUrl;
+      taskURL.textContent = "Material Link";
+      taskURL.target = "_blank";
+
+      const taskMeta = document.createElement('div');
+      taskMeta.className = 'task-meta';
+
+      const taskPoints = document.createElement('span');
+      taskPoints.className = 'task-points task-hidden';
+      taskPoints.textContent = `Points: ${task.points}`;
+
+      const rate = document.createElement('span');
+      rate.className = 'task-points task-hidden';
+      rate.textContent = `Score: ${task.rate}`;
+
+      taskMeta.appendChild(taskPoints);
+      taskMeta.appendChild(rate);
+
+      if (task.headEvaluation > 0) {
+        const taskEvaluation = document.createElement('span');
+        taskEvaluation.className = 'task-evaluation task-hidden';
+        taskEvaluation.textContent = `Head Eval: ${task.headEvaluation}, deadline: ${task.deadlineEvaluation}`;
+        taskMeta.appendChild(taskEvaluation);
+      } else {
+        const submitButton = document.createElement('button');
+        submitButton.className = 'submit-task-btn';
+        submitButton.textContent = 'Submit Task';
+        submitButton.addEventListener('click', () => {
+          currentTaskId = task._id;
+          console.log(currentTaskId);
+          submitTaskModal.style.display = 'block';
+        });
+        taskMeta.appendChild(submitButton);
+      }
+      const moreText = document.createElement('span');
+      moreText.className = 'more-text';
+      moreText.textContent = "...More";
+
+      taskMeta.appendChild(moreText);
+      taskElement.appendChild(taskHeader);
+      taskElement.appendChild(taskDescription);
+      taskElement.appendChild(taskURL);
+      taskElement.appendChild(taskMeta);
+
+      taskElement.addEventListener('click', () => {
+        taskElement.classList.toggle('hidden-details');
+        moreText.style.display = taskElement.classList.contains('hidden-details') ? 'block' : 'none';
+        taskMeta.style.justifyContent = taskElement.classList.contains('hidden-details') ? 'start' : 'space-between';
+      });
+
+      tasksList.appendChild(taskElement);
+    }
+  });
+
+
+}
+
+//toggle Tasks list
+function toggleList(id) {
+  if (id == "currentTasks") {
+    document.getElementById("CurrentTasksList").classList.remove("tasksActive")
+    document.getElementById("PreviousTasksList").classList.add("tasksActive")
+    document.getElementById("previousTasks").classList.remove("taskToggle")
+    document.getElementById("currentTasks").classList.add("taskToggle")
+  }
+  else if (id == "previousTasks") {
+    document.getElementById("CurrentTasksList").classList.add("tasksActive")
+    document.getElementById("PreviousTasksList").classList.remove("tasksActive")
+    document.getElementById("previousTasks").classList.add("taskToggle")
+    document.getElementById("currentTasks").classList.remove("taskToggle")
+  }
+}
 
 // Event Listeners
 changeAvatarBtn.addEventListener('click', () => {
