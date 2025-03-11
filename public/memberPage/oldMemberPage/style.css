@@ -1,0 +1,382 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #e6f0ff;
+    color: #2c3e50;
+    padding: 2rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.main-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1a73e8;
+}
+
+/* Leader Section */
+.leader-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leader-card {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.leader-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #1a73e8;
+    margin-bottom: 1rem;
+}
+
+.leader-name {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.leader-role {
+    color: #1a73e8;
+    font-weight: 500;
+}
+
+/* Committees Slider */
+.committees-slider {
+    margin-bottom: 3rem;
+}
+
+.swiper {
+    padding: 1rem;
+}
+
+.swiper-slide {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+}
+
+.swiper-slide:hover {
+    transform: scale(1.05);
+}
+
+.committee-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1a73e8;
+    margin-bottom: 1rem;
+}
+
+.committee-name {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 0.3rem;
+}
+
+.committee-role {
+    color: #1a73e8;
+    font-size: 0.9rem;
+}
+
+/* Committees Grid */
+.committees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.committee-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.role-section {
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    color: #1a73e8;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.member-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f0f7ff;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+}
+
+.member-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.member-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1a73e8;
+}
+
+.member-info {
+    flex-grow: 1;
+}
+
+.member-name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.member-role {
+    font-size: 0.85rem;
+    color: #1a73e8;
+}
+
+.best-member {
+    background: #e3f2fd;
+    border: 2px solid #1a73e8;
+}
+
+.best-badge {
+    background: #1a73e8;
+    color: white;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: #121212;
+    color: #ffffff;
+}
+
+.dark-mode .leader-section,
+.dark-mode .swiper-slide,
+.dark-mode .committee-card,
+.dark-mode .member-card {
+    background: #1e1e1e;
+    color: #ffffff;
+    border-color: #333;
+}
+
+.dark-mode .main-title,
+.dark-mode .leader-name,
+.dark-mode .head-name,
+.dark-mode .member-name {
+    color: #ffffff;
+}
+
+.dark-mode .leader-role,
+.dark-mode .head-committee,
+.dark-mode .member-role {
+    color: #64b5f6;
+}
+
+.dark-mode .best-member {
+    background: #2d2d2d;
+    border-color: #64b5f6;
+}
+
+.dark-mode .best-badge {
+    background: #64b5f6;
+    color: #121212;
+}
+
+/* Popup Styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.popup.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: center;
+    position: relative;
+}
+
+.popup-content.dark-mode {
+    background: #1e1e1e;
+    color: white;
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #1a73e8;
+}
+
+.popup-close.dark-mode {
+    color: #64b5f6;
+}
+
+/* Task Styles */
+.tasks-list {
+    margin-bottom: 1.5rem;
+}
+
+.task-item {
+    background: #f0f7ff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.task-title {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.task-max {
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+.task-progress {
+    height: 25px;
+    background: #f0f7ff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.task-rate {
+    height: 100%;
+    background: #1a73e8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 0.85rem;
+}
+
+.progress-container {
+    width: 100%;
+    height: 30px;
+    background: #f0f7ff;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.score-summary {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+/* Dark Mode Adjustments */
+.dark-mode .task-item,
+.dark-mode .task-progress {
+    background: #2d2d2d;
+}
+
+.dark-mode .task-rate {
+    background: #64b5f6;
+}
+
+.dark-mode .progress-container {
+    background: #2d2d2d;
+}
+
+.dark-mode .score-summary {
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Dark Mode Toggle Button */
+#darkModeToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+}

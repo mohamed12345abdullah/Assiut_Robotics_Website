@@ -261,22 +261,11 @@
     margin-top: 0.25rem;
   }
   
-  .hidden-details .task-hidden {
-    display: none;
-}
-.more-text {
-  font-weight: 500;
-  color: #2daee2e0;
-  cursor: pointer;
-  margin-left: 10px;
-  font-size: 16px;
-}
-  
   .task-item {
     border-bottom: 1px solid var(--border-color);
     padding: 1rem 0;
-    cursor: pointer;
   }
+  
   .task-item:last-child {
     border-bottom: none;
   }
@@ -291,16 +280,7 @@
   .task-title {
     font-weight: 600;
   }
-  .tasksActive{
-    display: none; 
-
-  }
-  .taskToggle{  
-     background-color: #93d3ec;
-    width: fit-content;
-    padding: 3px 15px;
-    border-radius: 20px;
-  }
+  
   .task-deadline {
     font-size: 0.75rem;
     color: var(--text-secondary);
