@@ -154,7 +154,7 @@ async function changeAvatar(file) {
     }
   } catch (error) {
     console.error('Error changing avatar:', error);
-    alert('Error changing avatar. Please try again later.');
+    alert('Error changing avatar.',error.message);
   }
 }
 
