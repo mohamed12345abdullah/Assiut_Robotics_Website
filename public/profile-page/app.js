@@ -150,7 +150,7 @@ async function changeAvatar(file) {
     if (response.ok) {
       const data = await response.json();
       userAvatar.src = data.avatar;
-      alert(date.message);
+      alert(data.message);
       window.location.reload();
     }
   } catch (error) {
