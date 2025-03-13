@@ -1,7 +1,7 @@
 // API URLs
 const API_URL = 'https://assiut-robotics-zeta.vercel.app/members/login';
 const VERIFY_URL = 'https://assiut-robotics-zeta.vercel.app/members/verify';
-const CHANGE_AVATAR_URL = 'https://assiutroboticswebsite-production.up.railway.app/members/changeProfileImage';
+const CHANGE_AVATAR_URL = "https://assiut-robotics-zeta.vercel.app//members/changeProfileImage';
 const SUBMIT_TASK_URL = 'https://assiut-robotics-zeta.vercel.app/members/submitTask';
 
 // State management
