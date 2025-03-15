@@ -170,20 +170,23 @@ document.body.insertAdjacentHTML('beforeend', `
             <img class="popup-image" src="" alt="">
             <h2 class="popup-title"></h2>
             <div class="popup-details"></div>
+            <div class="borrow-by"></div>
         </div>
     </div>
 `);
 
 // دالة لعرض البوب أب
-function showPopup(image, title, description) {
+function showPopup(image, title, description, borrower) {
     const popup = document.getElementById('popup');
     const popupImage = popup.querySelector('.popup-image');
     const popupTitle = popup.querySelector('.popup-title');
     const popupDetails = popup.querySelector('.popup-details');
+    const popupBorrower = popup.querySelector('.borrow-by');
 
     popupImage.src = image;
     popupTitle.textContent = title;
     popupDetails.textContent = description || 'لا يوجد وصف متاح';
+    popupBorrower.textContent ='borroweed by: '+ borrower ;
 
     popup.classList.add('active');
     document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
@@ -298,9 +301,10 @@ function displayComponents(items) {
 
     paginatedItems.forEach((element, index) => {
         container.innerHTML += `
-            <div class="component box" data-index="${index}" onclick="showPopup('${element.image}', '${element.title}', '${element.description || ''}')">
+            <div class="component box" data-index="${index}" onclick="showPopup('${element.image}', '${element.title}', '${element.description || ''}' , '${element.borrowedBy!=null ? element.borrowedBy.borrowerName : 'Not Borrowed'}')">
                 <img src="${element.image}" alt="${element.title}">
                 <div class="name">${element.title}</div>
+   
             </div>
         `;
     });
