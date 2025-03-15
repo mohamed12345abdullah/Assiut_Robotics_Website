@@ -90,7 +90,7 @@ function loadBlogs() {
         async function load() {
             // we used try and catch to handle if there is a problem we can catch it and handle it.   because it is an async function that will not affect the whole code so we can know that from the effect
             try {
-                const res = await fetch("https://assiutrobotics-production.up.railway.app/blogs/getBlogs"); // make the request to the server to get the blogs
+                const res = await fetch("https://assiut-robotics-zeta.vercel.app/blogs/getBlogs"); // make the request to the server to get the blogs
                 if (res.ok) { // if the request is ok
                     let response = await res.json(); // get the response from the server
                     console.log(response); // debugging
