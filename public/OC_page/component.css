@@ -161,6 +161,8 @@ body {
 }
 
 .popup-content {
+    display: flex;
+    flex-direction: column;
     background: var(--card-bg);
     padding: 30px;
     border-radius: var(--border-radius);
@@ -199,6 +201,26 @@ body {
     font-size: 24px;
     margin-bottom: 15px;
     color: var(--text-color);
+}
+
+.borrow-button {
+ 
+    width: 30%;
+    padding: 12px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    margin-bottom: 15px;
+    margin: auto;
+}
+
+.borrow-button:hover {
+    background: var(--text-color);
+    color: var(--card-bg);
 }
 
 /* تنسيق التنقل بين الصفحات */

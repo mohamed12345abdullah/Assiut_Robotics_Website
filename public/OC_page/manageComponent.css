@@ -1,0 +1,292 @@
+/* styling manage component */
+
+
+/* global styles */
+
+/* roots */
+
+
+/* colors */
+/* dark mode and light mode */
+    /* dark mode colors */
+:root{
+    --primary-color: #1e1e1e;
+    --secondary-color: #2e2e2e;
+    --text-color: #ffffff;
+    --background-color: #1e1e1e;
+    --dark-mode-background-color: #1e1e1e;
+    --light-mode-background-color: #ffffff;
+    --dark-mode-text-color: #ffffff;
+    --light-mode-text-color: #000000;
+    --dark-mode-primary-color: #1e1e1e;
+    --light-mode-primary-color: #1e1e1e;
+    --dark-mode-secondary-color: #2e2e2e;
+    --light-mode-secondary-color: #2e2e2e;
+    --dark-mode-card-color: #2d2d2d;
+    --light-mode-card-color: #f5f5f5;
+    --dark-mode-shadow-color: #333333;
+    --light-mode-shadow-color: #e5e5e5;
+    --dark-mode-hover-color: #64b5f6;
+    --light-mode-hover-color: #64b5f6;
+    --dark-mode-primary-color: #1e1e1e;
+    --light-mode-primary-color: #1e1e1e;
+    --dark-mode-secondary-color: #2e2e2e;
+    --light-mode-secondary-color: #2e2e2e;
+    --dark-mode-card-color: #2d2d2d;
+    --light-mode-card-color: #f5f5f5;
+    --dark-mode-shadow-color: #333333;
+    --light-mode-shadow-color: #e5e5e5;
+    --dark-mode-hover-color: #64b5f6;
+    --light-mode-hover-color: #64b5f6;
+
+}
+
+
+
+    /* style responsive and blure nav bar */
+
+   nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+   }
+
+   /* hide the all child of nav bar */
+
+   nav *{
+    display: none;
+   }
+
+   nav.active{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+
+
+   nav .burger{
+    display: block;
+    cursor: pointer;
+    align-self: flex-start;
+   }
+
+   nav .box.active{
+    display: block;
+    cursor: pointer;
+    align-self: flex-start;
+   }
+
+   nav .box a{
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.3s;
+   }
+
+   nav .box a:hover{
+    color: var(--primary-color);
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* styling requested components */
+
+   .requested-components {
+    display: flex;
+    flex-direction:row ;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f5f5f5;
+}
+
+.requested-components h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+/* 
+.components-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+} */
+
+.component-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 300px;
+}
+
+.component-info, .member-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.component-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.member-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0.5rem 0;
+}
+
+.component-name {
+    color: #2c3e50;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.member-name {
+    font-weight: 600;
+    color: #34495e;
+}
+
+.component-description, .member-email, .member-phone {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.component-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: auto;
+}
+
+button {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.approve {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.approve:hover {
+    background-color: #27ae60;
+}
+
+.reject {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.reject:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .component-card {
+        padding: 1rem;
+    }
+    
+    .component-image {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* pop up approve form */
+
+.approve-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.approve-form.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.approve-form-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.approve-form-content.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+

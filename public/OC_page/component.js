@@ -57,7 +57,7 @@ function displayComponents(items) {
 
     paginatedItems.forEach(element => {
         container.innerHTML += `
-            <div class="component box" onclick="showPopup('${element.image}', '${element.title}', '${element.description || ''}')">
+            <div class="component box" onclick="showPopup('${element.image}', '${element.title}', '${element.description || ''}', '${element.borrowedBy != null ? element.borrowedBy.borrowerName : 'Not Borrowed'}  , '${element._id}')">
                 <img src="${element.image}" alt="${element.title}">
                 <div class="name">${element.title}</div>
             </div>
@@ -171,23 +171,28 @@ document.body.insertAdjacentHTML('beforeend', `
             <h2 class="popup-title"></h2>
             <div class="popup-details"></div>
             <div class="borrow-by"></div>
+            <button class="borrow-button">I need this</button>
+
         </div>
     </div>
 `);
 
 // دالة لعرض البوب أب
-function showPopup(image, title, description, borrower) {
+function showPopup(image, title, description, borrower, componentId) {
+    console.log(componentId);
+    
     const popup = document.getElementById('popup');
     const popupImage = popup.querySelector('.popup-image');
     const popupTitle = popup.querySelector('.popup-title');
     const popupDetails = popup.querySelector('.popup-details');
     const popupBorrower = popup.querySelector('.borrow-by');
-
+    const borrowButton = popup.querySelector('.borrow-button');
+    
     popupImage.src = image;
     popupTitle.textContent = title;
     popupDetails.textContent = description || 'لا يوجد وصف متاح';
     popupBorrower.textContent ='borroweed by: '+ borrower ;
-
+    borrowButton.setAttribute('data-component-id', componentId);
     popup.classList.add('active');
     document.body.style.overflow = 'hidden'; // منع التمرير في الخلفية
 }
@@ -301,7 +306,7 @@ function displayComponents(items) {
 
     paginatedItems.forEach((element, index) => {
         container.innerHTML += `
-            <div class="component box" data-index="${index}" onclick="showPopup('${element.image}', '${element.title}', '${element.description || ''}' , '${element.borrowedBy!=null ? element.borrowedBy.borrowerName : 'Not Borrowed'}')">
+            <div class="component box" data-index="${index}" onclick="showPopup('${element.image}', '${element.title}', '${element.description || ''}' , '${element.borrowedBy!=null ? element.borrowedBy.member.name : 'Not Borrowed'}', '${element._id}')">
                 <img src="${element.image}" alt="${element.title}">
                 <div class="name">${element.title}</div>
    
@@ -331,3 +336,37 @@ function updateDisplay(items) {
         handleScrollFocus();
     }, 100);
 }
+
+
+const borrowButton = document.querySelector('.borrow-button');
+borrowButton.addEventListener('click',async () => {
+    try {
+
+    console.log('borrow button clicked');
+    console.log("component id",borrowButton.getAttribute('data-component-id'));    
+    const componentId = borrowButton.getAttribute('data-component-id');
+    const response = await fetch('https://assiut-robotics-zeta.vercel.app/components/requestToBorrow', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            componentId: componentId
+        })
+    })
+    const data = await response.json();
+
+    if (response.ok) {
+        alert(data.message);
+    
+    } else {
+        
+        alert(`Failed: ${data.message}`);
+    }
+    console.log(data);
+    } catch (error) {
+        console.log(error);
+        alert(error.message);
+    }
+});
