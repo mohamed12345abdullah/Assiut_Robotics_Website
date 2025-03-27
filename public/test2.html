@@ -136,6 +136,24 @@
             <h3>عدد الأعضاء النشطين: <span id="totalActiveVisitors">0</span></h3>
         </div>
 
+        <!-- table of active visitors -->
+        <div class="active-visitors">
+            <h3>الأعضاء النشطين</h3>
+            <table class="main-table" id="activeVisitorsTable">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>اللجنة</th>
+                        <th>الدور</th>
+                        <th>عدد الزيارات</th>
+                    </tr>
+                </thead>
+                <tbody id="activeVisitorsList">
+                </tbody>
+            </table>
+        </div>
+
         <table class="main-table" id="mainTable">
             <thead>
                 <tr>
@@ -199,6 +217,28 @@ function processData() {
 
     const activeVisitors = data.data.filter(member => member.visits?.length > 0).length;
     document.getElementById('totalActiveVisitors').textContent = activeVisitors;
+    
+    const activeTbody = document.getElementById('activeVisitorsList');
+    activeTbody.innerHTML = '';
+    
+    data.data.forEach(member => {
+        
+        if (member.visits?.length > 0) {
+            console.log(member);
+            const totalVisits = member.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0;
+            const row = document.createElement('tr');
+            row.className = 'member-row';
+            row.onclick = () => showMemberDetails(member);
+            row.innerHTML = `
+                <td>${member.name}</td>
+                <td>${member.email}</td>
+                <td>${member.committee}</td>
+                <td>${member.role}</td>
+                <td>${totalVisits}</td>
+            `;
+            activeTbody.appendChild(row);
+        }
+    });
     
     const tbody = document.getElementById('membersList');
     tbody.innerHTML = '';
