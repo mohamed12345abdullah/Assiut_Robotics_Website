@@ -125,6 +125,17 @@
         <button class="back-btn" onclick="showMainTable()" style="display: none;">← العودة للقائمة</button>
         
         <!-- الجدول الرئيسي -->
+
+        <div class="total-visits">
+            <h3>عدد الزيارات: <span id="totalVisits">0</span></h3>
+        </div>
+        <div class="total-visitors">
+            <h3>عدد الأعضاء: <span id="totalVisitors">0</span></h3>
+        </div>
+        <div class="total-visitor-active">
+            <h3>عدد الأعضاء النشطين: <span id="totalActiveVisitors">0</span></h3>
+        </div>
+
         <table class="main-table" id="mainTable">
             <thead>
                 <tr>
@@ -176,6 +187,19 @@ async function getDate() {
 getDate(); 
 
 function processData() {
+
+    // sort data by number of visits
+    data.data.sort((a, b) => (b.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0) - (a.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0));
+
+    const totalVisits = data.data.reduce((acc, member) => acc + (member.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0), 0);
+    document.getElementById('totalVisits').textContent = totalVisits;
+
+    const totalVisitors = data.data.length;
+    document.getElementById('totalVisitors').textContent = totalVisitors;
+
+    const activeVisitors = data.data.filter(member => member.visits?.length > 0).length;
+    document.getElementById('totalActiveVisitors').textContent = activeVisitors;
+    
     const tbody = document.getElementById('membersList');
     tbody.innerHTML = '';
     
