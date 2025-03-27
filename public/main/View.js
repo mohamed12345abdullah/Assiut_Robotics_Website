@@ -193,3 +193,35 @@ setInterval(() => {
 
 
 }, 4000);
+
+
+
+
+
+
+
+// sendIp 
+
+const getip = async () => {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  }
+
+
+  sendIp = async () => {
+    const ip = await getip();
+    const response = await fetch('https://assiut-robotics-zeta.vercel.app/visitor', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ip }),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await sendIp();
+  });
