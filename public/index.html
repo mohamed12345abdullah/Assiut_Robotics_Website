@@ -348,6 +348,7 @@
           body: JSON.stringify({ ip }),
         });
         const data = await response.json();
+        console.log(data);
         return data;
       }
 
