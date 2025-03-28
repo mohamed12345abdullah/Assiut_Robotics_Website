@@ -1,0 +1,124 @@
+#manageTracks {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+#manageTracks h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+#addTrack {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#addTrackForm {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#addTrackForm input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+#addTrackForm button {
+    background-color: #3498db;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#addTrackForm button:hover {
+    background-color: #2980b9;
+}
+
+#trackList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#trackList > div {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#trackList h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+#trackList p {
+    margin: 0.5rem 0 0 0;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+#trackList button {
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#trackList button[onclick*="edit"] {
+    background-color: #95a5a6;
+    color: white;
+}
+
+#trackList button[onclick*="delete"] {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#trackList button:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+    #addTrackForm {
+        flex-direction: column;
+    }
+    
+    #trackList > div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    #trackList button {
+        margin-top: 1rem;
+        width: 100%;
+    }
+}
+
+input::placeholder {
+    color: #95a5a6;
+    opacity: 1;
+}

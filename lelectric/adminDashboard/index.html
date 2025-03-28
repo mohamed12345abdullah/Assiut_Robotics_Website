@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+<body>
+
+    <h2>Admin Dashboard</h2>
+
+    <div class="container" >
+        <div id="manageTracks">
+            <h2>Manage Tracks</h2>
+            <div id="addTrack">
+                <h2>Add Track</h2>
+                <form id="addTrackForm" action="">
+                    <input type="text" name="name" id="trackName" placeholder="Track Name">
+                    <input type="text" name="description" id="trackDescription" placeholder="Track Description">
+                    <input type="hidden" name="trackId" id="trackId">
+                    <button type="submit">submit</button>
+                </form>
+            </div>
+            <div id="trackList">
+                <div id="track1">
+                    <h3>Track 1</h3>
+                    <p>Track 1 Description</p>
+                    <button type="button" onclick="editTrack(1)">Edit</button>
+                    <button type="button" onclick="deleteTrack(1)">Delete</button>
+                </div>
+            </div>
+        </div>
+   
+
+
+        manage courses
+        <!-- on click  track show courses of this track -->
+        <div id="manageCourses">
+            <h2>Manage Courses</h2>
+            <div id="addCourse">
+                <h2>Add Course</h2>
+                <form action="">
+                    <input type="text" name="name" id="courseName" placeholder="Course Name">
+                    <input type="text" name="description" id="courseDescription" placeholder="Course Description">
+                    <button type="submit">Add Course</button>
+                </form>
+            </div>
+            <div id="courseList">
+                <div id="course1">
+                    <h3>Course 1</h3>
+                    <p>Course 1 Description</p>
+                    <button type="button" onclick="editCourse(1)">Edit</button>
+                    <button type="button" onclick="deleteCourse(1)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+
+        manage tasks
+        <!-- on click  course show tasks of this course -->
+        <div id="manageTasks">
+            <h2>Manage Tasks</h2>
+            <div id="addTask">
+                <h2>Add Task</h2>
+                <form action="">
+                    <input type="text" name="name" id="taskName" placeholder="Task Name">
+                    <input type="text" name="description" id="taskDescription" placeholder="Task Description">
+                    <button type="submit">Add Task</button>
+                </form>
+            </div>
+            <div id="taskList">
+                <div id="task1">
+                    <h3>Task 1</h3>
+                    <p>Task 1 Description</p>
+                    <button type="button" onclick="editTask(1)">Edit</button>
+                    <button type="button" onclick="deleteTask(1)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    
+
+
+    <script>
+        
+        let Tracks;
+        let Courses;
+        let Tasks;
+// tracks
+
+{        
+
+
+        const renderTracks = async() => {
+            try {
+                const  response=await fetch('https://assiut-robotics-zeta.vercel.app/electric/getAllTracks')
+               
+                const res = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tracks', response.message);
+                }
+                Tracks = res.data;
+                const trackList = document.getElementById('trackList');
+                trackList.innerHTML = '';
+                Tracks.forEach(track => {
+                    const trackDiv = document.createElement('div');
+                    trackDiv.innerHTML = `
+                            <h3>${track.name}</h3>
+                            <p>${track.description}</p>
+                            <button type="button" onclick="editTrack('${track._id}')">Edit</button>
+                            <button type="button" onclick="deleteTrack('${track._id}')">Delete</button>
+                        `;
+                        trackList.appendChild(trackDiv);
+                    });
+            } catch (error) {
+                console.error('Error fetching tracks:', error);
+            }
+        }
+        renderTracks();
+
+
+        const addTrackApi = async(data) => {
+            try {
+                const response = await fetch('https://assiut-robotics-zeta.vercel.app/electric/addTrack', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                body: JSON.stringify(data)
+            })
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error('Failed to add track', response.message);
+            }
+            renderTracks();
+        } catch (error) {
+            console.error('Error adding track:', error);
+        }
+        }
+
+
+        editTrackApi = async(data) => {
+            try {
+                const response = await fetch('https://assiut-robotics-zeta.vercel.app/electric/updateTrack', {
+                    method: 'PUT',
+                    headers: {                                                                                          
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                const res = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to edit track', response.message);
+                }
+                renderTracks();
+            } catch (error) {
+                console.error('Error editing track:', error);
+            }
+        }
+
+
+        document.getElementById('addTrackForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let userData= window.localStorage.getItem('user');
+            userData= JSON.parse(userData);
+            const trackName = document.getElementById('trackName').value;
+            const trackDescription = document.getElementById('trackDescription').value;
+            const data = {
+                name: trackName,
+                description: trackDescription,
+                // userId: userData._id,
+                // email: userData.email
+            };
+
+            if (document.getElementById('trackId').value) {
+                data.trackId = document.getElementById('trackId').value;
+                editTrackApi(data);
+            } else {
+                addTrackApi(data);
+            }
+            console.log("Track data", data);
+
+            document.getElementById('addTrackForm').style.display = 'none';
+            document.getElementById('trackName').value = '';
+            document.getElementById('trackDescription').value = '';
+            document.getElementById('trackId').value = '';
+        })
+
+   
+    editTrack = (trackId) => {
+        console.log(Tracks);
+        let track=Tracks.find(track=>track._id===trackId);
+        document.getElementById('addTrackForm').style.display = 'block';
+        document.getElementById('trackName').value = track.name;
+        document.getElementById('trackDescription').value = track.description;
+        document.getElementById('trackId').value = track._id;                                               
+        // add values to the inputs
+        
+    }
+
+
+    deleteTrack = async(trackId) => {
+        try {
+            const response = await fetch('https://assiut-robotics-zeta.vercel.app/electric/deleteTrack', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ trackId })
+            })
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error('Failed to delete track', response.message);
+            }
+        renderTracks();
+    } catch (error) {
+        console.error('Error deleting track:', error);
+    }
+    }
+}
+   
+   
+//  courses
+
+{
+        //add course
+        
+        document.getElementById('addCourseForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let userData= window.localStorage.getItem('user');
+            userData= JSON.parse(userData);
+            const courseName = document.getElementById('courseName').value;
+            const courseDescription = document.getElementById('courseDescription').value;
+            const data = {
+                name: courseName,
+                description: courseDescription,
+                trackId: document.getElementById('trackId').value,
+                // userId: userData._id,
+                // email: userData.email
+            };
+
+            if (document.getElementById('courseId').value) {
+                data.courseId = document.getElementById('courseId').value;
+                editCourseApi(data);
+            } else {
+                addCourseApi(data);
+            }
+            console.log("Course data", data);
+
+            document.getElementById('addCourseForm').style.display = 'none';
+            document.getElementById('courseName').value = '';
+            document.getElementById('courseDescription').value = '';
+            document.getElementById('courseId').value = '';
+        })
+        
+        const renderCourses = async() => {
+            try {
+                const  response=await fetch('https://assiut-robotics-zeta.vercel.app/electric/getAllCourses')
+               
+                const res = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to fetch courses', response.message);
+                }
+                Courses = res.data;
+                const courseList = document.getElementById('courseList');
+                courseList.innerHTML = '';
+                Courses.forEach(course => {
+                    const courseDiv = document.createElement('div');
+                    courseDiv.innerHTML = `
+                            <h3>${course.name}</h3>
+                            <p>${course.description}</p>
+                            <button type="button" onclick="editCourse('${course._id}')">Edit</button>
+                            <button type="button" onclick="deleteCourse('${course._id}')">Delete</button>
+                        `;
+                        courseList.appendChild(courseDiv);
+                    });
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        }
+        renderCourses();
+
+
+
+}
+   </script>
+</body>
+</html>
