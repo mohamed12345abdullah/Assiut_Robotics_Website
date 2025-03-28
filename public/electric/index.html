@@ -3,9 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Robotics Academy</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <nav class="navbar">
+        <div class="logo">Robotics Academy</div>
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="#">Hardware</a>
+            <a href="#">Embedded</a>
+            <a href="#">ROS & Raspberry</a>
+            <a href="#">Computer Vision</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Welcome to Robotics Academy</h1>
+        <p>Innovate • Learn • Create</p>
+    </header>
+
+    <section class="tracks">
+        <div class="track-card">
+            <div class="track-icon">🔧</div>
+            <h3>Hardware</h3>
+            <p>Master electronic components, circuit design, and PCB development</p>
+        </div>
+        <div class="track-card">
+            <div class="track-icon">💻</div>
+            <h3>Embedded Systems</h3>
+            <p>Learn microcontroller programming and real-time systems</p>
+        </div>
+        <div class="track-card">
+            <div class="track-icon">🤖</div>
+            <h3>ROS & Raspberry</h3>
+            <p>Build advanced robotics systems with ROS and Raspberry Pi</p>
+        </div>
+        <div class="track-card">
+            <div class="track-icon">👁️</div>
+            <h3>Computer Vision</h3>
+            <p>Develop AI-powered computer vision applications</p>
+        </div>
+    </section>
+
+    <section class="leaderboard">
+        <h2>Track Leaderboards</h2>
+        <div class="track-filters">
+            <button class="active">All Tracks</button>
+            <button>Hardware</button>
+            <button>Computer Vision</button>
+            <button>ROS & Raspberry</button>
+            <button>Embedded</button>
+        </div>
+        <div id="leaderboardList"></div>
+    </section>
+
+    <section class="team">
+        <h2>Meet Our Team</h2>
+        <div class="team-grid" id="mainTeam"></div>
+    </section>
+
+    <section class="team">
+        <h2>Our Assistant Team</h2>
+        <div class="team-grid" id="assistantTeam"></div>
+    </section>
+
+    <section class="team">
+        <h2>Our HR Team</h2>
+        <div class="team-grid" id="hrTeam"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 Robotics Academy - All Rights Reserved</p>
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>
