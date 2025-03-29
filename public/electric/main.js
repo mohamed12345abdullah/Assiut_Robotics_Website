@@ -1,4 +1,25 @@
 // Track data
+
+// backend api
+const backendUrl = "https://assiut-robotics-zeta.vercel.app/";
+//  =================  
+
+async function fetchTracks() {
+    try {
+        const response = await fetch(`${backendUrl}/electric/getAllTracks`);
+        const res = await response.json();
+        if (!response.ok) {
+            throw new Error('Failed to fetch tracks', response.message);
+        }
+        return res.data;
+    } catch (error) {
+        console.error('Error fetching tracks:', error.message);
+        return [];
+    }
+}
+
+
+// dummy data
 const trackData = {
     'All Tracks': [
         { rank: 1, name: "Alex Johnson", track: "ROS & Raspberry", points: 2150 },
