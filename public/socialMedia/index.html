@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assiut Robotics</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="../head/logo.png" alt="">
+            </div>
+            <div class="title">
+                <h1>Assiut Robotics</h1>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <input type="text" id="userIdInput" placeholder="Enter User ID">
+            <button onclick="getUserStats()">Search</button>
+        </div>
+
+        <div class="stats-section" id="userStats">
+            <!-- User stats will be displayed here -->
+        </div>
+
+        <div class="content" id="postsContainer">
+            <!-- Posts will be dynamically added here -->
+        </div>
+
+        <div class="footer">
+            <p>Footer</p>
+        </div>
+    </div>
+
+    <script>
+        let Data;
+        let comments;
+
+        const getData = async () => {
+            try {
+                const response = await fetch('https://graph.facebook.com/v22.0/262144867290545/posts?fields=message,created_time,comments{message,from{id,name},created_time},reactions.summary(true)&access_token=EAAZAWa4znVt4BO7y3XfsgCcqyAOduuOVBDtu7ZAzoNEam50ZBqkdccq69RxmBlb763wtK8XiMhVRHHpbO8ZAn9uXiIMHCfA1okek81MOQIBClZBsjm5mVwBe0SeAbyZAffEZCoyrh02ZBDhBs6XcRJSBZCryLtbKb0WMG8cLZBNP0e2IXdZB05nJxQgqZA6jqfYR94wZD')
+                const data = await response.json()
+                Data = data.data;
+                console.log(Data)
+                renderPosts()
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        const renderPosts = () => {
+            const postsContainer = document.getElementById('postsContainer')
+            postsContainer.innerHTML = ''
+            
+            Data.forEach(post => {
+                const postElement = document.createElement('div')
+                postElement.classList.add('post')
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-info">
+                            <p>${new Date(post.created_time).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.message}</p>
+                    </div>
+                    <div class="post-stats">
+                        <div class="comments-section">
+                            <h3>Comments (${post.comments.data.length})</h3>
+                            <ul>
+                                ${post.comments.data.map(comment => `
+                                    <li>
+                                        <strong>${comment.message}</strong>
+                                        <span class="comment-time">${new Date(comment.created_time).toLocaleTimeString()}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="reactions-section">
+                            <h3>Reactions (${post.reactions.summary.total_count})</h3>
+                            <div class="reactions-count">
+                                ${post.reactions.summary.total_count} total reactions
+                            </div>
+                        </div>
+                    </div>
+                `
+                postsContainer.appendChild(postElement)
+            })
+        }
+
+        const getUserStats = async () => {
+            const userId = document.getElementById('userIdInput').value
+            if (!userId) return
+
+            const userComments = []
+            const monthlyStats = {}
+
+            // Get posts for the last 3 months
+            const threeMonthsAgo = new Date()
+            threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
+
+            Data.forEach(post => {
+                const postDate = new Date(post.created_time)
+                if (postDate >= threeMonthsAgo) {
+                    const postComments = post.comments.data.filter(comment => comment.from.id === userId)
+                    userComments.push(...postComments)
+
+                    const month = postDate.toLocaleString('default', { month: 'long' })
+                    if (!monthlyStats[month]) {
+                        monthlyStats[month] = {
+                            posts: 0,
+                            comments: 0
+                        }
+                    }
+                    monthlyStats[month].posts++
+                    monthlyStats[month].comments += postComments.length
+                }
+            })
+
+            const totalPosts = Data.length
+            const totalComments = userComments.length
+            const commentPercentage = (totalComments / totalPosts * 100).toFixed(2)
+
+            const statsElement = document.getElementById('userStats')
+            statsElement.innerHTML = `
+                <h2>User Activity Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Comments</h3>
+                        <p>${totalComments}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Comment Percentage</h3>
+                        <p>${commentPercentage}%</p>
+                    </div>
+                </div>
+                <h3>Monthly Activity</h3>
+                <div class="monthly-stats">
+                    ${Object.entries(monthlyStats).map(([month, stats]) => `
+                        <div class="month-stats">
+                            <h4>${month}</h4>
+                            <p>Posts: ${stats.posts}</p>
+                            <p>Comments: ${stats.comments}</p>
+                            <p>Comment Rate: ${(stats.comments / stats.posts * 100).toFixed(2)}%</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `
+        }
+
+        getData()
+    </script>
+</body>
+</html>
