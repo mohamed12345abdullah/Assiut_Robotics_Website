@@ -163,7 +163,8 @@ const deleteOne = async (id) => {
   const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/deleteOne", {
     method: "post",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem('token')}`
     },
     body: JSON.stringify(data)
 
