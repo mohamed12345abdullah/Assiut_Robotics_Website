@@ -277,7 +277,7 @@ const pushToDB = async (formData) => {
   try {
     console.log(formData);
     for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+      console.log(`${key}: ${value}`); 
     }
 
     const res = await fetch("https://assiutroboticswebsite-production.up.railway.app/components/add", {
