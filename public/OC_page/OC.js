@@ -45,7 +45,9 @@ const updateComponent = async (formData) => {
     const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/update", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+
       },
       body: JSON.stringify({
         id: dataObject.id,
