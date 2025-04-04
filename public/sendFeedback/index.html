@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Member Evaluation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://assiut-robotics-zeta.vercel.app/logo.png" alt="Logo" class="logo">
+            <h1>Evaluation Report</h1>
+            <p class="date">March 2025</p>
+        </div>
+
+   
+
+
+
+        <form id="evaluationForm" class="evaluation-form">
+
+            <div class="member-select">
+                <label for="memberSelect">Select Member:</label>
+                <select id="memberSelect"></select>
+            </div>
+
+            <div class="member-select">
+                <label for="committeeSelect">Select Committee:</label>
+                <select id="committeeSelect">
+                    <option value="">media design</option>
+                    <option value="">media content</option>
+                    <option value="">media video</option>
+                </select>
+            </div>
+
+            <div class="metrics-section">
+                <h2>Evaluation Metrics</h2>
+                
+                <div class="metric-item">
+                    <label for="tasksDeadline">Tasks at Deadline (%)</label>
+                    <input type="range" id="tasksDeadline" name="tasksDeadline" min="0" max="100" value="10">
+                    <span class="value-display">10%</span>
+                </div>
+
+                <div class="metric-item">
+                    <label for="behavior">Behavior (%)</label>
+                    <input type="range" id="behavior" name="behavior" min="0" max="100" value="20">
+                    <span class="value-display">20%</span>
+                </div>
+
+                <div class="metric-item">
+                    <label for="groupInteraction">Group Interaction (%)</label>
+                    <input type="range" id="groupInteraction" name="groupInteraction" min="0" max="100" value="30">
+                    <span class="value-display">30%</span>
+                </div>
+
+                <div class="metric-item">
+                    <label for="technicalPerformance">Technical Performance (%)</label>
+                    <input type="range" id="technicalPerformance" name="technicalPerformance" min="0" max="100" value="40">
+                    <span class="value-display">40%</span>
+                </div>
+                <div class="metric-item">
+                    <label for="total">Total (%)</label>
+                    <input type="range" id="total" name="total" min="0" max="100" value="50">
+                    <span class="value-display">50%</span>
+                </div>
+
+       
+            </div>
+
+            <div class="awards-section">
+                <h2>Awards of the Month</h2>
+                <div class="awards-container">
+                    <div class="award-item">
+                        <input type="checkbox" id="award1" name="awards" value="Best Presentation">
+                        <label for="award1">Best member</label>
+                    </div>
+                    <div class="award-item">
+                        <input type="checkbox" id="award2" name="awards" value="Best Project">
+                        <label for="award2">Best Project</label>
+                    </div>
+                    <div class="award-item">
+                        <input type="checkbox" id="award3" name="awards" value="Best Team">
+                        <label for="award3">Best Team</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Send Feedback Email</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
