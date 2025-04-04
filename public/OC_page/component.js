@@ -170,9 +170,6 @@ document.body.insertAdjacentHTML('beforeend', `
             <img class="popup-image" src="" alt="">
             <h2 class="popup-title"></h2>
             <div class="popup-details"></div>
-            <div class="borrow-by"></div>
-            <button class="borrow-button">I need this</button>
-
         </div>
     </div>
 `);
@@ -264,6 +261,7 @@ function createIntersectionObserver() {
                 entry.target.classList.add('visible');
             }
         });
+
     }, options);
 
     // مراقبة كل العناصر
@@ -337,36 +335,3 @@ function updateDisplay(items) {
     }, 100);
 }
 
-
-const borrowButton = document.querySelector('.borrow-button');
-borrowButton.addEventListener('click',async () => {
-    try {
-
-    console.log('borrow button clicked');
-    console.log("component id",borrowButton.getAttribute('data-component-id'));    
-    const componentId = borrowButton.getAttribute('data-component-id');
-    const response = await fetch('https://assiut-robotics-zeta.vercel.app/components/requestToBorrow', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-            componentId: componentId
-        })
-    })
-    const data = await response.json();
-
-    if (response.ok) {
-        alert(data.message);
-    
-    } else {
-        
-        alert(`Failed: ${data.message}`);
-    }
-    console.log(data);
-    } catch (error) {
-        console.log(error);
-        alert(error.message);
-    }
-});
