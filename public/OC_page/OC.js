@@ -77,7 +77,8 @@ form.addEventListener('submit', function (event) {
   event.preventDefault();
   if (title.value != '' && price.value > 0 && count.value <= 100 && category.value != '') {
     if (mood == 'create') {
-
+      console.log('create');
+      
       let countValue = Number(count.value) || 1;
       for (let i = 0; i < countValue; i++) {
         let formData = new FormData();
