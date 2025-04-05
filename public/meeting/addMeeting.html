@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة اجتماع جديد</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .member-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        .member-item:hover {
+            background-color: #f8f9fa;
+        }
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        .member-info {
+            flex-grow: 1;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .members-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+        .form-check-input {
+            cursor: pointer;
+        }
+        .form-check-label {
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">إضافة اجتماع جديد</h2>
+            <form id="meetingForm">
+                <div class="mb-3">
+                    <label for="title" class="form-label">عنوان الاجتماع</label>
+                    <input type="text" class="form-control" id="title" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">اختر الأعضاء</label>
+                    <div class="search-box">
+                        <input type="text" class="form-control" id="memberSearch" placeholder="ابحث عن عضو...">
+                    </div>
+                    <div class="members-container" id="membersContainer">
+                        <!-- سيتم ملء هذا القسم باستخدام JavaScript -->
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">إضافة الاجتماع</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let allMembers = [];
+
+        // جلب بيانات الأعضاء عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/members/get/web');
+                const data = await response.json();
+                allMembers = data.date;
+                displayMembers(allMembers);
+            } catch (error) {
+                console.error('حدث خطأ في جلب بيانات الأعضاء:', error);
+            }
+        });
+
+        // عرض الأعضاء
+        function displayMembers(members) {
+            const container = document.getElementById('membersContainer');
+            container.innerHTML = '';
+
+            members.forEach(member => {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'member-item';
+                memberDiv.innerHTML = `
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="${member._id}" id="member_${member._id}">
+                        <label class="form-check-label" for="member_${member._id}">
+                            <div class="d-flex align-items-center">
+                                <img src="${member.avatar}" class="member-avatar" alt="${member.name}">
+                                <div class="member-info">
+                                    <div>${member.name}</div>
+                                    <small class="text-muted">${member.email}</small>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                `;
+                container.appendChild(memberDiv);
+            });
+        }
+
+        // فلترة الأعضاء عند البحث
+        document.getElementById('memberSearch').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredMembers = allMembers.filter(member => 
+                member.name.toLowerCase().includes(searchTerm) ||
+                member.email.toLowerCase().includes(searchTerm)
+            );
+            displayMembers(filteredMembers);
+        });
+
+        // معالجة إرسال النموذج
+        document.getElementById('meetingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const selectedMembers = Array.from(document.querySelectorAll('.form-check-input:checked'))
+                .map(checkbox => checkbox.value);
+            
+            if (selectedMembers.length === 0) {
+                alert('الرجاء اختيار عضو واحد على الأقل');
+                return;
+            }
+            
+            
+            try {
+                const response = await fetch('https://assiut-robotics-zeta.vercel.app/meeting', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        members: selectedMembers
+                    })
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    alert('تم إضافة الاجتماع بنجاح');
+                    window.location.reload();
+                } else {
+                    alert('حدث خطأ: ' + result.message);
+                }
+            } catch (error) {
+                console.error('حدث خطأ في إرسال البيانات:', error);
+                alert('حدث خطأ في إرسال البيانات');
+            }
+        });
+    </script>
+</body>
+</html>

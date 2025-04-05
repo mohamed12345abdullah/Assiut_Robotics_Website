@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الاجتماعات</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .meeting-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .meeting-card:hover {
+            transform: translateY(-5px);
+        }
+        .calendar-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .time-slot {
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+            min-height: 80px;
+        }
+        .time-slot.available {
+            background-color: #e6cc97;
+            color: white;
+        }
+        .time-slot.booked {
+            background-color: #28a745;
+            color: white;
+        }
+        .time-slot.selected {
+            background-color: #007bff;
+            color: white;
+        }
+        .member-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .booking-info {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        .modal-content {
+            border-radius: 15px;
+        }
+        .modal-header {
+            background: #f8f9fa;
+            border-radius: 15px 15px 0 0;
+        }
+        .modal-footer {
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+        }
+        .nav-tabs .nav-link {
+            color: #495057;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #e6cc97;
+            color: white;
+            border-color: #e6cc97;
+        }
+        .time-slot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .day-tab {
+            display: none;
+        }
+        .day-tab.active {
+            display: block;
+        }
+        .booked-members {
+            margin-top: 5px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .booked-member {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+        .filter-container {
+            margin-bottom: 20px;
+        }
+        .book-button {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .view-members-btn {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+        .members-modal .modal-body {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .members-modal .member-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .members-modal .member-avatar {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        .time-slot-info {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">جدول الاجتماعات</h2>
+        <div id="meetingsContainer" class="row"></div>
+        <div id="calendarContainer" class="calendar-container">
+            <h3 id="meetingTitle" class="text-center mb-4"></h3>
+            
+            <div class="filter-container">
+                <input type="text" class="form-control" id="timeFilter" placeholder="ابحث عن موعد...">
+            </div>
+
+            <ul class="nav nav-tabs" id="dayTabs" role="tablist">
+                <!-- سيتم إضافة علامات التبويب ديناميكياً -->
+            </ul>
+
+            <div class="tab-content" id="dayTabsContent">
+                <!-- سيتم إضافة محتوى علامات التبويب ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing booked members and booking -->
+    <div class="modal fade members-modal" id="timeSlotModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="timeSlotTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="bookedMembersList">
+                        <!-- سيتم إضافة الأعضاء المحجوزين هنا -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary" id="bookTimeSlot">حجز الموعد</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentMeetingId = null;
+        let selectedTimeId = null;
+        let selectedTime = null;
+        let currentMeeting = null;
+        const timeSlotModal = new bootstrap.Modal(document.getElementById('timeSlotModal'));
+
+        // جلب بيانات الاجتماعات
+        async function fetchMeetings() {
+            try {
+                const response = await fetch('https://assiut-robotics-zeta.vercel.app/meeting', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                const data = await response.json();
+                displayMeetings(data.data);
+            } catch (error) {
+                console.error('حدث خطأ في جلب بيانات الاجتماعات:', error);
+            }
+        }
+
+        // عرض الاجتماعات كبطاقات
+        function displayMeetings(meetings) {
+            const container = document.getElementById('meetingsContainer');
+            container.innerHTML = '';
+
+            meetings.forEach(meeting => {
+                const card = document.createElement('div');
+                card.className = 'col-md-4';
+                card.innerHTML = `
+                    <div class="card meeting-card" data-meeting-id="${meeting._id}">
+                        <div class="card-body">
+                            <h5 class="card-title">${meeting.title}</h5>
+                            <p class="card-text">تم الإنشاء بواسطة: ${meeting.createdBy.name}</p>
+                            <div class="d-flex align-items-center">
+                                <small>الأعضاء:</small>
+                                ${meeting.members.map(member => `
+                                    <img src="${member.avatar}" class="member-avatar" title="${member.name}">
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // إضافة مستمعي الأحداث للبطاقات
+            document.querySelectorAll('.meeting-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const meetingId = card.dataset.meetingId;
+                    const meeting = meetings.find(m => m._id === meetingId);
+                    showCalendar(meeting);
+                });
+            });
+        }
+
+        // عرض التقويم
+        function showCalendar(meeting) {
+            currentMeeting = meeting;
+            currentMeetingId = meeting._id;
+            document.getElementById('meetingTitle').textContent = meeting.title;
+            document.getElementById('calendarContainer').style.display = 'block';
+            
+            const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            const tabsContainer = document.getElementById('dayTabs');
+            const contentContainer = document.getElementById('dayTabsContent');
+            
+            tabsContainer.innerHTML = '';
+            contentContainer.innerHTML = '';
+
+            meeting.tableOfDates.forEach((day, dayIndex) => {
+                // إنشاء علامة التبويب
+                const tab = document.createElement('li');
+                tab.className = 'nav-item';
+                tab.innerHTML = `
+                    <a class="nav-link ${dayIndex === 0 ? 'active' : ''}" 
+                       id="day-${dayIndex}-tab" 
+                       data-bs-toggle="tab" 
+                       href="#day-${dayIndex}" 
+                       role="tab">
+                        ${days[dayIndex]}
+                    </a>
+                `;
+                tabsContainer.appendChild(tab);
+
+                // إنشاء محتوى علامة التبويب
+                const tabContent = document.createElement('div');
+                tabContent.className = `tab-pane fade ${dayIndex === 0 ? 'show active' : ''}`;
+                tabContent.id = `day-${dayIndex}`;
+                tabContent.role = "tabpanel";
+
+                const timeGrid = document.createElement('div');
+                timeGrid.className = 'time-slot-grid';
+
+                day.forEach(timeSlot => {
+                    const timeElement = document.createElement('div');
+                    timeElement.className = `time-slot ${timeSlot.isBooked ? 'booked' : 'available'}`;
+                    timeElement.textContent = timeSlot.time;
+                    timeElement.dataset.timeId = timeSlot._id;
+                    
+                    // إضافة معلومات الحجز
+                    if (timeSlot.bookedBy && timeSlot.bookedBy.length > 0) {
+                        const infoDiv = document.createElement('div');
+                        infoDiv.className = 'time-slot-info';
+                        infoDiv.textContent = `${timeSlot.bookedBy.length} محجوز`;
+                        timeElement.appendChild(infoDiv);
+                    }
+
+                    // إضافة مستمع النقر
+                    timeElement.addEventListener('click', () => {
+                        showTimeSlotModal(timeSlot, meeting);
+                    });
+                    
+                    timeGrid.appendChild(timeElement);
+                });
+
+                tabContent.appendChild(timeGrid);
+                contentContainer.appendChild(tabContent);
+            });
+
+            // إضافة مستمع البحث
+            document.getElementById('timeFilter').addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                document.querySelectorAll('.time-slot').forEach(slot => {
+                    const time = slot.textContent.toLowerCase();
+                    const isVisible = time.includes(searchTerm);
+                    slot.style.display = isVisible ? 'block' : 'none';
+                });
+            });
+        }
+
+        // عرض نافذة تفاصيل الموعد
+        function showTimeSlotModal(timeSlot, meeting) {
+            selectedTimeId = timeSlot._id;
+            selectedTime = timeSlot.time;
+            
+            document.getElementById('timeSlotTitle').textContent = `موعد ${timeSlot.time}`;
+            
+            const membersList = document.getElementById('bookedMembersList');
+            membersList.innerHTML = '';
+            
+            if (timeSlot.bookedBy && timeSlot.bookedBy.length > 0) {
+                const membersTitle = document.createElement('h6');
+                membersTitle.textContent = 'الاعضاء';
+                membersList.appendChild(membersTitle);
+                
+                timeSlot.bookedBy.forEach(bookedById => {
+                    const member = meeting.members.find(m => m._id === bookedById);
+                    if (member) {
+                        const memberDiv = document.createElement('div');
+                        memberDiv.className = 'member-item';
+                        memberDiv.innerHTML = `
+                            <img src="${member.avatar}" class="member-avatar">
+                            <span>${member.name}</span>
+                        `;
+                        membersList.appendChild(memberDiv);
+                    }
+                });
+            } else {
+                const noMembers = document.createElement('p');
+                noMembers.textContent = 'لا يوجد أعضاء محجوزين لهذا الموعد';
+                membersList.appendChild(noMembers);
+            }
+            
+            timeSlotModal.show();
+        }
+
+        // حجز موعد
+        async function bookTimeSlot() {
+            if (!selectedTimeId) {
+                alert('الرجاء اختيار موعد');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://assiut-robotics-zeta.vercel.app/meeting/${currentMeetingId}/book`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        timeId: selectedTimeId
+                    })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('تم حجز الموعد بنجاح');
+                    timeSlotModal.hide();
+                    fetchMeetings(); // تحديث البيانات
+                } else {
+                    alert('حدث خطأ: ' + result.message);
+                }
+            } catch (error) {
+                console.error('حدث خطأ في حجز الموعد:', error);
+                alert('حدث خطأ في حجز الموعد');
+            }
+        }
+    </script>
+</body>
+</html>
+                    },
+                    body: JSON.stringify({
+                        timeId: selectedTimeId
+                    })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('تم حجز الموعد بنجاح');
+                    timeSlotModal.hide();
+                    fetchMeetings(); // تحديث البيانات
+                } else {
+                    alert('حدث خطأ: ' + result.message);
+                }
+            } catch (error) {
+                console.error('حدث خطأ في حجز الموعد:', error);
+                alert('حدث خطأ في حجز الموعد');
+            }
+        }
+
+        // إضافة مستمع الحدث لزر الحجز
+        document.getElementById('bookTimeSlot').addEventListener('click', bookTimeSlot);
+
+        // جلب البيانات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', fetchMeetings);
+    </script>
+</body>
+</html>
