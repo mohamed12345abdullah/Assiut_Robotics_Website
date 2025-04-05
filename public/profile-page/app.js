@@ -37,15 +37,15 @@ const progressBar = document.getElementsByClassName('progress-bar-fill')[0];
 
 // Related links
 const Links = {
-  "HR" : [[{name: "HR page", link: "../control-panel/addHrTocommittee.html"}],[]],
+  "HR" : [[{name: "HR page", link: "../control-panel/addHrTocommittee.html"}],[{name: "Meeting vote", link: "../meeting/vote.html"}]],
   "web" : [],
-  "media" : [[{name : "Make blog", link : "../blog/add-blog.html"}],[]],
-  "OC" : [[],[{name: "Components management page", link: "../OC_page/OC.html"}]],
-  "PR" : [],
-  "AC Electric" : [],
-  "AC Mechanical" : [],
+  "media" : [[{name : "Make blog", link : "../blog/add-blog.html"}],[{name: "Meeting vote", link: "../meeting/vote.html"}]],
+  "OC" : [[],[{name: "Components management page", link: "../OC_page/OC.html"},{name: "Meeting vote", link: "../meeting/vote.html"}]],
+  "PR" : [[],[{name: "Meeting vote", link: "../meeting/vote.html"}]],
+  "AC Electric" : [[],[{name: "Meeting vote", link: "../meeting/vote.html"}]],
+  "AC Mechanical" : [[],[{name: "Meeting vote", link: "../meeting/vote.html"}]],
   "head" : [[{name: "Task manager", link: "../head/index.html"},{name: "Tracks manager", link: "../Tracks/admin.html"},{name: "members", link: "../leader/index.html"},{name: "Meeting vote", link: "../meeting/vote.html"}],[]],
-  "leader" : [[{name: "Leader page", link: "../leader/index.html"},{name: "HR page", link: "../control-panel/addHrTocommittee.html"},{name : "Make blog", link : "../blog/add-blog.html"},{name: "Components management page", link: "../OC_page/OC.html"},{name: "Task manager", link: "../head/index.html"},{name: "meeting vote", link: "../meeting/vote.html"},{name: "members", link: "../leader/index.html"}]],
+  "leader" : [[{name: "Leader page", link: "../leader/index.html"},{name: "HR page", link: "../control-panel/addHrTocommittee.html"},{name : "Make blog", link : "../blog/add-blog.html"},{name: "Components management page", link: "../OC_page/OC.html"},{name: "Task manager", link: "../head/index.html"},{name: "Meeting vote", link: "../meeting/vote.html"},{name: "members", link: "../leader/index.html"}]],
 }
 
 // Verify token
