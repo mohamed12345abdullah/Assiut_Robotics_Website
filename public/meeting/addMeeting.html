@@ -53,6 +53,38 @@
             cursor: pointer;
             width: 100%;
         }
+        .selected-members {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .selected-members-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        .selected-member {
+            display: inline-flex;
+            align-items: center;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .selected-member img {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .remove-member {
+            margin-right: 5px;
+            cursor: pointer;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +95,12 @@
                 <div class="mb-3">
                     <label for="title" class="form-label">عنوان الاجتماع</label>
                     <input type="text" class="form-control" id="title" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الأعضاء المختارين</label>
+                    <div class="selected-members" id="selectedMembersContainer">
+                        <div class="selected-members-title">لم يتم اختيار أي أعضاء</div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">اختر الأعضاء</label>
@@ -80,6 +118,7 @@
 
     <script>
         let allMembers = [];
+        let selectedMembers = new Set();
 
         // جلب بيانات الأعضاء عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', async () => {
@@ -103,23 +142,77 @@
             members.forEach(member => {
                 const memberDiv = document.createElement('div');
                 memberDiv.className = 'member-item';
+                const isSelected = selectedMembers.has(member._id);
+                
                 memberDiv.innerHTML = `
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="${member._id}" id="member_${member._id}">
+                        <input class="form-check-input" type="checkbox" value="${member._id}" 
+                               id="member_${member._id}" ${isSelected ? 'checked' : ''}>
                         <label class="form-check-label" for="member_${member._id}">
                             <div class="d-flex align-items-center">
                                 <img src="${member.avatar}" class="member-avatar" alt="${member.name}">
                                 <div class="member-info">
                                     <div>${member.name}</div>
                                     <small class="text-muted">${member.email}</small>
-                                    <div style="margin-left: 5px; color: #ffa745;" ">${member.role}</div>
-                                    <div style="margin-left: 5px; color: #6c757d;" ">${member.committee}</div>
+                                    <div style="margin-left: 5px; color: #ffa745;">${member.role}</div>
+                                    <div style="margin-left: 5px; color: #6c757d;">${member.committee}</div>
                                 </div>
                             </div>
                         </label>
                     </div>
                 `;
+
+                // إضافة مستمع الحدث للـ checkbox
+                const checkbox = memberDiv.querySelector('.form-check-input');
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        selectedMembers.add(member._id);
+                    } else {
+                        selectedMembers.delete(member._id);
+                    }
+                    updateSelectedMembersDisplay();
+                });
+
                 container.appendChild(memberDiv);
+            });
+        }
+
+        // تحديث عرض الأعضاء المختارين
+        function updateSelectedMembersDisplay() {
+            const container = document.getElementById('selectedMembersContainer');
+            
+            if (selectedMembers.size === 0) {
+                container.innerHTML = '<div class="selected-members-title">لم يتم اختيار أي أعضاء</div>';
+                return;
+            }
+
+            let html = '<div class="selected-members-title">الأعضاء المختارين:</div>';
+            
+            selectedMembers.forEach(memberId => {
+                const member = allMembers.find(m => m._id === memberId);
+                if (member) {
+                    html += `
+                        <div class="selected-member">
+                            <span class="remove-member" data-member-id="${member._id}">×</span>
+                            <img src="${member.avatar}" alt="${member.name}">
+                            <span>${member.name}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            container.innerHTML = html;
+
+            // إضافة مستمعي الأحداث لأزرار الإزالة
+            container.querySelectorAll('.remove-member').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const memberId = e.target.dataset.memberId;
+                    selectedMembers.delete(memberId);
+                    updateSelectedMembersDisplay();
+                    // تحديث حالة الـ checkbox
+                    const checkbox = document.querySelector(`#member_${memberId}`);
+                    if (checkbox) checkbox.checked = false;
+                });
             });
         }
 
@@ -138,14 +231,11 @@
             e.preventDefault();
             
             const title = document.getElementById('title').value;
-            const selectedMembers = Array.from(document.querySelectorAll('.form-check-input:checked'))
-                .map(checkbox => checkbox.value);
             
-            if (selectedMembers.length === 0) {
+            if (selectedMembers.size === 0) {
                 alert('الرجاء اختيار عضو واحد على الأقل');
                 return;
             }
-            
             
             try {
                 const response = await fetch('https://assiut-robotics-zeta.vercel.app/meeting', {
@@ -156,7 +246,7 @@
                     },
                     body: JSON.stringify({
                         title: title,
-                        members: selectedMembers
+                        members: Array.from(selectedMembers)
                     })
                 });
                 
