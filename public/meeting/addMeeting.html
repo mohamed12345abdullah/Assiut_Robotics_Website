@@ -84,7 +84,7 @@
         // جلب بيانات الأعضاء عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('http://localhost:3000/members/get/web');
+                const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/getAllMembers');
                 const data = await response.json();
                 allMembers = data.date;
                 displayMembers(allMembers);
