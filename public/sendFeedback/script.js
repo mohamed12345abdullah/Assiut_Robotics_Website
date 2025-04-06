@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Fetch members data
     async function fetchMembers() {
         try {
-            const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/get/media');
+            const response = await fetch('https://assiut-robotics-zeta.vercel.app/members/get/web');
             const data = await response.json();
             
             if (data.date) {
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const selectedAwards = Array.from(document.querySelectorAll('input[name="awards"]:checked'))
-            .map(checkbox => checkbox.value);
+        const selectedAwards = Array.from(document.querySelectorAll('input[name="awards"]'))
+            .map(input => input.value).filter(value => value !== '');
 
         const feedbackData = {
             committee: committeeSelect.value,
