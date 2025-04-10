@@ -3,334 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة الأعضاء</title>
+    <title>عرض اللجان - L-O-C-S-S و G-S</title>
     <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cae;
+            --light-color: #f8f9fa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --rounded: 12px;
+        }
+        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background: #f0f2f5;
+            background-color: #f5f5f5;
             padding: 20px;
+            color: #333;
         }
-
-        .container {
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .committees-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
         }
-
-        /* تنسيق الجدول الرئيسي */
-        .main-table {
-            width: 100%;
-            border-collapse: collapse;
+        
+        .committee-card {
             background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-            border-radius: 8px;
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
             overflow: hidden;
-        }
-
-        .main-table th, 
-        .main-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-            text-align: right;
-        }
-
-        .main-table th {
-            background-color: #2c3e50;
-            color: white;
-        }
-
-        .member-row {
+            width: 300px;
+            transition: transform 0.3s ease;
             cursor: pointer;
-            transition: background 0.3s;
         }
-
-        .member-row:hover {
-            background: #f5f5f5;
+        
+        .committee-card:hover {
+            transform: translateY(-5px);
         }
-
-        /* تنسيق صفحة التفاصيل */
-        .profile-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: none;
+        
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
         }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .user-info {
-            flex: 1;
-        }
-
-        .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-        }
-
-        .male { background: #e3f2fd; color: #1976d2; }
-        .female { background: #fce4ec; color: #c2185b; }
-
-        .visits-section {
-            margin-top: 30px;
-        }
-
-        .ip-card {
-            background: #f8f9fa;
+        
+        .card-body {
             padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--rounded);
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-
-        .visit-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+        
+        .modal-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.8rem;
         }
-
-        .back-btn {
-            background: #e74c3c;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 20px;
+        
+        .modal-description {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #555;
         }
-
-        .status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.9em;
+        
+        @media (max-width: 768px) {
+            .committees-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .modal-image {
+                max-height: 200px;
+            }
         }
-
-        .active { background: #fff3cd; color: #856404; }
-        .ended { background: #d4edda; color: #155724; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="back-btn" onclick="showMainTable()" style="display: none;">← العودة للقائمة</button>
-        
-        <!-- الجدول الرئيسي -->
-
-        <div class="total-visits">
-            <h3>عدد الزيارات: <span id="totalVisits">0</span></h3>
-        </div>
-        <div class="total-visitors">
-            <h3>عدد الأعضاء: <span id="totalVisitors">0</span></h3>
-        </div>
-        <div class="total-visitor-active">
-            <h3>عدد الأعضاء النشطين: <span id="totalActiveVisitors">0</span></h3>
-        </div>
-
-        <!-- table of active visitors -->
-        <div class="active-visitors">
-            <h3>الأعضاء النشطين</h3>
-            <table class="main-table" id="activeVisitorsTable">
-                <thead>
-                    <tr>
-                        <th>الاسم</th>
-                        <th>البريد الإلكتروني</th>
-                        <th>اللجنة</th>
-                        <th>الدور</th>
-                        <th>عدد الزيارات</th>
-                    </tr>
-                </thead>
-                <tbody id="activeVisitorsList">
-                </tbody>
-            </table>
-        </div>
-
-        <table class="main-table" id="mainTable">
-            <thead>
-                <tr>
-                    <th>الاسم</th>
-                    <th>البريد الإلكتروني</th>
-                    <th>اللجنة</th>
-                    <th>الدور</th>
-                    <th>عدد الزيارات</th>
-                </tr>
-            </thead>
-            <tbody id="membersList">
-            </tbody>
-        </table>
-
-        <!-- صفحة التفاصيل -->
-        <div class="profile-card" id="profileCard">
-            <div class="profile-header">
-                <div class="user-info">
-                    <h2 id="memberName"></h2>
-                    <p id="memberEmail"></p>
-                    <div style="margin-top: 10px;">
-                        <span class="badge" id="memberGender"></span>
-                        <span class="badge" id="memberCommittee"></span>
-                        <span class="badge" id="memberRole"></span>
-                    </div>
-                </div>
+    <h1>لجاننا</h1>
+    
+    <div class="committees-container">
+        <!-- Committee 1 -->
+        <div class="committee-card" onclick="openModal('locss')">
+            <img src="https://via.placeholder.com/300x180?text=L-O-C-S-S" alt="L-O-C-S-S Committee" class="card-image">
+            <div class="card-body">
+                <h2 class="card-title">L-O-C-S-S</h2>
             </div>
-
-            <div class="visits-section">
-                <h3>سجل الزيارات</h3>
-                <div id="visitsContainer"></div>
+        </div>
+        
+        <!-- Committee 2 -->
+        <div class="committee-card" onclick="openModal('gs')">
+            <img src="https://via.placeholder.com/300x180?text=G-S" alt="G-S Committee" class="card-image">
+            <div class="card-body">
+                <h2 class="card-title">G-S</h2>
             </div>
         </div>
     </div>
-
-<script>
-let data
-
-async function getDate() {
-    try {
-        const response = await fetch('https://assiut-robotics-zeta.vercel.app/visitor/members');
-        data = await response.json();
-        processData();
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-}
-
-getDate(); 
-
-function processData() {
-
-    // sort data by number of visits
-    data.data.sort((a, b) => (b.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0) - (a.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0));
-
-    const totalVisits = data.data.reduce((acc, member) => acc + (member.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0), 0);
-    document.getElementById('totalVisits').textContent = totalVisits;
-
-    const totalVisitors = data.data.length;
-    document.getElementById('totalVisitors').textContent = totalVisitors;
-
-    const activeVisitors = data.data.filter(member => member.visits?.length > 0).length;
-    document.getElementById('totalActiveVisitors').textContent = activeVisitors;
     
-    const activeTbody = document.getElementById('activeVisitorsList');
-    activeTbody.innerHTML = '';
+    <!-- Modal for L-O-C-S-S -->
+    <div id="locss-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('locss')">&times;</span>
+            <img src="https://via.placeholder.com/600x300?text=L-O-C-S-S" alt="L-O-C-S-S Committee" class="modal-image">
+            <h2 class="modal-title">L-O-C-S-S</h2>
+            <p class="modal-description">
+                لجنة L-O-C-S-S هي لجنة متخصصة في تطوير الأنظمة اللوجستية وحلول سلسلة التوريد. نعمل على تقديم حلول مبتكرة لتحسين كفاءة العمليات اللوجستية وتبسيط عمليات التوريد. نهدف إلى خلق أنظمة مستدامة وفعالة تلبي احتياجات الشركات في العصر الحديث.
+            </p>
+        </div>
+    </div>
     
-    data.data.forEach(member => {
-        
-        if (member.visits?.length > 0) {
-            console.log(member);
-            const totalVisits = member.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0;
-            const row = document.createElement('tr');
-            row.className = 'member-row';
-            row.onclick = () => showMemberDetails(member);
-            row.innerHTML = `
-                <td>${member.name}</td>
-                <td>${member.email}</td>
-                <td>${member.committee}</td>
-                <td>${member.role}</td>
-                <td>${totalVisits}</td>
-            `;
-            activeTbody.appendChild(row);
+    <!-- Modal for G-S -->
+    <div id="gs-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('gs')">&times;</span>
+            <img src="https://via.placeholder.com/600x300?text=G-S" alt="G-S Committee" class="modal-image">
+            <h2 class="modal-title">G-S</h2>
+            <p class="modal-description">
+                لجنة G-S تركز على تطوير حلول الأمن السيبراني وأنظمة الحماية. نقدم استشارات متخصصة في مجال الأمن المعلوماتي ونطور أنظمة حماية متكاملة للشركات والمؤسسات. نؤمن بأهمية الحماية الرقمية في عصر التكنولوجيا ونعمل على توفير حلول شاملة ومبتكرة.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function openModal(committee) {
+            document.getElementById(`${committee}-modal`).style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
-    });
-    
-    const tbody = document.getElementById('membersList');
-    tbody.innerHTML = '';
-    
-    data.data.forEach(member => {
-        const totalVisits = member.visits?.reduce((acc, visit) => acc + visit.history.length, 0) || 0;
         
-        const row = document.createElement('tr');
-        row.className = 'member-row';
-        row.onclick = () => showMemberDetails(member);
-        row.innerHTML = `
-            <td>${member.name}</td>
-            <td>${member.email}</td>
-            <td>${member.committee}</td>
-            <td>${member.role}</td>
-            <td>${totalVisits}</td>
-        `;
-        tbody.appendChild(row);
-    });
-}
-
-function showMemberDetails(member) {
-    document.getElementById('mainTable').style.display = 'none';
-    document.querySelector('.back-btn').style.display = 'inline-block';
-    document.getElementById('profileCard').style.display = 'block';
-
-    // تعبئة البيانات الأساسية
-    document.getElementById('memberName').textContent = member.name;
-    document.getElementById('memberEmail').textContent = member.email;
-    document.getElementById('memberGender').className = `badge ${member.gender === 'male' ? 'male' : 'female'}`;
-    document.getElementById('memberGender').textContent = member.gender === 'male' ? 'ذكر' : 'أنثى';
-    document.getElementById('memberCommittee').textContent = member.committee;
-    document.getElementById('memberRole').textContent = member.role;
-
-    // تعبئة بيانات الزيارات
-    const visitsContainer = document.getElementById('visitsContainer');
-    visitsContainer.innerHTML = '';
-    
-    if (!member.visits || member.visits.length === 0) {
-        visitsContainer.innerHTML = '<p>لا يوجد زيارات</p>';
-        return;
-    }
-
-    member.visits.forEach(visit => {
-        const ipCard = document.createElement('div');
-        ipCard.className = 'ip-card';
+        function closeModal(committee) {
+            document.getElementById(`${committee}-modal`).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
         
-        const ipHeader = document.createElement('div');
-        ipHeader.style.marginBottom = '15px';
-        ipHeader.innerHTML = `<strong>عنوان IP:</strong> ${visit.ip} 
-                            <span style="margin-right: 20px;">عدد الزيارات: ${visit.history.length}</span>`;
-        
-        const visitsList = document.createElement('div');
-        visit.history.forEach(h => {
-            const visitItem = document.createElement('div');
-            visitItem.className = 'visit-item';
-            
-            const start = new Date(h.visitStart);
-            const end = h.visitEnd ? new Date(h.visitEnd) : null;
-            
-            visitItem.innerHTML = `
-                <div>
-                    <div>${start.toLocaleString()}</div>
-                    ${end ? `<div>المدة: ${formatDuration(end - start)}</div>` : ''}
-                </div>
-                <span class="status ${end ? 'ended' : 'active'}">
-                    ${end ? 'منتهية' : 'جارية'}
-                </span>
-            `;
-            
-            visitsList.appendChild(visitItem);
-        });
-
-        ipCard.appendChild(ipHeader);
-        ipCard.appendChild(visitsList);
-        visitsContainer.appendChild(ipCard);
-    });
-}
-
-function showMainTable() {
-    document.getElementById('mainTable').style.display = 'table';
-    document.querySelector('.back-btn').style.display = 'none';
-    document.getElementById('profileCard').style.display = 'none';
-}
-
-function formatDuration(ms) {
-    const hours = Math.floor(ms / 3600000);
-    const minutes = Math.floor((ms % 3600000) / 60000);
-    return `${hours} ساعة ${minutes} دقيقة`;
-}
-
-window.onload = processData;
-</script>
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
 </body>
 </html>
