@@ -1,5 +1,10 @@
+@import url('https://fonts.cdnfonts.com/css/seven-segment');
+
+                
 body{
     background-color: #eef0e5;
+    font-family: 'Seven Segment', sans-serif !important;
+                                                
 }
 
 .topnav {
@@ -122,4 +127,42 @@ body{
     border-radius: 8px;
     z-index: 10;
     display: none;
+}
+
+/* Styling for the taps */
+.taps{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    padding: 30px;
+    margin: auto;
+    width: 50%;
+    overflow-x: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.taps button{
+    width: 100px;
+    height: 30px;
+    text-align: left;
+    padding-left: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Seven Segment', sans-serif;
+
+    background: linear-gradient(to right, #007bff, #3ca8ff);
+    border: 2px solid rgb(26, 25, 25);
+    cursor: pointer;
+}
+
+.taps button:hover{
+    color: #000;
+    transition: all 0.5s ease-out;
+}
+.Active{
+    background: linear-gradient(to right, #a6f7e9, #9dcdf5) !important;
 }
