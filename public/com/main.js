@@ -10,9 +10,11 @@ AOS.init({
 
 // Hero Section Image Slider
 const heroImages = [
-    'https://images.unsplash.com/photo-1581092160607-ee22731c2f54?w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1600&auto=format&fit=crop'
+    '/imgs/electric.png',
+    '/imgs/mechanical.png',
+    '/imgs/programming.png',
+    '/imgs/media.png',
+    '/imgs/organization.png',
 ];
 
 let currentImageIndex = 0;
