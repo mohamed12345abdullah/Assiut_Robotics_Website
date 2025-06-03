@@ -20,9 +20,14 @@ const heroImages = [
 let currentImageIndex = 0;
 const hero = document.querySelector('.hero');
 
-function changeHeroImage() {
+
+
+function changeHeroImage() {    
+    console.log(currentImageIndex);
+    console.log(heroImages[currentImageIndex]);
+    console.log(currentImageIndex % heroImages.length);
+    hero.style.backgroundImage = `url('${heroImages[currentImageIndex]}');`;
     currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-    hero.style.backgroundImage = `url('${heroImages[currentImageIndex]}')`;
 }
 
 setInterval(changeHeroImage, 5000);
