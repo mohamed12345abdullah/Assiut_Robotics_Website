@@ -35,7 +35,7 @@ body {
 
 /* Header Styles */
 .header {
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
@@ -48,7 +48,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
+    padding: 1rem 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -70,31 +70,42 @@ body {
     color: var(--text-light);
 }
 
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
 .nav-links a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    margin-left: 2rem;
     transition: var(--transition);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 
 .nav-links a:hover {
     color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.1);
 }
 
 .nav-links a.active {
     color: var(--primary-color);
-    position: relative;
+    background: rgba(37, 99, 235, 0.1);
 }
 
-.nav-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
+.nav-links a.register-btn {
     background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    transition: var(--transition);
+}
+
+.nav-links a.register-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Hero Section */
@@ -357,6 +368,9 @@ body {
 
 .committee-content {
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .committee-icon {
@@ -397,6 +411,7 @@ body {
     color: white;
     border: none;
     border-radius: 5px;
+    margin-top: 1rem;
     cursor: pointer;
     transition: var(--transition);
 }
@@ -549,7 +564,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Modal */
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -560,26 +575,25 @@ body {
     background: rgba(0, 0, 0, 0.8);
     z-index: 1000;
     backdrop-filter: blur(5px);
+    overflow-y: auto;
 }
 
 .modal-content {
-    position: fixed;
-    top: 5%;
-    left: 5%;
-    right: 5%;
-    bottom: 5%;
+    position: relative;
     background: white;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     max-height: 90vh;
+    width: 90%;
+    margin: 5vh auto;
 }
 
 .modal-header {
     position: sticky;
     top: 0;
     background: white;
-    padding: 1rem;
+    padding: 1.5rem;
     border-bottom: 2px solid var(--primary-color);
     display: flex;
     justify-content: space-between;
@@ -590,7 +604,7 @@ body {
 .modal-body {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .committee-name {
@@ -612,28 +626,113 @@ body {
     color: var(--primary-color);
 }
 
+.committee-detail-content {
+    padding: 1rem;
+}
+
+.committee-detail-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.committee-detail-content h3 {
+    color: var(--text-color);
+    margin: 1.5rem 0 1rem;
+    font-size: 1.5rem;
+}
+
+.committee-detail-content h4 {
+    color: var(--text-color);
+    margin: 1.25rem 0 0.75rem;
+    font-size: 1.25rem;
+}
+
+.committee-detail-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: var(--text-light);
+}
+
+.committee-detail-content ul {
+    margin: 1rem 0;
+    padding-right: 1.5rem;
+}
+
+.committee-detail-content ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    color: var(--text-light);
+}
+
+.committee-detail-content ul li strong {
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.committee-detail-content ul li p {
+    margin: 0.5rem 0 0;
+}
+
 @media (max-width: 768px) {
     .modal-content {
-        top: 3%;
-        left: 3%;
-        right: 3%;
-        bottom: 3%;
+        width: 95%;
+        margin: 2.5vh auto;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .committee-detail-content {
+        padding: 0.5rem;
+    }
+    
+    .committee-detail-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .committee-detail-content h3 {
+        font-size: 1.3rem;
+        margin: 1.25rem 0 0.75rem;
+    }
+    
+    .committee-detail-content h4 {
+        font-size: 1.1rem;
+        margin: 1rem 0 0.5rem;
+    }
+
+    .nav-links a.register-btn {
+        margin-top: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        height: 100vh;
     }
     
     .modal-header {
         padding: 0.75rem;
     }
     
-    .committee-name {
-        font-size: 1.25rem;
-    }
-    
-    .close {
-        font-size: 1.25rem;
-    }
-    
     .modal-body {
-        padding: 0.75rem;
+        padding: 1rem;
+    }
+    
+    .committee-detail-content {
+        padding: 0.25rem;
     }
 }
 
@@ -655,4 +754,451 @@ body {
 
 .animate-text-delay {
     animation: fadeIn 1s ease-out 0.5s forwards;
+}
+
+.committee-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.tab-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h5 {
+    color: var(--primary-color);
+    margin: 1rem 0;
+}
+
+.tab-content ul {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.tab-content ul li {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.tab-content ul li::before {
+    content: '•';
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+}
+
+.tab-content ul ul {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.committee-content {
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .committee-tabs {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tab-btn {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .committees-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .committee-card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .about-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .about-image {
+        height: 300px;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .committees-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .committee-tabs {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tab-btn {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .committee-content {
+        padding: 1.5rem;
+    }
+
+    .committee-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .committee-icon {
+        margin-bottom: 0.5rem;
+    }
+
+    .committee-text {
+        margin-top: 1rem;
+    }
+
+    .committee-text h4 {
+        font-size: 1.1rem;
+    }
+
+    .committee-text ul {
+        padding-left: 1rem;
+    }
+
+    .committee-text ul li {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .read-more {
+        margin-top: 1rem;
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    /* Modal Responsive Styles */
+    .modal-content {
+        width: 95%;
+        margin: 2.5% auto;
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 0.8rem;
+    }
+
+    .modal-body {
+        padding: 1rem;
+    }
+
+    .committee-detail-content {
+        padding: 1rem;
+    }
+
+    .committee-detail-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .committee-detail-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .committee-detail-content h4 {
+        font-size: 1.1rem;
+    }
+
+    .committee-detail-content p,
+    .committee-detail-content li {
+        font-size: 0.9rem;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 1rem 1rem;
+        box-shadow: var(--shadow-md);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        text-align: right;
+        padding: 0.75rem;
+        border-radius: 5px;
+    }
+
+    .nav-container {
+        padding: 0.75rem 15px;
+    }
+
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+
+    .tagline {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .committee-card {
+        margin: 0;
+    }
+
+    .committee-image {
+        height: 180px;
+    }
+
+    .committee-overlay h3 {
+        font-size: 1.2rem;
+    }
+
+    .committee-overlay p {
+        font-size: 0.8rem;
+    }
+
+    .committee-content {
+        padding: 1rem;
+    }
+
+    .committee-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .tab-btn {
+        min-width: 100px;
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .committee-text h4 {
+        font-size: 1rem;
+    }
+
+    .committee-text p {
+        font-size: 0.85rem;
+    }
+
+    .committee-text ul li {
+        font-size: 0.85rem;
+    }
+
+    /* Modal Responsive Styles for Small Screens */
+    .modal {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .modal-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-container {
+        padding: 0.5rem 10px;
+    }
+
+    .logo h1 {
+        font-size: 1.1rem;
+    }
+
+    .tagline {
+        display: none;
+    }
+
+    .menu-toggle {
+        font-size: 1.25rem;
+    }
+
+    .nav-links {
+        width: 200px;
+    }
+}
+
+@media (max-width: 320px) {
+    .nav-container {
+        padding: 0.5rem 5px;
+    }
+
+    .logo h1 {
+        font-size: 1rem;
+    }
+
+    .menu-toggle {
+        font-size: 1.1rem;
+        padding: 0.25rem;
+    }
+
+    .nav-links {
+        width: 180px;
+    }
+
+    .nav-links a {
+        padding: 0.25rem 0.4rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Landscape Mode for Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .modal {
+        padding: 1rem;
+    }
+
+    .modal-content {
+        max-height: 90vh;
+        margin: 5vh auto;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .committee-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .modal {
+        display: none !important;
+    }
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0.75rem 15px;
+    }
+
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+
+    .tagline {
+        font-size: 0.75rem;
+    }
+
+    .nav-links {
+        gap: 0.5rem;
+    }
+
+    .nav-links a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-container {
+        padding: 0.5rem 10px;
+    }
+
+    .logo h1 {
+        font-size: 1.1rem;
+    }
+
+    .tagline {
+        display: none;
+    }
+
+    .nav-links {
+        gap: 0.25rem;
+    }
+
+    .nav-links a {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .nav-container {
+        padding: 0.5rem 5px;
+    }
+
+    .logo h1 {
+        font-size: 1rem;
+    }
+
+    .nav-links a {
+        padding: 0.25rem 0.4rem;
+        font-size: 0.75rem;
+    }
 }

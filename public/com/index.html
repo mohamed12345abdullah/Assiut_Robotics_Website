@@ -21,6 +21,7 @@
                 <a href="#about">من نحن</a>
                 <a href="#committees">اللجان</a>
                 <a href="#contact">اتصل بنا</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScn4bU5YXhjEOkctauSBE77madkXBSIE8OChxiLpvmc5qovrQ/viewform" class="register-btn" target="_blank">قدم الآن</a>
             </div>
         </nav>
     </header>
@@ -126,7 +127,7 @@
                     <div class="committee-image">
                         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="Academic Committee">
                         <div class="committee-overlay">
-                            <h3>اللجنة الأكاديمية</h3>
+                            <h3>اللجان الأكاديمية</h3>
                             <p>الركيزة الأساسية للعملية التعليمية</p>
                         </div>
                     </div>
@@ -135,16 +136,21 @@
                             <div class="committee-icon">
                                 <i class="fas fa-graduation-cap"></i>
                             </div>
-                            <h2>اللجنة الأكاديمية</h2>
+                            <h2>اللجان الأكاديمية</h2>
+                        </div>
+                        <div class="committee-tabs">
+                            <button class="tab-btn active" onclick="switchTab('electrical')">كهرباء</button>
+                            <button class="tab-btn" onclick="switchTab('mechanical')">ميكانيكا</button>
                         </div>
                         <div class="committee-text">
-                            <h4>المهام الرئيسية</h4>
-                            <ul>
-                                <li>المهام التعليمية والتقييم</li>
-                                <li>تشكيل الفرق الفنية</li>
-                                <li>إعداد المناهج والمصادر</li>
-                                <li>ورش العمل والجلسات التعليمية</li>
-                            </ul>
+                            <div id="electrical-content" class="tab-content active">
+                                <h4>اللجنة الأكاديمية الكهربية</h4>
+                                <p>تهدف إلى تأهيل الأعضاء للعمل في المجالات التقنية المتعلقة بالأنظمة الكهربائية والإلكترونية، من خلال التدريب العملي والمشاركة في المشاريع والمسابقات.</p>
+                            </div>
+                            <div id="mechanical-content" class="tab-content">
+                                <h4>اللجنة الأكاديمية الميكانيكية</h4>
+                                <p>تهدف اللجنة الأكاديمية الميكانيكية إلى تأهيل الأعضاء للعمل بكفاءة في المجالات الهندسية المتعلقة بتصميم وتحليل الأنظمة الميكانيكية، وذلك من خلال التدريب العملي على أدوات التصميم والمحاكاة، والمشاركة في المشاريع التطبيقية.</p>
+                            </div>
                         </div>
                         <button class="read-more" onclick="showDetails('academic')">اقرأ المزيد</button>
                     </div>
@@ -213,7 +219,7 @@
                     <div class="committee-image">
                         <img src="https://images.unsplash.com/photo-1510096358640-cc43efaf92c7?w=800&auto=format&fit=crop" alt="Media Committee">
                         <div class="committee-overlay">
-                            <h3>لجنة الإعلام</h3>
+                            <h3>لجنة الميديا</h3>
                             <p>إدارة المحتوى والتسويق</p>
                         </div>
                     </div>
@@ -222,52 +228,33 @@
                             <div class="committee-icon">
                                 <i class="fas fa-camera"></i>
                             </div>
-                            <h2>لجنة الإعلام</h2>
+                            <h2>لجنة الميديا</h2>
+                        </div>
+                        <div class="committee-tabs">
+                            <button class="tab-btn active" onclick="switchTab('video')">فيديو</button>
+                            <button class="tab-btn" onclick="switchTab('design')">تصميم</button>
+                            <button class="tab-btn" onclick="switchTab('social')">سوشيال</button>
                         </div>
                         <div class="committee-text">
-                            <h4>المهام الرئيسية</h4>
-                            <ul>
-                                <li>إدارة وسائل التواصل الاجتماعي</li>
-                                <li>إطلاق الحملات التسويقية</li>
-                                <li>إدارة المحتوى الإعلامي</li>
-                                <li>تنظيم الفعاليات</li>
-                            </ul>
+                            <div id="video-content" class="tab-content active">
+                                <h4>قسم الفيديو</h4>
+                                <p>إنتاج وتحرير المحتوى المرئي للفريق</p>
+                            </div>
+                            <div id="design-content" class="tab-content">
+                                <h4>قسم التصميم</h4>
+                                <p>تصميم الهوية البصرية والمحتوى الإبداعي</p>
+                            </div>
+                            <div id="social-content" class="tab-content">
+                                <h4>قسم السوشيال</h4>
+                                <p>إدارة منصات التواصل الاجتماعي</p>
+                            </div>
                         </div>
                         <button class="read-more" onclick="showDetails('media')">اقرأ المزيد</button>
                     </div>
                 </div>
 
-                <!-- Design Committee -->
-                <div class="committee-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="committee-image">
-                        <img src="https://images.unsplash.com/photo-1542744095-6f4e021c6246?w=800&auto=format&fit=crop" alt="Design Committee">
-                        <div class="committee-overlay">
-                            <h3>لجنة التصميم</h3>
-                            <p>الإبداع في التصميم والفنون</p>
-                        </div>
-                    </div>
-                    <div class="committee-content">
-                        <div class="committee-header">
-                            <div class="committee-icon">
-                                <i class="fas fa-paint-brush"></i>
-                            </div>
-                            <h2>لجنة التصميم</h2>
-                        </div>
-                        <div class="committee-text">
-                            <h4>المهام الرئيسية</h4>
-                            <ul>
-                                <li>تصميم الهوية البصرية</li>
-                                <li>الجرافيك والتصميم</li>
-                                <li>التصميم ثلاثي الأبعاد</li>
-                                <li>الإبداع الفني</li>
-                            </ul>
-                        </div>
-                        <button class="read-more" onclick="showDetails('design')">اقرأ المزيد</button>
-                    </div>
-                </div>
-
                 <!-- OC Committee -->
-                <div class="committee-card" data-aos="fade-up" data-aos-delay="700">
+                <div class="committee-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="committee-image">
                         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="OC Committee">
                         <div class="committee-overlay">
@@ -292,6 +279,35 @@
                             </ul>
                         </div>
                         <button class="read-more" onclick="showDetails('oc')">اقرأ المزيد</button>
+                    </div>
+                </div>
+
+                <!-- PR Committee -->
+                <div class="committee-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="committee-image">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="PR Committee">
+                        <div class="committee-overlay">
+                            <h3>لجنة العلاقات العامة</h3>
+                            <p>بناء العلاقات والتواصل الخارجي</p>
+                        </div>
+                    </div>
+                    <div class="committee-content">
+                        <div class="committee-header">
+                            <div class="committee-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h2>لجنة العلاقات العامة</h2>
+                        </div>
+                        <div class="committee-text">
+                            <h4>المهام الرئيسية</h4>
+                            <ul>
+                                <li>إتمام التصاريح والإجراءات الرسمية</li>
+                                <li>تنظيم الفعاليات والندوات</li>
+                                <li>الترويج للفعاليات</li>
+                                <li>تعزيز فرص التعاون والشراكات</li>
+                            </ul>
+                        </div>
+                        <button class="read-more" onclick="showDetails('pr')">اقرأ المزيد</button>
                     </div>
                 </div>
             </div>
