@@ -1,3 +1,17 @@
+// Splash Screen
+document.addEventListener('DOMContentLoaded', function() {
+    const splashScreen = document.getElementById('splash-screen');
+    
+    // Hide splash screen after 5 seconds
+    setTimeout(() => {
+        splashScreen.classList.add('fade-out');
+        // Remove splash screen from DOM after fade-out animation
+        setTimeout(() => {
+            splashScreen.remove();
+        }, 500);
+    }, 5000);
+});
+
 // Initialize AOS
 AOS.init({
     duration: 1000,
