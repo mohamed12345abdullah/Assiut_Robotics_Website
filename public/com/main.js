@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             splashScreen.remove();
         }, 500);
-    }, 8000);
+    }, 5000);
 });
 
 // Initialize AOS
