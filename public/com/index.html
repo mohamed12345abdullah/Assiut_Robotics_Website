@@ -19,6 +19,9 @@
                 <h1>أسيوط روبوتكس</h1>
                 <p class="tagline">Assiut Robotics</p>
             </div>
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="nav-links">
                 <a href="#home" class="active">الرئيسية</a>
                 <a href="#about">من نحن</a>
@@ -35,7 +38,9 @@
             <h1 class="hero-title">أسيوط روبوتكس</h1>
             <p class="hero-subtitle">أول فريق تأسس في كلية الهندسة بجامعة أسيوط</p>
             <div class="hero-buttons">
-                <button class="primary-btn">انضم إلينا</button>
+                <button class="primary-btn"> 
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScn4bU5YXhjEOkctauSBE77madkXBSIE8OChxiLpvmc5qovrQ/viewform" class="register-btn" target="_blank">انضم إلينا</a>
+                </button>
                 <button class="secondary-btn">اكتشف المزيد</button>
             </div>
             <div class="hero-stats">
@@ -443,5 +448,28 @@
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="main.js"></script>
+    <script>
+    function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('active');
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const navLinks = document.querySelector('.nav-links');
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+            navLinks.classList.remove('active');
+        }
+    });
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.remove('active');
+        });
+    });
+    </script>
 </body>
 </html>

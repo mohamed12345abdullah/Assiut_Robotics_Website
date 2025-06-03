@@ -15,38 +15,7 @@
 }
 
 /* Splash Screen */
-.splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-}
 
-.splash-screen.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.splash-content {
-    text-align: center;
-    color: white;
-    padding: 2rem;
-    max-width: 800px;
-}
-
-.splash-content h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
 
 .developers {
     display: flex;
@@ -279,6 +248,9 @@ body {
     background-color: white;
     color: var(--primary-color);
     border: none;
+    text-decoration: none;
+    width: 200px;
+    height: 50px;
 }
 
 .primary-btn:hover {
@@ -1083,10 +1055,13 @@ body {
         padding: 5rem 1rem 1rem;
         box-shadow: var(--shadow-md);
         z-index: 1000;
+        transition: transform 0.3s ease;
+        transform: translateX(100%);
     }
 
     .nav-links.active {
         display: flex;
+        transform: translateX(0);
     }
 
     .nav-links a {
@@ -1094,6 +1069,12 @@ body {
         text-align: right;
         padding: 0.75rem;
         border-radius: 5px;
+        margin: 0.25rem 0;
+    }
+
+    .nav-links a.register-btn {
+        margin-top: 1rem;
+        text-align: center;
     }
 
     .nav-container {
@@ -1386,5 +1367,57 @@ body {
 
     .developer {
         padding: 1.5rem;
+    }
+}
+
+/* Mobile Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 1rem 1rem;
+        box-shadow: var(--shadow-md);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+        transform: translateX(100%);
+    }
+
+    .nav-links.active {
+        display: flex;
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        width: 100%;
+        text-align: right;
+        padding: 0.75rem;
+        border-radius: 5px;
+        margin: 0.25rem 0;
+    }
+
+    .nav-links a.register-btn {
+        margin-top: 1rem;
+        text-align: center;
     }
 }
