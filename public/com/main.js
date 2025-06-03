@@ -525,7 +525,7 @@ const sendIpApi = async (page) => {
     try{
     const clientIP = await getClientIP();
     console.log("api function ", page, clientIP)
-    const response = await fetch(`http://localhost:3000/guest`,{
+    const response = await fetch(`https://assiut-robotics-zeta.vercel.app/guest`,{
         method: "POST",
         headers: {
             "Content-type": "application/json"
