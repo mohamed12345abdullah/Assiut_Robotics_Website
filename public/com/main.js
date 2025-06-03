@@ -462,6 +462,7 @@ AOS.init({
 
 
 function showDetails(committee) {
+    sendIpApi(committee);
     if (!committeeDetails[committee]) {
         console.error(`Details for committee ${committee} not found`);
         return;
@@ -501,4 +502,53 @@ function switchTab(tabName) {
     
     if (modalContent) modalContent.classList.add('active');
     if (modalButton) modalButton.classList.add('active');
+}
+
+// get client ip
+
+// Function to get client IP
+const getClientIP = async () => {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error('Error getting IP:', error);
+        return null;
+    }
+};
+
+
+// send ip of the guest
+
+const sendIpApi = async (page) => {
+    try{
+    const clientIP = await getClientIP();
+    console.log("api function ", page, clientIP)
+    const response = await fetch(`http://localhost:3000/guest`,{
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            ip: clientIP,
+            page: page
+        })
+    })
+    if(response.ok){
+        console.log("ok response")
+        const data = await response.json();
+        console.log("send ip success", data);
+        return data;
+    }else{
+        // throw new Error("Failed to login");
+        const data = await response.json();
+        console.log(" fail to send ip ",data )
+        return data;
+    }
+}
+catch(error){
+    console.log(error)
+    return error;
+}
 }
