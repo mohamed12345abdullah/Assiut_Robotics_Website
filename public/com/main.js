@@ -5,7 +5,7 @@
 AOS.init({
     duration: 1000,
     once: true,
-    // offset: 100
+    offset: 100
 });
 
 // Hero Section Image Slider
@@ -556,3 +556,6 @@ const formClick = document.querySelectorAll('.formClick');
 formClick.forEach(form => form.addEventListener('click', function() {
     sendIpApi('form');
 }));
+
+
+closeModal();
