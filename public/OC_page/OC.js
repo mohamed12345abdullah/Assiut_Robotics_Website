@@ -45,9 +45,7 @@ const updateComponent = async (formData) => {
     const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/update", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         id: dataObject.id,
@@ -79,8 +77,7 @@ form.addEventListener('submit', function (event) {
   event.preventDefault();
   if (title.value != '' && price.value > 0 && count.value <= 100 && category.value != '') {
     if (mood == 'create') {
-      console.log('create');
-      
+
       let countValue = Number(count.value) || 1;
       for (let i = 0; i < countValue; i++) {
         let formData = new FormData();
@@ -166,8 +163,7 @@ const deleteOne = async (id) => {
   const res = await fetch("https://assiut-robotics-zeta.vercel.app/components/deleteOne", {
     method: "post",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem('token')}`
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
 
@@ -280,7 +276,7 @@ const pushToDB = async (formData) => {
   try {
     console.log(formData);
     for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`); 
+      console.log(`${key}: ${value}`);
     }
 
     const res = await fetch("https://assiutroboticswebsite-production.up.railway.app/components/add", {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="manageComponent.css">
+    <link rel="stylesheet" href="../main/footerAndheader.css" />
+    <title>Manage Components</title>
+</head>
+<body>
+    <div id="myUniqueHeaderID"></div>
+    
+    <nav>
+
+        <div class="burger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="box">
+            requested components
+        </div>
+        <div class="box">
+            borrowed components
+        </div>
+        <div class="box">
+            <a href="./OC.html"> manage components</a>
+        </div>
+    </nav>
+    
+
+    <style>
+    
+    </style>
+    <section class="requested-components">
+        <h2>Requested Components</h2>
+        <div class="components-container">
+            <div class="component-card">
+                <div class="component-info">
+                    <h3 class="component-name">Component Name</h3>
+                    <img class="component-image" src="" alt="">
+                    <p class="component-description">Component Description</p>
+
+                </div>
+                <div class="member-info">
+                    <p class="member-name">Member Name</p>
+                    <img class="member-image" src="" alt="">
+                    <p class="member-email">Member Email</p>
+                    <p class="member-phone">Member Phone</p>
+
+                </div>
+                <div class="component-actions">
+                    <button class="approve">Approve</button>
+                    <button class="reject">Reject</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="borrowed components">
+
+    </section>
+
+
+
+    <!-- approve form popup  -->
+
+    <div class="approve-form">
+        <div class="approve-form-content">
+            <h2>Approve Component</h2>
+            <form id="approve-form">
+                <div class="component-name">
+                </div>
+                <div class="component-image">
+                    <img src="" alt="">
+                </div>
+                <label for="borrowDate">Borrow Date</label>
+                <input type="date" id="borrowDate">
+
+                <input type="hidden" id="componentId">
+
+                <label for="deadlineDate">deadlineDate </label>
+                <input type="date" id="deadlineDate">
+                <button type="submit">Approve</button>
+              
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../main/footerAndheader.js" defer></script>
+    <script src="manageComponent.js"></script>
+    
+</body>
+</html>
