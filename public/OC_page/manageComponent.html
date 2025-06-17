@@ -3,95 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="manageComponent.css">
     <link rel="stylesheet" href="../main/footerAndheader.css" />
+    <link rel="stylesheet" href="manageComponent.css">
+    
     <title>Manage Components</title>
 </head>
 <body>
     <div id="myUniqueHeaderID"></div>
     
     <nav>
-
         <div class="burger">
             <div></div>
             <div></div>
             <div></div>
         </div>
-        <div class="box">
-            requested components
-        </div>
-        <div class="box">
-            borrowed components
-        </div>
-        <div class="box">
-            <a href="./OC.html"> manage components</a>
-        </div>
-    </nav>
-    
-
-    <style>
-    
-    </style>
-    <section class="requested-components">
-        <h2>Requested Components</h2>
-        <div class="components-container">
-            <div class="component-card">
-                <div class="component-info">
-                    <h3 class="component-name">Component Name</h3>
-                    <img class="component-image" src="" alt="">
-                    <p class="component-description">Component Description</p>
-
-                </div>
-                <div class="member-info">
-                    <p class="member-name">Member Name</p>
-                    <img class="member-image" src="" alt="">
-                    <p class="member-email">Member Email</p>
-                    <p class="member-phone">Member Phone</p>
-
-                </div>
-                <div class="component-actions">
-                    <button class="approve">Approve</button>
-                    <button class="reject">Reject</button>
-                </div>
+        <div class="nav-links">
+            <div class="box">
+                <a href="#requested" class="selected">Requested Components</a>
+            </div>
+            <div class="box">
+                <a href="./borrowedComponents.html">Borrowed Components</a>
+            </div>
+            <div class="box">
+                <a href="./OC.html">Manage Components</a>
             </div>
         </div>
-    </section>
+    </nav>
 
+    <main>
+        <section id="requested" class="requested-components">
+            <h2>Requested Components</h2>
+            <div class="components-container">
+                <!-- Components will be rendered here dynamically -->
+            </div>
+        </section>
 
-    <section class="borrowed components">
+    </main>
 
-    </section>
-
-
-
-    <!-- approve form popup  -->
-
+    <!-- Approve Form Modal -->
     <div class="approve-form">
         <div class="approve-form-content">
             <h2>Approve Component</h2>
-            <form id="approve-form">
-                <div class="component-name">
+            <form id="approve-form" >
+                <div class="form-group">
+                    <label for="componentName">Component Name</label>
+                    <div id="componentName" class="component-name"></div>
                 </div>
-                <div class="component-image">
-                    <img src="" alt="">
+                <div class="form-group" id="componentImage" >
+                    <!-- <label>Component Image</label> -->
+                    <div class="component-image" id="componentImage">
+                        <img src="" alt="Component Image">
+                    </div>
                 </div>
-                <label for="borrowDate">Borrow Date</label>
-                <input type="date" id="borrowDate">
-
+                <div class="form-group">
+                    <label for="borrowDate">Borrow Date</label>
+                    <input type="date" id="borrowDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="deadlineDate">Return Date</label>
+                    <input type="date" id="deadlineDate" required>
+                </div>
                 <input type="hidden" id="componentId">
-
-                <label for="deadlineDate">deadlineDate </label>
-                <input type="date" id="deadlineDate">
-                <button type="submit">Approve</button>
-              
+                <div class="form-actions">
+                    <button type="submit"   class="submit-btn">Approve</button>
+                    <button type="button" onclick="closeModal()"  class="cancel-btn">Cancel</button>
+                </div>
+                <p id="error-message" style="color: red; display: none;"></p>
             </form>
         </div>
     </div>
 
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../main/footerAndheader.js" defer></script>
     <script src="manageComponent.js"></script>
-    
 </body>
 </html>

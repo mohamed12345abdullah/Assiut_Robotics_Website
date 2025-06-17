@@ -169,7 +169,7 @@
                 <!-- Academic Committee -->
                 <div class="committee-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="committee-image">
-                        <img src="./imgs/electric.png" alt="Academic Committee">
+                        <img src="/imgs/electric.png" alt="Academic Committee">
                         <div class="committee-overlay">
                             <h3>اللجان الأكاديمية</h3>
                             <p>الركيزة الأساسية للعملية التعليمية</p>
@@ -203,7 +203,7 @@
                 <!-- Web Committee -->
                 <div class="committee-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="committee-image">
-                        <img src="./imgs/web.png" alt="Web Committee">
+                        <img src="/imgs/web.png" alt="Web Committee">
                         <div class="committee-overlay">
                             <h3>لجنة الويب</h3>
                             <p>تطوير وتصميم المواقع الإلكترونية</p>
@@ -232,7 +232,7 @@
                 <!-- HR Committee -->
                 <div class="committee-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="committee-image">
-                        <img src="imgs/hr.png" alt="">
+                        <img src="/imgs/hr.png" alt="HR Committee">
                         <div class="committee-overlay">
                             <h3>لجنة الموارد البشرية</h3>
                             <p>إدارة وتطوير الموارد البشرية</p>
@@ -261,7 +261,7 @@
                 <!-- Media Committee -->
                 <div class="committee-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="committee-image">
-                        <img src="./imgs/media.png" alt="">
+                        <img src="/imgs/media.png" alt="Media Committee">
                         <div class="committee-overlay">
                             <h3>لجنة الميديا</h3>
                             <p>إدارة المحتوى والتسويق</p>
@@ -300,7 +300,7 @@
                 <!-- OC Committee -->
                 <div class="committee-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="committee-image">
-                        <img src="./imgs/oc.png" alt="OC Committee">
+                        <img src="/imgs/oc.png" alt="OC Committee">
                         <div class="committee-overlay">
                             <h3>لجنة التنظيم</h3>
                             <p>تنظيم وتنسيق الفعاليات والأنشطة</p>
@@ -329,7 +329,7 @@
                 <!-- PR Committee -->
                 <div class="committee-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="committee-image">
-                        <img src="./imgs/pr.png" alt="PR Committee">
+                        <img src="/imgs/pr.png" alt="PR Committee">
                         <div class="committee-overlay">
                             <h3>لجنة العلاقات العامة</h3>
                             <p>بناء العلاقات والتواصل الخارجي</p>
@@ -386,15 +386,21 @@
                 <div class="contact-form" data-aos="fade-left">
                     <form id="contact-form">
                         <div class="form-group">
-                            <input type="text" placeholder="الاسم" required>
+                            <input type="text" id="name" name="name" placeholder="الاسم" required minlength="2" maxlength="50">
+                            <div class="error-message" id="name-error"></div>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="البريد الإلكتروني" required>
+                            <input type="email" id="email" name="email" placeholder="البريد الإلكتروني" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                            <div class="error-message" id="email-error"></div>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="الرسالة" required></textarea>
+                            <textarea id="message" name="message" placeholder="الرسالة" required minlength="10" maxlength="500"></textarea>
+                            <div class="error-message" id="message-error"></div>
                         </div>
-                        <button type="submit" class="submit-btn">إرسال</button>
+                        <button type="submit" class="submit-btn">
+                            <span class="button-text">إرسال</span>
+                            <span class="loading-spinner"></span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -469,6 +475,63 @@
         link.addEventListener('click', () => {
             document.querySelector('.nav-links').classList.remove('active');
         });
+    });
+
+    // تحسين نموذج الاتصال
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // إعادة تعيين رسائل الخطأ
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        
+        // التحقق من صحة البيانات
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        let isValid = true;
+        
+        if (name.length < 2) {
+            document.getElementById('name-error').textContent = 'يجب أن يكون الاسم أكثر من حرفين';
+            isValid = false;
+        }
+        
+        if (!email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+            document.getElementById('email-error').textContent = 'يرجى إدخال بريد إلكتروني صحيح';
+            isValid = false;
+        }
+        
+        if (message.length < 10) {
+            document.getElementById('message-error').textContent = 'يجب أن تكون الرسالة أكثر من 10 أحرف';
+            isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // إظهار حالة التحميل
+        const submitBtn = document.querySelector('.submit-btn');
+        const buttonText = submitBtn.querySelector('.button-text');
+        const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+        
+        buttonText.style.display = 'none';
+        loadingSpinner.style.display = 'inline-block';
+        submitBtn.disabled = true;
+        
+        try {
+            // هنا يمكنك إضافة كود إرسال البيانات إلى الخادم
+            await new Promise(resolve => setTimeout(resolve, 1000)); // محاكاة إرسال البيانات
+            
+            // إظهار رسالة النجاح
+            alert('تم إرسال رسالتك بنجاح!');
+            this.reset();
+        } catch (error) {
+            alert('حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+        } finally {
+            // إعادة تعيين حالة الزر
+            buttonText.style.display = 'inline-block';
+            loadingSpinner.style.display = 'none';
+            submitBtn.disabled = false;
+        }
     });
     </script>
 </body>
