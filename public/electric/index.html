@@ -8,75 +8,54 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Assiut Robotics</div>
-        <div class="nav-links">
-            <a href="#" class="active">Home</a>
-            <a href="#">Hardware</a>
-            <a href="#">Embedded</a>
-            <a href="#">ROS & Raspberry</a>
-            <a href="#">Computer Vision</a>
-        </div>
+        
+        <div class="logo">
+            <img src="../all-images/default.png" alt=""> 
+            <a href="#" class="active" onclick = "goHome()">Assiut Robotics</a></div>
     </nav>
 
-    <header class="hero">
+    <header class="hero" id="header">
         <h1>Welcome to Assiut Robotics</h1>
         <p>Learn How to Learn</p>
     </header>
+    <div id = "home">
+        <section class="tracks">
+            
+        </section>
 
-    <section class="tracks">
-        <div class="track-card">
-            <div class="track-icon">🔧</div>
-            <h3>Hardware</h3>
-            <p>Master electronic components, circuit design, and PCB development</p>
-        </div>
-        <div class="track-card">
-            <div class="track-icon">💻</div>
-            <h3>Embedded Systems</h3>
-            <p>Learn microcontroller programming and real-time systems</p>
-        </div>
-        <div class="track-card">
-            <div class="track-icon">🤖</div>
-            <h3>ROS & Raspberry</h3>
-            <p>Build advanced robotics systems with ROS and Raspberry Pi</p>
-        </div>
-        <div class="track-card">
-            <div class="track-icon">👁️</div>
-            <h3>Computer Vision</h3>
-            <p>Develop AI-powered computer vision applications</p>
-        </div>
-    </section>
+        <section class="leaderboard">
+            <h2>Track Leaderboards</h2>
+            <div class="track-filters">
+                <button class="active">All Tracks</button>
+                <button>Hardware</button>
+                <button>Computer Vision</button>
+                <button>ROS & Raspberry</button>
+                <button>Embedded</button>
+            </div>
+            <div id="leaderboardList"></div>
+        </section>
 
-    <section class="leaderboard">
-        <h2>Track Leaderboards</h2>
-        <div class="track-filters">
-            <button class="active">All Tracks</button>
-            <button>Hardware</button>
-            <button>Computer Vision</button>
-            <button>ROS & Raspberry</button>
-            <button>Embedded</button>
-        </div>
-        <div id="leaderboardList"></div>
-    </section>
+        <section class="team">
+            <h2>Meet Our Team</h2>
+            <div class="team-grid" id="mainTeam"></div>
+        </section>
 
-    <section class="team">
-        <h2>Meet Our Team</h2>
-        <div class="team-grid" id="mainTeam"></div>
-    </section>
+        <section class="team">
+            <h2>Our Assistant Team</h2>
+            <div class="team-grid" id="assistantTeam"></div>
+        </section>
 
-    <section class="team">
-        <h2>Our Assistant Team</h2>
-        <div class="team-grid" id="assistantTeam"></div>
-    </section>
-
-    <section class="team">
-        <h2>Our HR Team</h2>
-        <div class="team-grid" id="hrTeam"></div>
-    </section>
-
+        <section class="team">
+            <h2>Our HR Team</h2>
+            <div class="team-grid" id="hrTeam"></div>
+        </section>
+    </div>
+    <div id="track"></div>
+    <div id="course"></div>
     <footer>
         <p>made by </p>
     </footer>
-
+    <script src="https://kit.fontawesome.com/79904cb93e.js" crossorigin="anonymous"></script>
     <script src="main.js"></script>
 </body>
 </html>

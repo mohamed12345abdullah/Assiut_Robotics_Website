@@ -7,7 +7,7 @@ const container = document.getElementsByClassName(".members");
 //fetching data from the api
 async function fetchingData() {
     try{
-    let response = await fetch('https://assiutrobotics-production.up.railway.app/members/getAllMembers');
+    let response = await fetch('https://assiut-robotics-zeta.vercel.app/members/getAllMembers');
     let data = await response.json();
     return data.data.members;
     }

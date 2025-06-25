@@ -1,124 +1,211 @@
-#manageTracks {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+:root {
+    --primary-color: #1976d2;
+    --secondary-color: #0d1333;
+    --text-color: #f5f5f5;
+    --card-bg: rgba(255, 255, 255, 0.10);
+    --hover-color: #1565c0;
+    --accent-color: #ffb300;
+    --header-color: #FFF685;
+    --modal-bg: rgba(13, 19, 51, 0.95);
+    --modal-content-bg: #222a44;
 }
 
-#manageTracks h2 {
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    text-align: center;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-#addTrack {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+body, html {
+    height: 100%;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
 }
 
-#addTrackForm {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-#addTrackForm input {
-    flex: 1;
-    padding: 0.8rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    font-size: 1rem;
-    min-width: 200px;
-}
-
-#addTrackForm button {
-    background-color: #3498db;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#addTrackForm button:hover {
-    background-color: #2980b9;
-}
-
-#trackList {
+#dashboard-container {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-}
-
-#trackList > div {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    justify-content: flex-start;
+    padding: 40px 0;
 }
 
-#trackList h3 {
-    margin: 0;
-    color: #2c3e50;
-    font-size: 1.2rem;
+#header-section {
+    width: 80vw;
+    min-height: 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--secondary-color);
+    border-radius: 18px;
+    margin-bottom: 32px;
+    padding: 32px 48px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
 
-#trackList p {
-    margin: 0.5rem 0 0 0;
-    color: #7f8c8d;
-    font-size: 0.9rem;
+#header-title {
+    font-size: 2.5rem;
+    color: var(--header-color);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-#trackList button {
-    padding: 0.5rem 1rem;
-    margin-left: 0.5rem;
+#add-btn, .back-btn {
+    background: var(--accent-color);
+    color: var(--secondary-color);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: background 0.2s;
+}
+#add-btn:hover, .back-btn:hover {
+    background: var(--hover-color);
+    color: var(--text-color);
 }
 
-#trackList button[onclick*="edit"] {
-    background-color: #95a5a6;
-    color: white;
+#core-section {
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 300px;
 }
 
-#trackList button[onclick*="delete"] {
-    background-color: #e74c3c;
-    color: white;
+.card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 32px 24px;
+    min-width: 260px;
+    max-width: 320px;
+    flex: 1 1 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+.card:hover {
+    background: var(--hover-color);
+    color: var(--text-color);
+    transform: translateY(-4px) scale(1.03);
+}
+.card a{
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--modal-content-bg);
+    width: 50%;
+    padding: 10px 0;
+    text-align: center;
+}
+.card a:hover{
+    transition: all 0.5s ease;
+    scale: 1.1;
+    border: 1px solid var(--accent-color);
+}
+.card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+.card p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #e0e0e0;
 }
 
-#trackList button:hover {
-    opacity: 0.9;
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: var(--modal-bg);
+    justify-content: center;
+    align-items: center;
+}
+.modal.show {
+    display: flex;
+}
+.modal-content {
+    background: var(--modal-content-bg);
+    margin: auto;
+    padding: 32px 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    position: relative;
+}
+.close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+#modal-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+#modal-form input, #modal-form textarea, #modal-form select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+}
+#modal-form textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+#modal-submit {
+    background: var(--accent-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#modal-submit:hover {
+    background: var(--hover-color);
+    color: var(--text-color);
 }
 
-@media (max-width: 600px) {
-    #addTrackForm {
-        flex-direction: column;
-    }
-    
-    #trackList > div {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    #trackList button {
-        margin-top: 1rem;
-        width: 100%;
-    }
+.card-actions{
+    width: 100%;
+    height: 20%;
+    padding-top: 10%;
+    display: flex;
+    gap: 5%;
+    justify-self: flex-end;
 }
-
-input::placeholder {
-    color: #95a5a6;
-    opacity: 1;
+.card-actions i:hover{
+    transition: all 0.5s ease;
+    scale: 1.1;
 }
