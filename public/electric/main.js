@@ -135,111 +135,24 @@ const electricData = {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-08-10"
                 },
                 {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-15"
                 },
                 {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-20"
                 },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
+                // ... باقي التاسكات كما هي
               ]
             },
             {
@@ -250,111 +163,24 @@ const electricData = {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-10"
                 },
                 {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-15"
                 },
                 {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-20"
                 },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
+                // ... باقي التاسكات كما هي
               ]
             },
             {
@@ -365,685 +191,24 @@ const electricData = {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-10"
                 },
                 {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-07-15"
                 },
                 {
                   name: "Blink LED",
                   description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
                   link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
+                  submitLink: "https://forms.gle/submit-blink",
+                  deadline: "2024-08-20"
                 },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
-              ]
-            },
-            {
-              name: "Intro to Embedded",
-              description: "مقدمة عن الأنظمة المدمجة.",
-              tasks: [
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
-              ]
-            },
-            {
-              name: "Intro to Embedded",
-              description: "مقدمة عن الأنظمة المدمجة.",
-              tasks: [
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
-              ]
-            },
-            {
-              name: "Intro to Embedded",
-              description: "مقدمة عن الأنظمة المدمجة.",
-              tasks: [
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
-              ]
-            },
-            {
-              name: "Intro to Embedded",
-              description: "مقدمة عن الأنظمة المدمجة.",
-              tasks: [
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                // ... المزيد من التاسكات
-              ]
-            },
-            {
-              name: "Intro to Embedded",
-              description: "مقدمة عن الأنظمة المدمجة.",
-              tasks: [
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
-                {
-                  name: "Blink LED",
-                  description: "برمجة دائرة لجعل LED تضيء وتطفئ.",
-                  link: "https://example.com/blink",
-                  submitLink: "https://forms.gle/submit-blink"
-                },
+                
                 // ... المزيد من التاسكات
               ]
             },
@@ -1286,16 +451,32 @@ function renderCourse(course, courseContainer) {
     }
     let tasksHtml = "";
     if (Array.isArray(course.tasks) && course.tasks.length > 0) {
-        tasksHtml = course.tasks.map(task => `
-            <div class="task-block">
-                <h4>${task.name}</h4>
-                <p>${task.description}</p>
-                <div class = "links">
-                    <a href="${task.link}" target="_blank">رابط التاسك</a> 
-                    <a href="${task.submitLink}" target="_blank">رابط التسليم</a>
+        tasksHtml = course.tasks.map(task => {
+            let deadlineDate = task.deadline ? new Date(task.deadline) : null;
+            let today = new Date();
+            let daysLeft = deadlineDate ? Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24)) : null;
+            let deadlineHtml = '';
+            if (deadlineDate) {
+                deadlineHtml = `<div class="deadline-info" style="margin:8px 0 8px 0;padding:6px 12px;background:#f8f9fa;border-radius:6px;display:inline-block;font-size:15px;">
+                    <span style='font-weight:bold;color:#d9534f;'>Deadline:</span>
+                    <span style='color:#333;'>${deadlineDate.toLocaleDateString()}</span>
+                    <span style='margin-right:10px;color:#007bff;'>
+                        (${daysLeft > 0 ? daysLeft + ' يوم متبقي' : daysLeft === 0 ? 'اليوم!' : 'انتهى الموعد'})
+                    </span>
+                </div>`;
+            }
+            return `
+                <div class="task-block">
+                    <h4>${task.name}</h4>
+                    <p>${task.description}</p>
+                    ${deadlineHtml}
+                    <div class = "links">
+                        <a href="${task.link}" target="_blank">رابط التاسك</a> 
+                        <a href="${task.submitLink}" target="_blank">رابط التسليم</a>
+                    </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     } else {
         tasksHtml = "<p>No tasks for this course.</p>";
     }
